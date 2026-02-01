@@ -1,57 +1,3 @@
-# name: flutter_template
-
-# concurrency:
-#   group: ${{ github.workflow }}-${{ github.ref }}
-#   cancel-in-progress: true
-
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches: [main]
-
-# jobs:
-#   verify:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-
-#       # 1. Read the version from .fvmrc
-#       - name: Get Flutter version from FVM
-#         id: fvm-config
-#         run: |
-#           echo "FLUTTER_VERSION=$(id=$'import json; print(json.load(open(".fvmrc"))["flutter"])'; python3 -c "$id")" >> $GITHUB_OUTPUT
-#         shell: bash
-
-#       # 2. Install the exact Flutter version
-#       - name: Setup Flutter
-#         uses: subosito/flutter-action@v2
-#         with:
-#           flutter-version: ${{ steps.fvm-config.outputs.FLUTTER_VERSION }}
-#           cache: true
-
-#       # 3. Install Dependencies
-#       - name: Install Dependencies
-#         run: flutter pub get
-
-#       # 4. Linting
-#       - name: Verify Formatting
-#         run: flutter format --set-exit-if-changed .
-
-#       - name: Analyze Project
-#         run: flutter analyze
-
-#       # 5. Run Tests with Coverage
-#       - name: Run Tests
-#         run: flutter test --coverage
-
-#       # 6. Enforce 95% Coverage
-#       - name: Check Test Coverage (95%)
-#         uses: VeryGoodOpenSource/very_good_coverage@v3
-#         with:
-#           path: ./coverage/lcov.info
-#           min_coverage: 95
-
 name: flutter_template
 
 concurrency:
@@ -70,29 +16,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Setup FVM & Flutter
-      - name: Setup Flutter Version Management
-        uses: flutter-actions/setup-fvm@v1
-      
-      - name: Install Flutter via FVM
-        run: fvm install
+      # 1. Read the version from .fvmrc
+      - name: Get Flutter version from FVM
+        id: fvm-config
+        run: |
+          echo "FLUTTER_VERSION=$(id=$'import json; print(json.load(open(".fvmrc"))["flutter"])'; python3 -c "$id")" >> $GITHUB_OUTPUT
+        shell: bash
 
-      # Install Dependencies
+      # 2. Install the exact Flutter version
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.fvm-config.outputs.FLUTTER_VERSION }}
+          cache: true
+
+      # 3. Install Dependencies
       - name: Install Dependencies
-        run: fvm flutter pub get
+        run: flutter pub get
 
-      # Linting
+      # 4. Linting
       - name: Verify Formatting
-        run: fvm flutter format --set-exit-if-changed .
+        run: flutter format --set-exit-if-changed .
 
       - name: Analyze Project
-        run: fvm flutter analyze
+        run: flutter analyze
 
-      # Run Tests with Coverage
+      # 5. Run Tests with Coverage
       - name: Run Tests
-        run: fvm flutter test --coverage
+        run: flutter test --coverage
 
-      # Enforce 95% Coverage
+      # 6. Enforce 95% Coverage
       - name: Check Test Coverage (95%)
         uses: VeryGoodOpenSource/very_good_coverage@v3
         with:
