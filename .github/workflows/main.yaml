@@ -29,6 +29,8 @@ jobs:
         with:
           flutter-version: ${{ steps.fvm-config.outputs.FLUTTER_VERSION }}
           cache: true
+          cache-key: 'flutter-sdk-${{ runner.os }}-${{ steps.fvm-config.outputs.FLUTTER_VERSION }}'
+          cache-path: '${{ runner.tool_cache }}/flutter'
 
       # 3. Install Dependencies
       - name: Install Dependencies
