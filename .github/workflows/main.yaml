@@ -36,14 +36,14 @@ jobs:
 
       # 4. Linting
       - name: Verify Formatting
-        run: flutter format --set-exit-if-changed .
+        run: dart format --set-exit-if-changed .
 
       - name: Analyze Project
-        run: flutter analyze
+        run: dart analyze
 
       # 5. Run Tests with Coverage
       - name: Run Tests
-        run: flutter test --coverage
+        run: fvm flutter test --no-pub --test-randomize-ordering-seed=random --coverage
 
       # 6. Enforce 95% Coverage
       - name: Check Test Coverage (95%)
