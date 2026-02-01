@@ -40,7 +40,7 @@ jobs:
         run: dart analyze --fatal-infos
 
       - name: Run Tests
-        run: fvm flutter test --no-pub --test-randomize-ordering-seed=random --coverage
+        run: flutter test --no-pub --test-randomize-ordering-seed=random --coverage
 
       - name: Check Test Coverage (95%)
         uses: VeryGoodOpenSource/very_good_coverage@v3
