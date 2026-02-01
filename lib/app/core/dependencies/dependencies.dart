@@ -1,4 +1,5 @@
 import 'package:flutter_template/app/core/dependencies/dependencies.config.dart';
+import 'package:flutter_template/environment.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -16,5 +17,7 @@ final GetIt getIt = GetIt.instance;
 /// in `dependencies.config.dart`.
 /// {@endtemplate}
 @InjectableInit()
-Future<void> configureDependencies(String env) async =>
-    getIt.init(environment: env);
+Future<void> configureDependencies(String env) {
+  EnvironmentConfig.environment = env;
+  return getIt.init(environment: env);
+}

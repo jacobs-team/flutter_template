@@ -3,7 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 
+/// {@template dev_tools_view}
+/// A view that provides a user interface for toggling developer settings.
+/// {@endtemplate}
 class DevToolsView extends StatelessWidget {
+  /// {@macro dev_tools_view}
   const DevToolsView({super.key});
 
   @override

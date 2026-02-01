@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs, placeholder
+
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';

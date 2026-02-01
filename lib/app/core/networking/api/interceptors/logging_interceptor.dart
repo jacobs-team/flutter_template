@@ -1,6 +1,11 @@
 part of '../rest_client.dart';
 
+/// {@template logging_interceptor}
+/// A Dio [Interceptor] that conditionally logs network traffic
+/// if [DevToolsCubit] `isApiDebug` is true.
+/// {@endtemplate}
 class LoggingInterceptor extends Interceptor {
+  /// {@macro logging_interceptor}
   LoggingInterceptor(this._devToolsCubit, this._logger);
 
   final DevToolsCubit _devToolsCubit;

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/core.dart';
@@ -32,10 +33,11 @@ class NavigationWrapper extends StatelessWidget {
             onPressed: getIt<AuthCubit>().logout,
             icon: const Icon(Icons.logout),
           ),
-          IconButton(
-            onPressed: () => context.push(Routes.devTools),
-            icon: const Icon(Icons.code),
-          ),
+          if (kDebugMode)
+            IconButton(
+              onPressed: () => context.push(Routes.devTools),
+              icon: const Icon(Icons.code),
+            ),
         ],
       ),
       body: Column(

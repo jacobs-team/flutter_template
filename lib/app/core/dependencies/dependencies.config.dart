@@ -33,8 +33,6 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:hydrated_bloc/hydrated_bloc.dart' as _i67;
 import 'package:injectable/injectable.dart' as _i526;
 
-const String _dev = 'dev';
-
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
   Future<_i174.GetIt> init({
@@ -50,11 +48,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i669.AuthCubit>(() => _i669.AuthCubit());
     gh.singleton<_i313.ConnectivityCubit>(() => _i313.ConnectivityCubit());
     gh.singleton<_i96.FileCacheService>(() => _i96.FileCacheService());
+    gh.singleton<_i90.DevToolsCubit>(() => _i90.DevToolsCubit());
     gh.singleton<_i693.AppRouter>(() => _i693.AppRouter());
-    gh.singleton<_i90.DevToolsCubit>(
-      () => _i90.DevToolsCubit(),
-      registerFor: {_dev},
-    );
     gh.singleton<_i994.RestClient>(
       () => _i994.RestClient(gh<_i483.AuthCubit>(), gh<_i701.DevToolsCubit>()),
     );

@@ -12,7 +12,21 @@
       "args": [
         "--flavor",
         "development",
-        "--dart-define-from-file=env.json",
+        "--dart-define-from-file=config/dev.json",
+        "--web-browser-flag",
+        "--disable-web-security"
+      ]
+    },
+    {
+      "name": "Launch prod",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "lib/main_production.dart",
+      "args": [
+        "--flavor",
+        "production",
+        "--dart-define-from-file=config/prod.json",
         "--web-browser-flag",
         "--disable-web-security"
       ]

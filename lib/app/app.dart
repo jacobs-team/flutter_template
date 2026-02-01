@@ -23,28 +23,25 @@ class CoffeeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    MaterialApp app(ThemeMode themeMode) => MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: AppRouter.router,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: themeMode,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      builder: (context, child) => Layout(child: child!),
+    return BlocSelector<DevToolsCubit, DevToolsState, bool>(
+      bloc: getIt<DevToolsCubit>(),
+      selector: (state) => state.isDarkMode,
+      builder: (context, isDarkMode) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: AppRouter.router,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: !kDebugMode
+              ? ThemeMode.system
+              : isDarkMode
+              ? ThemeMode.dark
+              : ThemeMode.light,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) => Layout(child: child!),
+        );
+      },
     );
-
-    if (kDebugMode) {
-      return BlocSelector<DevToolsCubit, DevToolsState, bool>(
-        bloc: getIt<DevToolsCubit>(),
-        selector: (state) => state.isDarkMode,
-        builder: (context, isDarkMode) {
-          return app(isDarkMode ? ThemeMode.dark : ThemeMode.light);
-        },
-      );
-    }
-
-    return app(ThemeMode.system);
   }
 }

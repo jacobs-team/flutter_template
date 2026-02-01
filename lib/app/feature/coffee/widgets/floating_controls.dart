@@ -3,7 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 
+/// {@template floating_controls}
+/// A column of floating action buttons used to control the
+/// coffee discovery feed.
+/// {@endtemplate}
 class FloatingControls extends StatelessWidget {
+  /// {@macro floating_controls}
   const FloatingControls({
     required PageController pageController,
     super.key,

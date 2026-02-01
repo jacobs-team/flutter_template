@@ -7,4 +7,7 @@ abstract class EnvironmentConfig {
     'API_DOMAIN',
     defaultValue: 'https://coffee.alexflipnote.dev',
   );
+
+  /// e.g prod, dev etc.
+  static late final String environment;
 }

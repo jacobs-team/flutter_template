@@ -82,6 +82,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_template/environment.dart';
@@ -105,6 +106,7 @@ class RestClient {
             BaseOptions(baseUrl: EnvironmentConfig.apiDomain),
           ) {
     _dio.interceptors.addAll([
+      if (kDebugMode)
       LoggingInterceptor(
         _devToolsCubit,
         PrettyDioLogger(
