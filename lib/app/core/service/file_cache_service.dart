@@ -14,7 +14,7 @@ class FileCacheService {
 
   /// Removes a specific file from the local cache.
   Future<void> removeFile(String url) async {
-    await DefaultCacheManager().removeFile(url);
+    DefaultCacheManager().removeFile(url);
   }
 
   /// Removes all files from local cache.
