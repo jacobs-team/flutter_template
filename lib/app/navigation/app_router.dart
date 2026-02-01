@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/cubit/auth_cubit.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
@@ -52,12 +53,13 @@ class AppRouter {
         return const NoTransitionPage(child: SignInView());
       },
     ),
-    GoRoute(
-      path: Routes.devTools,
-      pageBuilder: (BuildContext context, GoRouterState state) {
-        return const NoTransitionPage(child: DevToolsView());
-      },
-    ),
+    if (kDebugMode)
+      GoRoute(
+        path: Routes.devTools,
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return const NoTransitionPage(child: DevToolsView());
+        },
+      ),
   ];
 
   /// Data for rendering navigation bars or rails.

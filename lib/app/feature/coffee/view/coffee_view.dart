@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/cubit/connectivity_cubit.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
+import 'package:flutter_template/app/feature/coffee/widgets/floating_controls.dart';
 
 /// {@template coffee_view}
 /// A stateful widget that displays a vertical feed of coffee images.
@@ -42,71 +43,11 @@ class _CoffeeViewState extends State<CoffeeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FloatingActionButton.small(
-            heroTag: 'btn_up',
-            shape: const CircleBorder(),
-            onPressed: () => _pageController.previousPage(
-              duration: const Duration(milliseconds: 250),
-              curve: Curves.easeInOut,
-            ),
-            child: const Icon(Icons.arrow_upward),
-          ),
-          const SizedBox(height: 6),
-          FloatingActionButton.small(
-            heroTag: 'btn_down',
-            shape: const CircleBorder(),
-            onPressed: () => _pageController.nextPage(
-              duration: const Duration(milliseconds: 250),
-              curve: Curves.easeInOut,
-            ),
-            child: const Icon(Icons.arrow_downward),
-          ),
-          const SizedBox(height: 10),
-          BlocSelector<
-            CoffeeBloc,
-            CoffeeState,
-            (int, List<String>, List<String>, bool)
-          >(
-            bloc: coffeeBloc,
-            selector: (state) => (
-              state.currentImage,
-              state.images,
-              state.favorites,
-              state.loadingState == CoffeeLoadingState.saving,
-            ),
-            builder: (context, record) {
-              final (currentImage, images, favorites, savingImage) = record;
-
-              if (images.isEmpty || currentImage >= images.length) {
-                return const SizedBox.shrink();
-              }
-
-              final imageUrl = images[currentImage];
-              final favorited = favorites.contains(imageUrl);
-
-              return FloatingActionButton(
-                heroTag: 'btn_favorite',
-                shape: const CircleBorder(),
-                onPressed: () => coffeeBloc.add(ToggleFavoriteImage(imageUrl)),
-                child: savingImage
-                    ? const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(),
-                      )
-                    : Icon(favorited ? Icons.favorite : Icons.favorite_outline),
-              );
-            },
-          ),
-        ],
-      ),
+      floatingActionButton: FloatingControls(pageController: _pageController),
       body: MultiBlocListener(
         listeners: [
           // Precaches images in a 10 image window
-          // with the current image being the center
+          // with the current image being the center.
           BlocListener<CoffeeBloc, CoffeeState>(
             bloc: coffeeBloc,
             listener: (context, state) {
@@ -126,7 +67,7 @@ class _CoffeeViewState extends State<CoffeeView> {
                 previous.imageWindow != current.imageWindow,
           ),
           // Reloads the current image (and any subsequent cache window images)
-          // in the event of a reconnection
+          // in the event of a reconnection.
           BlocListener<ConnectivityCubit, bool>(
             bloc: getIt<ConnectivityCubit>(),
             listenWhen: (previous, current) => current,
@@ -172,24 +113,7 @@ class _CoffeeViewState extends State<CoffeeView> {
                     : CoffeeImage(
                         onTap: () =>
                             coffeeBloc.add(ToggleFavoriteImage(images[index])),
-                        child: Image.network(
-                          images[index],
-                          fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.error_outline,
-                                    color: Colors.red,
-                                    size: 48,
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                        url: images[index],
                       );
               },
             );

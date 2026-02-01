@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 /// {@endtemplate}
 class CoffeeImage extends StatefulWidget {
   /// {@macro coffee_image}
-  const CoffeeImage({required this.onTap, required this.child, super.key});
+  const CoffeeImage({required this.onTap, required this.url, super.key});
 
   /// Callback triggered when the image is double-tapped.
   final void Function() onTap;
 
-  /// The image widget to display.
-  final Widget child;
+  /// The image url to display.
+  final String url;
 
   @override
   State<CoffeeImage> createState() => _CoffeeImageState();
@@ -47,7 +47,24 @@ class _CoffeeImageState extends State<CoffeeImage> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          widget.child,
+          Image.network(
+            widget.url,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) {
+              return const Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      color: Colors.red,
+                      size: 48,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
           IgnorePointer(
             child: AnimatedOpacity(
               opacity: _showHeart ? 1.0 : 0.0,

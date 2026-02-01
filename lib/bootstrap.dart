@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 /// Global [BlocObserver] used to log bloc state changes and errors.
@@ -38,6 +37,5 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await configureDependencies();
   runApp(await builder());
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/core.dart';
-import 'package:flutter_template/app/core/cubit/connectivity_cubit.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/navigation/navigation.dart';
 import 'package:flutter_template/app/widgets/layout.dart';

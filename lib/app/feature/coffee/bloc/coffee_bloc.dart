@@ -80,7 +80,6 @@ class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
     Emitter<CoffeeState> emit,
   ) async {
     try {
-      //TODO investigate
       final numImagesToLoad = math.max(
         0,
         event.currentImage - state.images.length + 5,

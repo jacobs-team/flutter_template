@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 part 'dev_tools_cubit.g.dart';
 part 'dev_tools_cubit.freezed.dart';
 
-@singleton
+@Singleton(env: [Environment.dev])
 class DevToolsCubit extends HydratedCubit<DevToolsState> {
   DevToolsCubit() : super(const DevToolsState());
 

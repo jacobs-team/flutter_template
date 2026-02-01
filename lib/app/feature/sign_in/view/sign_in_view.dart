@@ -10,10 +10,8 @@ class SignInView extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            getIt<AuthCubit>().setSession('username', 'token');
-          },
-          child: Text('Sign In'),
+          onPressed: () => getIt<AuthCubit>().setSession('username', 'token'),
+          child: const Text('Sign In'),
         ),
       ),
     );
