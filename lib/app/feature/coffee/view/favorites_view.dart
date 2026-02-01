@@ -34,7 +34,6 @@ class FavoritesView extends StatelessWidget {
               key: ValueKey(savedImages[index]),
               savedImages[index],
             );
-            //TODO
           },
         );
       },

@@ -15,9 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthState implements DiagnosticableTreeMixin {
 
-/// The unique identifier or name of the authenticated user.
- String? get user;/// The session token used for authorized requests.
- String? get token;
+ String? get user; String? get token;
 /// Create a copy of AuthState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -221,9 +219,7 @@ class _AuthState extends AuthState with DiagnosticableTreeMixin {
   const _AuthState({this.user, this.token}): super._();
   factory _AuthState.fromJson(Map<String, dynamic> json) => _$AuthStateFromJson(json);
 
-/// The unique identifier or name of the authenticated user.
 @override final  String? user;
-/// The session token used for authorized requests.
 @override final  String? token;
 
 /// Create a copy of AuthState

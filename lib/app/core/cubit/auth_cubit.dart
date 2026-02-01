@@ -1,5 +1,11 @@
+// ignore_for_file: public_member_api_docs
+
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_template/app/core/dependencies/dependencies.dart';
+import 'package:flutter_template/app/feature/coffee/coffee.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -15,9 +21,11 @@ part 'auth_cubit.g.dart';
 /// methods to handle user sessions and logout logic.
 /// {@endtemplate}
 @singleton
-class AuthCubit extends HydratedCubit<AuthState> {
+class AuthCubit extends HydratedCubit<AuthState> implements Listenable {
   /// {@macro auth_cubit}
   AuthCubit() : super(const AuthState());
+
+  final List<VoidCallback> _listeners = [];
 
   /// A [CancelToken] used to abort ongoing HTTP requests when
   /// the user logs out.
@@ -29,9 +37,13 @@ class AuthCubit extends HydratedCubit<AuthState> {
   }
 
   /// Clears the authentication state and cancels any active requests.
-  void logout() {
+  /// Clears the cached files and URLs.
+  Future<void> logout() async {
     cancelToken.cancel('Logged out');
     cancelToken = CancelToken();
+    if (getIt.isRegistered<CoffeeBloc>()) {
+      getIt<CoffeeBloc>().add(const ClearFeed());
+    }
     emit(const AuthState());
   }
 
@@ -40,6 +52,20 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
   @override
   Map<String, dynamic> toJson(AuthState state) => state.toJson();
+
+  @override
+  void addListener(VoidCallback listener) => _listeners.add(listener);
+
+  @override
+  void removeListener(VoidCallback listener) => _listeners.remove(listener);
+
+  @override
+  void onChange(Change<AuthState> change) {
+    super.onChange(change);
+    for (final listener in _listeners) {
+      listener();
+    }
+  }
 }
 
 /// {@template auth_state}
@@ -51,20 +77,15 @@ class AuthCubit extends HydratedCubit<AuthState> {
 abstract class AuthState with _$AuthState {
   /// {@macro auth_state}
   const factory AuthState({
-    /// The unique identifier or name of the authenticated user.
     String? user,
-
-    /// The session token used for authorized requests.
     String? token,
   }) = _AuthState;
 
-  /// {@macro auth_state}
   const AuthState._();
 
   /// Returns true if both [user] and [token] are present.
   bool get signedIn => user != null && token != null;
 
-  /// Creates an [AuthState] from a JSON [Map].
   factory AuthState.fromJson(Map<String, dynamic> json) =>
       _$AuthStateFromJson(json);
 }

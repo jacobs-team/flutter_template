@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/app/core/bloc/connectivity_cubit.dart';
+import 'package:flutter_template/app/core/cubit/connectivity_cubit.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
 
@@ -46,6 +46,7 @@ class _CoffeeViewState extends State<CoffeeView> {
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton.small(
+            heroTag: 'btn_up',
             shape: const CircleBorder(),
             onPressed: () => _pageController.previousPage(
               duration: const Duration(milliseconds: 250),
@@ -53,7 +54,9 @@ class _CoffeeViewState extends State<CoffeeView> {
             ),
             child: const Icon(Icons.arrow_upward),
           ),
+          const SizedBox(height: 6),
           FloatingActionButton.small(
+            heroTag: 'btn_down',
             shape: const CircleBorder(),
             onPressed: () => _pageController.nextPage(
               duration: const Duration(milliseconds: 250),
@@ -85,6 +88,7 @@ class _CoffeeViewState extends State<CoffeeView> {
               final favorited = favorites.contains(imageUrl);
 
               return FloatingActionButton(
+                heroTag: 'btn_favorite',
                 shape: const CircleBorder(),
                 onPressed: () => coffeeBloc.add(ToggleFavoriteImage(imageUrl)),
                 child: savingImage
@@ -142,6 +146,9 @@ class _CoffeeViewState extends State<CoffeeView> {
             listener: (context, state) {
               ScaffoldMessenger.of(
                 context,
+              ).clearSnackBars();
+              ScaffoldMessenger.of(
+                context,
               ).showSnackBar(
                 SnackBar(
                   content: Text(state.errorMessage!),
@@ -153,9 +160,7 @@ class _CoffeeViewState extends State<CoffeeView> {
         ],
         child: BlocSelector<CoffeeBloc, CoffeeState, List<String>>(
           bloc: coffeeBloc,
-          selector: (state) {
-            return state.images;
-          },
+          selector: (state) => state.images,
           builder: (context, images) {
             return PageView.builder(
               scrollDirection: Axis.vertical,
@@ -170,6 +175,20 @@ class _CoffeeViewState extends State<CoffeeView> {
                         child: Image.network(
                           images[index],
                           fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.error_outline,
+                                    color: Colors.red,
+                                    size: 48,
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                         ),
                       );
               },

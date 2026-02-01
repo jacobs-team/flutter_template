@@ -21,7 +21,7 @@ part 'coffee_bloc.g.dart';
 /// * Persistence of favorite images using [HydratedStorage] for the urls
 /// and [FileCacheService] for the corresponding files.
 /// {@endtemplate}
-@singleton
+@lazySingleton
 class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
   /// {@macro coffee_bloc}
   CoffeeBloc(this._repo, this._cacheService) : super(const CoffeeState()) {
@@ -29,6 +29,7 @@ class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
       (CoffeeEvent coffeEvent, emit) => coffeEvent.map(
         loadImages: (value) => _loadImages(value, emit),
         toggleFavoriteImage: (value) => _toggleFavorite(value, emit),
+        clearFeed: (value) => emit(CoffeeState(favorites: state.favorites)),
       ),
     );
   }
@@ -154,6 +155,7 @@ abstract class CoffeeEvent with _$CoffeeEvent {
   const factory CoffeeEvent.loadImages(int currentImage) = LoadImages;
   const factory CoffeeEvent.toggleFavoriteImage(String url) =
       ToggleFavoriteImage;
+  const factory CoffeeEvent.clearFeed() = ClearFeed;
 }
 
 @freezed

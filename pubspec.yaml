@@ -8,15 +8,17 @@ environment:
   flutter: ^3.35.0
 
 dependencies:
+  flutter_localizations:
+    sdk: flutter
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   auto_route: ^11.1.0 # Option 2 for routing
   connectivity_plus: ^7.0.0
   dio: ^5.9.1 # REST Networking 
-  flutter:
-    sdk: flutter
   flutter_bloc: ^9.1.1 # State management
   flutter_cache_manager: ^3.4.1
-  flutter_localizations:
-    sdk: flutter
   freezed_annotation: ^3.1.0 # Generated model mapping
   get_it: ^9.2.0 # Dependency injection in conjunction with injectable
   go_router: ^17.0.0 # Option 1 for routing - my preference

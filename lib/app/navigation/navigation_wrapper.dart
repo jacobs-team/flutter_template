@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_template/app/core/bloc/connectivity_cubit.dart';
+import 'package:flutter_template/app/core/core.dart';
+import 'package:flutter_template/app/core/cubit/connectivity_cubit.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/navigation/navigation.dart';
 import 'package:flutter_template/app/widgets/layout.dart';
@@ -26,6 +27,18 @@ class NavigationWrapper extends StatelessWidget {
     const destinations = AppRouter.destinations;
 
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: getIt<AuthCubit>().logout,
+            icon: const Icon(Icons.logout),
+          ),
+          IconButton(
+            onPressed: () => context.push(Routes.devTools),
+            icon: const Icon(Icons.code),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(

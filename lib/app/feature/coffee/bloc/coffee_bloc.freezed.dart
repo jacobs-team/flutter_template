@@ -55,12 +55,13 @@ extension CoffeeEventPatterns on CoffeeEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadImages value)?  loadImages,TResult Function( ToggleFavoriteImage value)?  toggleFavoriteImage,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( LoadImages value)?  loadImages,TResult Function( ToggleFavoriteImage value)?  toggleFavoriteImage,TResult Function( ClearFeed value)?  clearFeed,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case LoadImages() when loadImages != null:
 return loadImages(_that);case ToggleFavoriteImage() when toggleFavoriteImage != null:
-return toggleFavoriteImage(_that);case _:
+return toggleFavoriteImage(_that);case ClearFeed() when clearFeed != null:
+return clearFeed(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return toggleFavoriteImage(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadImages value)  loadImages,required TResult Function( ToggleFavoriteImage value)  toggleFavoriteImage,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( LoadImages value)  loadImages,required TResult Function( ToggleFavoriteImage value)  toggleFavoriteImage,required TResult Function( ClearFeed value)  clearFeed,}){
 final _that = this;
 switch (_that) {
 case LoadImages():
 return loadImages(_that);case ToggleFavoriteImage():
-return toggleFavoriteImage(_that);case _:
+return toggleFavoriteImage(_that);case ClearFeed():
+return clearFeed(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return toggleFavoriteImage(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadImages value)?  loadImages,TResult? Function( ToggleFavoriteImage value)?  toggleFavoriteImage,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( LoadImages value)?  loadImages,TResult? Function( ToggleFavoriteImage value)?  toggleFavoriteImage,TResult? Function( ClearFeed value)?  clearFeed,}){
 final _that = this;
 switch (_that) {
 case LoadImages() when loadImages != null:
 return loadImages(_that);case ToggleFavoriteImage() when toggleFavoriteImage != null:
-return toggleFavoriteImage(_that);case _:
+return toggleFavoriteImage(_that);case ClearFeed() when clearFeed != null:
+return clearFeed(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return toggleFavoriteImage(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int currentImage)?  loadImages,TResult Function( String url)?  toggleFavoriteImage,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( int currentImage)?  loadImages,TResult Function( String url)?  toggleFavoriteImage,TResult Function()?  clearFeed,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoadImages() when loadImages != null:
 return loadImages(_that.currentImage);case ToggleFavoriteImage() when toggleFavoriteImage != null:
-return toggleFavoriteImage(_that.url);case _:
+return toggleFavoriteImage(_that.url);case ClearFeed() when clearFeed != null:
+return clearFeed();case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return toggleFavoriteImage(_that.url);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int currentImage)  loadImages,required TResult Function( String url)  toggleFavoriteImage,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( int currentImage)  loadImages,required TResult Function( String url)  toggleFavoriteImage,required TResult Function()  clearFeed,}) {final _that = this;
 switch (_that) {
 case LoadImages():
 return loadImages(_that.currentImage);case ToggleFavoriteImage():
-return toggleFavoriteImage(_that.url);case _:
+return toggleFavoriteImage(_that.url);case ClearFeed():
+return clearFeed();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return toggleFavoriteImage(_that.url);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int currentImage)?  loadImages,TResult? Function( String url)?  toggleFavoriteImage,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( int currentImage)?  loadImages,TResult? Function( String url)?  toggleFavoriteImage,TResult? Function()?  clearFeed,}) {final _that = this;
 switch (_that) {
 case LoadImages() when loadImages != null:
 return loadImages(_that.currentImage);case ToggleFavoriteImage() when toggleFavoriteImage != null:
-return toggleFavoriteImage(_that.url);case _:
+return toggleFavoriteImage(_that.url);case ClearFeed() when clearFeed != null:
+return clearFeed();case _:
   return null;
 
 }
@@ -308,6 +314,38 @@ as String,
 
 
 }
+
+/// @nodoc
+
+
+class ClearFeed implements CoffeeEvent {
+  const ClearFeed();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClearFeed);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'CoffeeEvent.clearFeed()';
+}
+
+
+}
+
+
+
 
 
 /// @nodoc

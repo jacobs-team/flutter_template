@@ -1,4 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_template/app/core/dependencies/dependencies.dart';
+import 'package:flutter_template/app/feature/dev_tools/dev_tools.dart';
 import 'package:flutter_template/app/navigation/app_router.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:flutter_template/l10n/l10n.dart';
@@ -19,13 +23,25 @@ class CoffeeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.router,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      builder: (context, child) => Layout(child: child!),
+    return BlocSelector<DevToolsCubit, DevToolsState, bool>(
+      bloc: getIt<DevToolsCubit>(),
+      selector: (state) => state.isDarkMode,
+      builder: (context, isDarkMode) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: AppRouter.router,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: kDebugMode
+              ? isDarkMode
+                    ? ThemeMode.dark
+                    : ThemeMode.light
+              : ThemeMode.system,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) => Layout(child: child!),
+        );
+      },
     );
   }
 }

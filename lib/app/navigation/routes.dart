@@ -13,5 +13,5 @@ abstract class Routes {
   static const String coffee = '/coffee';
   static const String favorites = '/favorites';
   static const String signIn = '/sign-in';
-  static const String detail = 'detail';
+  static const String devTools = '/dev-tools';
 }

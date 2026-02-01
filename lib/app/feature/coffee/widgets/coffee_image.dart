@@ -42,18 +42,21 @@ class _CoffeeImageState extends State<CoffeeImage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onDoubleTap: _handleDoubleTap,
       child: Stack(
         fit: StackFit.expand,
         children: [
           widget.child,
-          AnimatedOpacity(
-            opacity: _showHeart ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 250),
-            child: Icon(
-              Icons.favorite,
-              size: 100,
-              color: Theme.of(context).colorScheme.primary,
+          IgnorePointer(
+            child: AnimatedOpacity(
+              opacity: _showHeart ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 250),
+              child: Icon(
+                Icons.favorite,
+                size: 100,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
           ),
         ],

@@ -61,7 +61,10 @@ class SavedCoffeeImage extends StatelessWidget {
         Align(
           alignment: Alignment.topRight,
           child: IconButton(
-            icon: const Icon(Icons.remove_circle_outline),
+            icon: const Icon(
+              Icons.remove_circle_outline,
+              color: Colors.red,
+            ),
             onPressed: () =>
                 getIt<CoffeeBloc>().add(ToggleFavoriteImage(coffeeImage)),
           ),

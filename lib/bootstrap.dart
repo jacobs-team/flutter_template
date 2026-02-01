@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 /// Global [BlocObserver] used to log bloc state changes and errors.
 class AppBlocObserver extends BlocObserver {
@@ -32,8 +33,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
-
   Bloc.observer = const AppBlocObserver();
+
+  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await configureDependencies();

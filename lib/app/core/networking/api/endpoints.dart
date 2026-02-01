@@ -1,8 +1,8 @@
 /// Centralized route definitions for all services.
 ///
 /// Use namespaces for service groups:
-/// * [AppEndpoints.coffee] for coffee services.
-abstract final class AppEndpoints {
+/// * [Endpoints.coffee] for coffee services.
+abstract final class Endpoints {
   /// Routes related to coffee services.
   static const coffee = CoffeeRoutes._();
 }

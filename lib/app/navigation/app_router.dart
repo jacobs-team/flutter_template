@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/app/core/bloc/auth_cubit.dart';
+import 'package:flutter_template/app/core/cubit/auth_cubit.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
-import 'package:flutter_template/app/feature/coffee/view/coffee_view.dart';
-import 'package:flutter_template/app/feature/coffee/view/favorites_view.dart';
+import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_template/app/navigation/navigation_wrapper.dart';
 import 'package:flutter_template/app/navigation/routes.dart';
 import 'package:go_router/go_router.dart';
@@ -17,8 +16,8 @@ import 'package:injectable/injectable.dart';
 /// {@endtemplate}
 @singleton
 class AppRouter {
-  /// The list of top-level routes and nested shell branches.
-  static final routes = [
+  /// The list of top-level and nested Routes.
+  static final List<RouteBase> routes = [
     StatefulShellRoute.indexedStack(
       branches: [
         StatefulShellBranch(
@@ -30,16 +29,6 @@ class AppRouter {
                   child: CoffeeView(),
                 );
               },
-              routes: [
-                GoRoute(
-                  path: Routes.detail,
-                  pageBuilder: (BuildContext context, GoRouterState state) {
-                    return const NoTransitionPage(
-                      child: Scaffold(),
-                    );
-                  },
-                ),
-              ],
             ),
           ],
         ),
@@ -56,6 +45,18 @@ class AppRouter {
       ],
       builder: (context, state, navigationShell) =>
           NavigationWrapper(navigationShell: navigationShell),
+    ),
+    GoRoute(
+      path: Routes.signIn,
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return const NoTransitionPage(child: SignInView());
+      },
+    ),
+    GoRoute(
+      path: Routes.devTools,
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return const NoTransitionPage(child: DevToolsView());
+      },
     ),
   ];
 
@@ -76,10 +77,18 @@ class AppRouter {
   /// The global [GoRouter] instance used by the application.
   static GoRouter router = GoRouter(
     initialLocation: Routes.coffee,
+    refreshListenable: getIt<AuthCubit>(),
     redirect: (context, state) {
+      final signedIn = getIt<AuthCubit>().state.signedIn;
       final isSigningIn = state.uri.path.startsWith(Routes.signIn);
 
-      if (isSigningIn && getIt<AuthCubit>().state.signedIn) {
+      // If not signedIn and trying to access a protected route - Force signIn.
+      if (!signedIn && !isSigningIn) {
+        return Routes.signIn;
+      }
+
+      // If signedIn and trying to access signIn -> Force coffee.
+      if (signedIn && isSigningIn) {
         return Routes.coffee;
       }
 
