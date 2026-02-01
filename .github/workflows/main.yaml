@@ -16,14 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1. Read the version from .fvmrc
       - name: Get Flutter version from FVM
         id: fvm-config
         run: |
           echo "FLUTTER_VERSION=$(id=$'import json; print(json.load(open(".fvmrc"))["flutter"])'; python3 -c "$id")" >> $GITHUB_OUTPUT
         shell: bash
 
-      # 2. Install the exact Flutter version
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -32,22 +30,18 @@ jobs:
           cache-key: 'flutter-sdk-${{ runner.os }}-${{ steps.fvm-config.outputs.FLUTTER_VERSION }}'
           cache-path: '${{ runner.tool_cache }}/flutter'
 
-      # 3. Install Dependencies
       - name: Install Dependencies
         run: flutter pub get
 
-      # 4. Linting
       - name: Verify Formatting
         run: dart format --set-exit-if-changed .
 
       - name: Analyze Project
-        run: dart analyze
+        run: dart analyze --fatal-infos
 
-      # 5. Run Tests with Coverage
       - name: Run Tests
         run: fvm flutter test --no-pub --test-randomize-ordering-seed=random --coverage
 
-      # 6. Enforce 95% Coverage
       - name: Check Test Coverage (95%)
         uses: VeryGoodOpenSource/very_good_coverage@v3
         with:
