@@ -3,5 +3,33 @@
     "counterAppBarTitle": "Contador",
     "@counterAppBarTitle": {
         "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "failedToToggleFavoriteImage": "Error al cambiar el estado de favorito de la imagen",
+    "@failedToToggleFavoriteImage": {
+        "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "failedToLoadImage": "Error al cargar la imagen",
+    "@failedToLoadImage": {
+        "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "noSavedImages": "No hay imágenes guardadas",
+    "@noSavedImages": {
+        "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "signIn": "Iniciar sesión",
+    "@signIn": {
+        "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "coffee": "Café",
+    "@coffee": {
+        "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "favorites": "Favoritos",
+    "@favorites": {
+        "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "noConnection": "Sin conexión",
+    "@noConnection": {
+        "description": "Texto mostrado en la AppBar de la página del contador"
     }
 }

@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({super.key});
@@ -14,7 +15,7 @@ class SignInView extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () => getIt<AuthCubit>().setSession('username', 'token'),
-          child: const Text('Sign In'),
+          child: Text(context.l10n.signIn),
         ),
       ),
     );

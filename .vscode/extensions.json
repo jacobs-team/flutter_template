@@ -4,6 +4,11 @@
   "recommendations": [
     "dart-code.dart-code",
     "dart-code.flutter",
-    "felixangelov.bloc"
+    "felixangelov.bloc",
+    "vscode-icons-team.vscode-icons",
+    "nash.awesome-flutter-snippets",
+    "alexisvt.flutter-snippets",
+    "ryanluker.vscode-coverage-gutters",
+    "flutterando.flutter-coverage"
   ]
 }
