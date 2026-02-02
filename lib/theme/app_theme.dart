@@ -45,6 +45,6 @@ class AppTheme {
     ),
     navigationRailTheme: _darkBase.navigationRailTheme.copyWith(
       backgroundColor: _darkBase.colorScheme.surfaceContainer,
-    )
+    ),
   );
 }

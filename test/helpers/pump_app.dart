@@ -136,7 +136,6 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<dynamic> {
   bool shouldReload(covariant LocalizationsDelegate<dynamic> old) => false;
 }
 
-
 final transparentPixel = Uint8List.fromList([
   0x89,
   0x50,
