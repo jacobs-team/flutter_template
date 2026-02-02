@@ -8,7 +8,6 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../../helpers/helpers.dart';
 
-//Test
 void main() {
   const url = 'url';
   group(CoffeeView, () {
