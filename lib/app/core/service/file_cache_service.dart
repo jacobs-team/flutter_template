@@ -13,7 +13,7 @@ class FileCacheService {
   }
 
   /// Removes a specific file from the local cache.
-  // TODO
+  // TODO(jacob): test
   Future<void> removeFile(String url) async {
     await DefaultCacheManager().removeFile(url);
   }

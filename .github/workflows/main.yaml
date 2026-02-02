@@ -19,16 +19,19 @@ jobs:
       - name: Get Flutter version from FVM
         id: fvm-config
         run: |
-          echo "FLUTTER_VERSION=$(id=$'import json; print(json.load(open(".fvmrc"))["flutter"])'; python3 -c "$id")" >> $GITHUB_OUTPUT
+          echo "FLUTTER_VERSION=$(python3 -c "import json; print(json.load(open('.fvmrc'))['flutter'])")" >> $GITHUB_OUTPUT
         shell: bash
 
-      - name: Setup Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
+          channel: stable
           flutter-version: ${{ steps.fvm-config.outputs.FLUTTER_VERSION }}
           cache: true
-          cache-key: 'flutter-sdk-${{ runner.os }}-${{ steps.fvm-config.outputs.FLUTTER_VERSION }}'
-          cache-path: '${{ runner.tool_cache }}/flutter'
+          cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
+          cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
+          pub-cache-key: "flutter-pub-:os:-:channel:-:version:-:arch:-:hash:"
+          pub-cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
 
       - name: Install Dependencies
         run: flutter pub get
