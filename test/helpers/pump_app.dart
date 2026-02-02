@@ -6,7 +6,6 @@ import 'package:get_it/get_it.dart';
 
 import 'helpers.dart';
 
-
 extension PumpApp on WidgetTester {
   Future<void> pumpPumpPumpItUP(
     Widget widget, {

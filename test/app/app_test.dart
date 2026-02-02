@@ -4,7 +4,6 @@ import 'package:mocktail/mocktail.dart';
 
 import '../helpers/helpers.dart';
 
-
 void main() {
   group(CoffeeApp, () {
     late final DevToolsCubit devToolsCubit;
