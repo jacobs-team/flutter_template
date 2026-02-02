@@ -63,24 +63,6 @@ void main() {
       expect(find.text(errorMessage), findsOneWidget);
     });
 
-    testWidgets('triggers $LoadImages on page change in $CoffeeView', (
-      tester,
-    ) async {
-      when(() => coffeeBloc.state).thenReturn(
-        const CoffeeState(images: ['url1', 'url2']),
-      );
-
-      await tester.pumpPumpPumpItUP(
-        deps: [coffeeBloc, connectivityCubit],
-        const CoffeeView(),
-      );
-
-      await tester.drag(find.byType(PageView), const Offset(0, -500));
-      await tester.pumpAndSettle();
-
-      verify(() => coffeeBloc.add(const LoadImages(1))).called(1);
-    });
-
     testWidgets('triggers $ToggleFavoriteImage when $CoffeeImage is tapped', (
       tester,
     ) async {

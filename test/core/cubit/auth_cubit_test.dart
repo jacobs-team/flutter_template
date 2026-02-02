@@ -27,7 +27,8 @@ void main() {
 
     blocTest<AuthCubit, AuthState>(
       'emits empty state and adds $ClearFeed when logout is called',
-      setUp: () {
+      setUp: () async {
+        await GetIt.I.unregister<CoffeeBloc>();
         GetIt.I.registerSingleton<CoffeeBloc>(coffeeBloc);
       },
       build: AuthCubit.new,
