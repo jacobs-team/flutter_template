@@ -6,30 +6,30 @@
     },
     "failedToToggleFavoriteImage": "Error al cambiar el estado de favorito de la imagen",
     "@failedToToggleFavoriteImage": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+        "description": "Mensaje de error mostrado cuando no se puede cambiar el estado de favorito de una imagen."
     },
     "failedToLoadImage": "Error al cargar la imagen",
     "@failedToLoadImage": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+        "description": "Mensaje de error mostrado cuando falla la carga de una imagen."
     },
     "noSavedImages": "No hay imágenes guardadas",
     "@noSavedImages": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+        "description": "Mensaje mostrado cuando el usuario no tiene imágenes guardadas."
     },
     "signIn": "Iniciar sesión",
     "@signIn": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+        "description": "Etiqueta del botón o acción que permite al usuario iniciar sesión."
     },
     "coffee": "Café",
     "@coffee": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+        "description": "Etiqueta de la sección o pestaña «Café» en la aplicación."
     },
     "favorites": "Favoritos",
     "@favorites": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+        "description": "Etiqueta de la sección o pestaña de imágenes favoritas."
     },
     "noConnection": "Sin conexión",
     "@noConnection": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
+        "description": "Mensaje mostrado cuando no hay conexión a Internet."
     }
 }
