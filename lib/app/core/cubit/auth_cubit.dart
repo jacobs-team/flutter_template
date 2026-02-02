@@ -37,7 +37,7 @@ class AuthCubit extends HydratedCubit<AuthState> implements Listenable {
   }
 
   /// Clears the authentication state and cancels any active requests.
-  /// Clears the cached files and URLs.
+  /// Clears the feed coffee image feed, keeps favorites.
   Future<void> logout() async {
     cancelToken.cancel('Logged out');
     cancelToken = CancelToken();

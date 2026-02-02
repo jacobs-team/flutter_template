@@ -57,3 +57,21 @@ jobs:
         with:
           path: ./coverage/lcov.info
           min_coverage: 95
+      - name: Extract Coverage
+        run: |
+          PERCENT=$(grep -oP 'SF:.*' -A 100 coverage/lcov.info | grep -m 1 'LF:' -A 1 | grep 'LH:' | awk -F: '{print $2}' | xargs)
+          TOTAL=$(grep -oP 'SF:.*' -A 100 coverage/lcov.info | grep -m 1 'LF:' | awk -F: '{print $2}' | xargs)
+          ACTUAL_PERCENT=$(echo "scale=2; $PERCENT/$TOTAL*100" | bc)
+          echo "COVERAGE_PERCENT=$ACTUAL_PERCENT" >> $GITHUB_ENV
+
+      - name: Update Coverage Badge Gist
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: ac78cd84ca1ae9a4bb0135c89100374a
+          filename: coverage.json
+          label: Coverage
+          message: ${{ env.COVERAGE_PERCENT }}%
+          valColorRange: ${{ env.COVERAGE_PERCENT }}
+          maxColorRange: 100
+          minColorRange: 0

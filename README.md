@@ -1,6 +1,6 @@
 # Flutter Template
 
-![coverage][coverage_badge]
+[![coverage][coverage_badge]](https://github.com/jcblol/flutter_template/actions)
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
 
@@ -164,8 +164,7 @@ To use the latest translations changes, you will need to generate them:
 flutter gen-l10n
 ```
 
-[coverage_badge]: coverage_badge.svg
-[flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
+[coverage_badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/jcblol/ac78cd84ca1ae9a4bb0135c89100374a/raw/coverage.json[flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
 [internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
