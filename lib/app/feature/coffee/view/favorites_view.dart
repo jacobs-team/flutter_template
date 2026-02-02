@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 
 /// {@template favorites_view}
 /// A stateless widget that displays a grid of favorited coffee images.
@@ -19,7 +20,7 @@ class FavoritesView extends StatelessWidget {
       },
       builder: (context, savedImages) {
         if (savedImages.isEmpty) {
-          return const Center(child: Text('No saved images'));
+          return Center(child: Text(context.l10n.noSavedImages));
         }
         return GridView.builder(
           padding: const EdgeInsets.all(8),

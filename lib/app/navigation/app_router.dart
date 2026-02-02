@@ -7,6 +7,7 @@ import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_template/app/navigation/navigation_wrapper.dart';
 import 'package:flutter_template/app/navigation/routes.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
 /// {@template app_router}
@@ -63,16 +64,16 @@ class AppRouter {
   ];
 
   /// Data for rendering navigation bars or rails.
-  static const destinations = [
+  static List<NavigationDestination> destinations(AppLocalizations l10n) => [
     NavigationDestination(
-      icon: Icon(Icons.coffee_outlined),
-      selectedIcon: Icon(Icons.coffee),
-      label: 'Coffee',
+      icon: const Icon(Icons.coffee_outlined),
+      selectedIcon: const Icon(Icons.coffee),
+      label: l10n.coffee,
     ),
     NavigationDestination(
-      icon: Icon(Icons.favorite_outline),
-      selectedIcon: Icon(Icons.favorite),
-      label: 'Favorites',
+      icon: const Icon(Icons.favorite_outline),
+      selectedIcon: const Icon(Icons.favorite),
+      label: l10n.favorites,
     ),
   ];
 

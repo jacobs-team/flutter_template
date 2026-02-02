@@ -3,5 +3,33 @@
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
+    },
+    "failedToToggleFavoriteImage": "Failed to toggle favorite image",
+    "@failedToToggleFavoriteImage": {
+        "description": "Error message when the favorite status update fails"
+    },
+    "failedToLoadImage": "Failed to load image",
+    "@failedToLoadImage": {
+        "description": "Error message when an image fails to fetch or display"
+    },
+    "noSavedImages": "No saved images",
+    "@noSavedImages": {
+        "description": "Empty state message when the user has no saved images"
+    },
+    "signIn": "Sign In",
+    "@signIn": {
+        "description": "Label for the sign in button or screen title"
+    },
+    "coffee": "Coffee",
+    "@coffee": {
+        "description": "Label or category name for coffee"
+    },
+    "favorites": "Favorites",
+    "@favorites": {
+        "description": "Title for the favorites section or navigation item"
+    },
+    "noConnection": "No connection",
+    "@noConnection": {
+        "description": "Error message indicating a lack of internet connectivity"
     }
 }

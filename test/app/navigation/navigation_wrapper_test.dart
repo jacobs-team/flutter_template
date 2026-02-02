@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/navigation/navigation.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
@@ -135,7 +136,12 @@ void main() {
         NavigationWrapper(navigationShell: navigationShell),
       );
 
-      await tester.tap(find.text(AppRouter.destinations[1].label));
+      final BuildContext context = tester.element(
+        find.byType(NavigationWrapper),
+      );
+      final l10n = AppLocalizations.of(context);
+      final favoritesLabel = AppRouter.destinations(l10n)[1].label;
+      await tester.tap(find.text(favoritesLabel));
 
       verify(
         () => navigationShell.goBranch(

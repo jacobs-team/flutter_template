@@ -5,6 +5,7 @@ import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/navigation/navigation.dart';
 import 'package:flutter_template/app/widgets/layout.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
 /// {@template navigation_wrapper}
@@ -48,7 +49,7 @@ class NavigationWrapper extends StatelessWidget {
                 if (showRail)
                   NavigationRail(
                     extended: expandRail,
-                    destinations: destinations
+                    destinations: destinations(context.l10n)
                         .map(
                           (d) => NavigationRailDestination(
                             icon: d.icon,
@@ -79,16 +80,16 @@ class NavigationWrapper extends StatelessWidget {
             builder: (context, connected) {
               return connected
                   ? const SizedBox.shrink()
-                  : const Padding(
-                      padding: EdgeInsets.all(10),
+                  : Padding(
+                      padding: const EdgeInsets.all(10),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.signal_wifi_statusbar_connected_no_internet_4,
                             color: Colors.red,
                           ),
-                          SizedBox(width: 10),
-                          Text('No connection'),
+                          const SizedBox(width: 10),
+                          Text(context.l10n.noConnection),
                         ],
                       ),
                     );
@@ -98,7 +99,7 @@ class NavigationWrapper extends StatelessWidget {
       ),
       bottomNavigationBar: !showRail
           ? NavigationBar(
-              destinations: destinations,
+              destinations: destinations(context.l10n),
               selectedIndex: navigationShell.currentIndex,
               onDestinationSelected: (int index) => navigationShell.goBranch(
                 index,
