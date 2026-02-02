@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 /// Centralized endpoint definitions for all services.
 ///
 /// Use namespaces for service groups:

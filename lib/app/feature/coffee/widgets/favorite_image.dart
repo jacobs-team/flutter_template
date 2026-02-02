@@ -6,7 +6,7 @@ import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
 import 'package:go_router/go_router.dart';
 
-/// {@template saved_coffee_image}
+/// {@template favorite_image}
 /// A stateless widget that displays a single favorited coffee image from
 /// the local cache.
 ///
@@ -14,9 +14,9 @@ import 'package:go_router/go_router.dart';
 /// * Preview the image in an [ExpandedImage] dialog.
 /// * Remove the image from favorites via [CoffeeBloc].
 /// {@endtemplate}
-class SavedCoffeeImage extends StatelessWidget {
-  /// {@macro saved_coffee_image}
-  const SavedCoffeeImage(this.coffeeImage, {super.key});
+class FavoriteImage extends StatelessWidget {
+  /// {@macro favorite_image}
+  const FavoriteImage(this.coffeeImage, {super.key});
 
   /// The unique URL identifier for the cached coffee image.
   final String coffeeImage;

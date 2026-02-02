@@ -39,7 +39,8 @@ enum LayoutData {
   }
 
   /// Derives the layout from the given [windowSize].
-  static LayoutData _derive(Size windowSize) =>
+  @visibleForTesting
+  static LayoutData derive(Size windowSize) =>
       values.firstWhere((e) => windowSize.width < e.maxWidth);
 }
 
@@ -91,7 +92,7 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _LayoutScope(
-      layout: data ?? LayoutData._derive(MediaQuery.sizeOf(context)),
+      layout: data ?? LayoutData.derive(MediaQuery.sizeOf(context)),
       child: child,
     );
   }

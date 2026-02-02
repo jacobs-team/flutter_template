@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'dart:io';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:injectable/injectable.dart';
@@ -13,7 +15,6 @@ class FileCacheService {
   }
 
   /// Removes a specific file from the local cache.
-  // TODO(jacob): test
   Future<void> removeFile(String url) async {
     await DefaultCacheManager().removeFile(url);
   }

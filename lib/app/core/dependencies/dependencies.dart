@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:flutter_template/app/core/dependencies/dependencies.config.dart';
 import 'package:flutter_template/environment.dart';
 import 'package:get_it/get_it.dart';

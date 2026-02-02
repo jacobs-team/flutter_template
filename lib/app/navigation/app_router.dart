@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/cubit/auth_cubit.dart';

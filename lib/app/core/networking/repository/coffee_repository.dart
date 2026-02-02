@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 /// A repository that handles data operations for coffee-related resources.
 ///
 /// {@endtemplate}
-@lazySingleton
+@singleton
 class CoffeeRepository {
   /// {@macro coffee_repository}
   CoffeeRepository(this._coffeeApi);
@@ -13,8 +13,8 @@ class CoffeeRepository {
   final CoffeeApi _coffeeApi;
 
   /// Fetches a random coffee image.
-  Future<CoffeeImage> getCoffeeImage() async {
+  Future<Coffee> getCoffeeImage() async {
     final response = await _coffeeApi.getCoffeeImageUrl();
-    return mapJson(response.data, CoffeeImage.fromJson);
+    return mapJson(response.data, Coffee.fromJson);
   }
 }

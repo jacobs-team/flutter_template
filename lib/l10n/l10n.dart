@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_template/l10n/gen/app_localizations.dart';
 

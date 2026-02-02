@@ -31,6 +31,9 @@ jobs:
           cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
           cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
 
+      - name: Install Very Good CLI
+        run: dart pub global activate very_good_cli
+
       - name: Install Dependencies
         run: flutter pub get
 
@@ -41,7 +44,13 @@ jobs:
         run: dart analyze --fatal-infos
 
       - name: Run Tests
-        run: flutter test --no-pub --test-randomize-ordering-seed=random --coverage
+        run: |
+          dart pub global run very_good_cli:very_good test \
+          --coverage \
+          --test-randomize-ordering-seed=random \
+          --exclude-coverage "**/*.g.dart" \
+          --exclude-coverage "**/*.freezed.dart" \
+          --exclude-coverage "lib/l10n/gen/*"
 
       - name: Check Test Coverage (95%)
         uses: VeryGoodOpenSource/very_good_coverage@v3

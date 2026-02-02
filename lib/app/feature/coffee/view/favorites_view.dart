@@ -30,7 +30,7 @@ class FavoritesView extends StatelessWidget {
           ),
           itemCount: savedImages.length,
           itemBuilder: (context, index) {
-            return SavedCoffeeImage(
+            return FavoriteImage(
               key: ValueKey(savedImages[index]),
               savedImages[index],
             );

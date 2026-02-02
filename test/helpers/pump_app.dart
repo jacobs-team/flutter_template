@@ -1,12 +1,14 @@
+import 'dart:io';
+
 import 'package:bloc_test/bloc_test.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_template/app/core/core.dart';
-import 'package:flutter_template/app/feature/feature.dart';
-import 'package:flutter_template/app/navigation/navigation.dart';
+import 'package:flutter_template/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'helpers.dart';
 
@@ -27,7 +29,22 @@ class MockRestClient extends Mock implements RestClient {}
 
 class MockFileCacheService extends Mock implements FileCacheService {}
 
-class MockAppRouter extends Mock implements AppRouter {}
+class MockDio extends Mock implements Dio {}
+
+class MockPrettyDioLogger extends Mock implements PrettyDioLogger {}
+
+class MockRequestInterceptorHandler extends Mock
+    implements RequestInterceptorHandler {}
+
+class MockResponseInterceptorHandler extends Mock
+    implements ResponseInterceptorHandler {}
+
+class MockErrorInterceptorHandler extends Mock
+    implements ErrorInterceptorHandler {}
+
+class MockCoffeeRepository extends Mock implements CoffeeRepository {}
+
+class MockFile extends Mock implements File {}
 
 extension PumpApp on WidgetTester {
   Future<void> pumpPumpPumpItUP(
@@ -47,7 +64,7 @@ extension PumpApp on WidgetTester {
       ..registerSingleton<CoffeeApi>(MockCoffeeApi())
       ..registerSingleton<RestClient>(MockRestClient())
       ..registerSingleton<FileCacheService>(MockFileCacheService())
-      ..registerSingleton<AppRouter>(MockAppRouter());
+      ..registerSingleton<CoffeeRepository>(MockCoffeeRepository());
 
     for (final instance in [...deps]) {
       await _registerOverride(instance);
@@ -59,7 +76,7 @@ extension PumpApp on WidgetTester {
         localizationsDelegates: [
           _AppLocalizationsDelegate(localizations: localizations ?? {}),
         ],
-        home: Scaffold(body: widget),
+        home: Layout(child: Scaffold(body: widget)),
       ),
     );
 
@@ -97,6 +114,10 @@ extension PumpApp on WidgetTester {
       getIt
         ..unregister<FileCacheService>()
         ..registerSingleton<FileCacheService>(instance);
+    } else if (instance is CoffeeRepository) {
+      getIt
+        ..unregister<CoffeeRepository>()
+        ..registerSingleton<CoffeeRepository>(instance);
     }
   }
 }
@@ -114,3 +135,74 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<dynamic> {
   @override
   bool shouldReload(covariant LocalizationsDelegate<dynamic> old) => false;
 }
+
+
+final transparentPixel = Uint8List.fromList([
+  0x89,
+  0x50,
+  0x4E,
+  0x47,
+  0x0D,
+  0x0A,
+  0x1A,
+  0x0A,
+  0x00,
+  0x00,
+  0x00,
+  0x0D,
+  0x49,
+  0x48,
+  0x44,
+  0x52,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x08,
+  0x06,
+  0x00,
+  0x00,
+  0x00,
+  0x1F,
+  0x15,
+  0xC4,
+  0x89,
+  0x00,
+  0x00,
+  0x00,
+  0x0A,
+  0x49,
+  0x44,
+  0x41,
+  0x54,
+  0x78,
+  0x9C,
+  0x63,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x05,
+  0x00,
+  0x01,
+  0x0D,
+  0x0A,
+  0x2D,
+  0xB4,
+  0x00,
+  0x00,
+  0x00,
+  0x00,
+  0x49,
+  0x45,
+  0x4E,
+  0x44,
+  0xAE,
+  0x42,
+  0x60,
+  0x82,
+]);

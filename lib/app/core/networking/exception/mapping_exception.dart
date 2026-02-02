@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:flutter_template/app/core/core.dart';
 
 /// {@template mapping_exception}

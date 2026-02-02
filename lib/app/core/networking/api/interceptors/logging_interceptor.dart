@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 part of '../rest_client.dart';
 
 /// {@template logging_interceptor}

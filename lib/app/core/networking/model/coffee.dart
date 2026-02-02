@@ -2,20 +2,19 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'coffee_image.freezed.dart';
-part 'coffee_image.g.dart';
+part 'coffee.freezed.dart';
+part 'coffee.g.dart';
 
 /// {@template coffee_image}
 /// A data model with an image url.
 /// {@endtemplate}
 @freezed
-abstract class CoffeeImage with _$CoffeeImage {
+abstract class Coffee with _$Coffee {
   /// {@macro coffee_image}
-  const factory CoffeeImage({
+  const factory Coffee({
     /// The file path or URL string for the coffee image.
     @JsonKey(name: 'file') required String imageUrl,
-  }) = _CoffeeImage;
+  }) = _Coffee;
 
-  factory CoffeeImage.fromJson(Map<String, dynamic> json) =>
-      _$CoffeeImageFromJson(json);
+  factory Coffee.fromJson(Map<String, dynamic> json) => _$CoffeeFromJson(json);
 }

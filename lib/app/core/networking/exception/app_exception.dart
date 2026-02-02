@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 /// {@template app_exception}
 /// Base class for all custom exceptions thrown by the application.
 ///

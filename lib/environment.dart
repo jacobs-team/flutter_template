@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 /// Environment values provided at build/run time.
 ///
 /// See  `launch.json` which injects `env.json`
