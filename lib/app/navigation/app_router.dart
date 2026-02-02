@@ -6,7 +6,6 @@ import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_template/app/navigation/navigation_wrapper.dart';
 import 'package:flutter_template/app/navigation/routes.dart';
 import 'package:go_router/go_router.dart';
-import 'package:injectable/injectable.dart';
 
 /// {@template app_router}
 /// Central navigation configuration using [GoRouter].
@@ -15,7 +14,6 @@ import 'package:injectable/injectable.dart';
 /// for bottom and rail navigation, route guards via redirect, and UI
 /// destinations.
 /// {@endtemplate}
-@singleton
 class AppRouter {
   /// The list of top-level and nested Routes.
   static final List<RouteBase> routes = [

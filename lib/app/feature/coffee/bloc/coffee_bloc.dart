@@ -21,7 +21,7 @@ part 'coffee_bloc.g.dart';
 /// * Persistence of favorite images using [HydratedStorage] for the urls
 /// and [FileCacheService] for the corresponding files.
 /// {@endtemplate}
-@lazySingleton
+@singleton
 class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
   /// {@macro coffee_bloc}
   CoffeeBloc(this._repo, this._cacheService) : super(const CoffeeState()) {
