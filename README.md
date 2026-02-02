@@ -161,7 +161,7 @@ To use the latest translations changes, you will need to generate them:
 1. Generate localizations for the current project:
 
 ```sh
-flutter gen-l10n"
+flutter gen-l10n
 ```
 
 [coverage_badge]: coverage_badge.svg
