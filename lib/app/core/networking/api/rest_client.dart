@@ -33,16 +33,6 @@ class RestClient {
             maxWidth: 100,
           ),
         ),
-      // if (enableAutoRetry)
-      //   RetryInterceptor(
-      //     dio: _dio,
-      //     logPrint: log,
-      //     retries: config.maxRetryAttempts,
-      //     retryDelays: [
-      //       const Duration(seconds: 1),
-      //       const Duration(seconds: 3),
-      //     ],
-      //   ),
     ]);
   }
 
