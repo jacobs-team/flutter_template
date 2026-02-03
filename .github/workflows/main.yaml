@@ -28,8 +28,6 @@ jobs:
           channel: stable
           flutter-version: ${{ steps.fvm-config.outputs.FLUTTER_VERSION }}
           cache: true
-          cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
-          cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
 
       - name: Install Very Good CLI
         run: dart pub global activate very_good_cli
@@ -58,6 +56,7 @@ jobs:
           path: ./coverage/lcov.info
           min_coverage: 95
       - name: Extract Coverage
+        id: coverage_data
         run: |
           ACTUAL_PERCENT=$(awk -F: '
             /^LF:/ { total += $2 }
@@ -70,7 +69,8 @@ jobs:
               }
             }
           ' coverage/lcov.info)
-          echo "COVERAGE_PERCENT=$ACTUAL_PERCENT" >> $GITHUB_ENV
+          echo "percent=$ACTUAL_PERCENT" >> $GITHUB_OUTPUT # Use Output instead of Env for better scope
+        shell: bash
 
       - name: Update Coverage Badge Gist
         uses: schneegans/dynamic-badges-action@v1.7.0
@@ -79,7 +79,7 @@ jobs:
           gistID: ac78cd84ca1ae9a4bb0135c89100374a
           filename: coverage.json
           label: Coverage
-          message: ${{ env.COVERAGE_PERCENT }}%
-          valColorRange: ${{ env.COVERAGE_PERCENT }}
+          message: ${{ steps.coverage_data.outputs.percent }}%
+          valColorRange: ${{ steps.coverage_data.outputs.percent }}
           maxColorRange: 100
           minColorRange: 0
