@@ -22,10 +22,10 @@ To run a specific flavor, use the Run and Debug sidebar in VSCode or the followi
 
 ```sh
 # Development
-$ flutter run --flavor development --target lib/main_development.dart --dart-define-from-file=config/dev.json
+$ fvm flutter run --flavor development --target lib/main_development.dart --dart-define-from-file=config/dev.json
 
 # Production
-$ flutter run --flavor production --target lib/main_production.dart --dart-define-from-file=config/prod.json
+$ fvm flutter run --flavor production --target lib/main_production.dart --dart-define-from-file=config/prod.json
 ```
 
 It's likely that you will need to generate code when working within this project. Many aspects of this project use code generation, including go_router (if using typed routes), bloc states and events, data models, assets like images or icons, and any dependencies that are annotated for use with injectable.
@@ -178,7 +178,7 @@ To use the latest translations changes, you will need to generate them:
 1. Generate localizations for the current project:
 
 ```sh
-flutter gen-l10n
+fvm flutter gen-l10n
 ```
 
 ## Built With 🛠️
