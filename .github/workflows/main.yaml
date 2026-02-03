@@ -28,8 +28,6 @@ jobs:
           channel: stable
           flutter-version: ${{ steps.fvm-config.outputs.FLUTTER_VERSION }}
           cache: true
-          cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
-          cache-path: "${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:"
 
       - name: Install Very Good CLI
         run: dart pub global activate very_good_cli
