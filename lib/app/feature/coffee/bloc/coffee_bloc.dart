@@ -25,8 +25,8 @@ part 'coffee_bloc.g.dart';
 class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
   /// {@macro coffee_bloc}
   CoffeeBloc(this._repo, this._cacheService) : super(const CoffeeState()) {
-    on(
-      (CoffeeEvent coffeEvent, emit) => coffeEvent.map(
+    on<CoffeeEvent>(
+      (coffeEvent, emit) => coffeEvent.map(
         loadImages: (value) => _loadImages(value, emit),
         toggleFavoriteImage: (value) => _toggleFavorite(value, emit),
         clearFeed: (value) => emit(CoffeeState(favorites: state.favorites)),

@@ -26,7 +26,7 @@ class AppRouter {
           routes: [
             GoRoute(
               path: Routes.coffee,
-              pageBuilder: (BuildContext context, GoRouterState state) {
+              pageBuilder: (context, state) {
                 return const NoTransitionPage(
                   child: CoffeeView(),
                 );
@@ -38,7 +38,7 @@ class AppRouter {
           routes: [
             GoRoute(
               path: Routes.favorites,
-              pageBuilder: (BuildContext context, GoRouterState state) {
+              pageBuilder: (context, state) {
                 return const NoTransitionPage(child: FavoritesView());
               },
             ),
@@ -50,14 +50,14 @@ class AppRouter {
     ),
     GoRoute(
       path: Routes.signIn,
-      pageBuilder: (BuildContext context, GoRouterState state) {
+      pageBuilder: (context, state) {
         return const NoTransitionPage(child: SignInView());
       },
     ),
     if (kDebugMode)
       GoRoute(
         path: Routes.devTools,
-        pageBuilder: (BuildContext context, GoRouterState state) {
+        pageBuilder: (context, state) {
           return const NoTransitionPage(child: DevToolsView());
         },
       ),

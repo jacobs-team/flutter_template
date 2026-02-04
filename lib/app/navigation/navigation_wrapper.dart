@@ -59,12 +59,10 @@ class NavigationWrapper extends StatelessWidget {
                         )
                         .toList(),
                     selectedIndex: navigationShell.currentIndex,
-                    onDestinationSelected: (int index) =>
-                        navigationShell.goBranch(
-                          index,
-                          initialLocation:
-                              index == navigationShell.currentIndex,
-                        ),
+                    onDestinationSelected: (index) => navigationShell.goBranch(
+                      index,
+                      initialLocation: index == navigationShell.currentIndex,
+                    ),
                   ),
                 Expanded(
                   child: navigationShell,
@@ -101,7 +99,7 @@ class NavigationWrapper extends StatelessWidget {
           ? NavigationBar(
               destinations: destinations(context.l10n),
               selectedIndex: navigationShell.currentIndex,
-              onDestinationSelected: (int index) => navigationShell.goBranch(
+              onDestinationSelected: (index) => navigationShell.goBranch(
                 index,
                 initialLocation: index == navigationShell.currentIndex,
               ),
