@@ -38,7 +38,7 @@ dev_dependencies:
   freezed: ^3.2.3 # Generated model mapping
   go_router_builder: ^4.2.0 # Generates Typed routes if using go_router
   injectable_generator: ^2.9.1   # Generates dynamic dependencies in conjunction with get_it
-  json_serializable: ^6.11.2 # Generated model mapping
+  json_serializable: ^6.12.0 # Generated model mapping
   mocktail: ^1.0.4 # Testing library
   very_good_analysis: ^10.1.0 # Code quality analysis in conjunction with analysis_options.yaml
 
