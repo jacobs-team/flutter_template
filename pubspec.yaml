@@ -35,7 +35,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.12.0 # Generates Typed asset strings
   flutter_test:
     sdk: flutter
-  freezed: ^3.2.3 # Generated model mapping
+  freezed: ^3.2.5 # Generated model mapping
   go_router_builder: ^4.2.0 # Generates Typed routes if using go_router
   injectable_generator: ^2.9.1   # Generates dynamic dependencies in conjunction with get_it
   json_serializable: ^6.11.2 # Generated model mapping
