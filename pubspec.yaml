@@ -20,7 +20,7 @@ dependencies:
   flutter_bloc: ^9.1.1 # State management
   flutter_cache_manager: ^3.4.1
   freezed_annotation: ^3.1.0 # Generated model mapping
-  get_it: ^9.2.0 # Dependency injection in conjunction with injectable
+  get_it: ^9.2.1 # Dependency injection in conjunction with injectable
   go_router: ^17.1.0 # Option 1 for routing - my preference
   hydrated_bloc: ^10.1.1 # Easy local caching
   injectable: ^2.7.1+4 # Dependency injection in conjunction with get_it
