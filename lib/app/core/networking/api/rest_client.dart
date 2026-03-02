@@ -45,81 +45,27 @@ class RestClient {
   /// Closes the underlying Dio client.
   void close() => _dio.close();
 
-  /// Sends a GET request to the specified [path].
-  Future<Response<T>> get<T>(
-    String path, {
-    Map<String, String>? headers,
-    CancelToken? cancelToken,
-    bool requiresAuth = true,
-  }) async {
-    return _dio.get<T>(
-      path,
-      options: Options(headers: headers),
-      cancelToken: cancelToken ?? _authCubit.cancelToken,
-    );
-  }
-
-  /// Sends a PATCH request to the specified [path].
-  Future<Response<T>> patch<T>(
-    String path, {
-    Map<String, String>? headers,
+  Future<Response<T>> request<T>(
+    String path,
+    HttpMethod method, {
     Object? body,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
     bool requiresAuth = true,
-  }) async {
-    return _dio.patch<T>(
-      path,
-      options: Options(headers: headers),
-      data: body,
-      cancelToken: cancelToken ?? _authCubit.cancelToken,
-    );
-  }
-
-  /// Sends a POST request to the specified [path].
-  Future<Response<T>> post<T>(
-    String path, {
-    Map<String, String>? headers,
-    Object? body,
-    CancelToken? cancelToken,
-    bool requiresAuth = true,
-  }) async {
-    return _dio.post<T>(
-      path,
-      options: Options(headers: headers),
-      data: body,
-      cancelToken: cancelToken ?? _authCubit.cancelToken,
-    );
-  }
-
-  /// Sends a PUT request to the specified [path].
-  Future<Response<T>> put<T>(
-    String path, {
-    Map<String, String>? headers,
-    Object? body,
-    CancelToken? cancelToken,
-    bool requiresAuth = true,
-  }) async {
-    return _dio.put<T>(
-      path,
-      options: Options(headers: headers),
-      data: body,
-      cancelToken: cancelToken ?? _authCubit.cancelToken,
-    );
-  }
-
-  /// Sends a DELETE request to the specified [path].
-  Future<Response<T>> delete<T>(
-    String path, {
-    Map<String, String>? headers,
-    Object? body,
-    CancelToken? cancelToken,
-    bool requiresAuth = true,
-  }) async {
-    return _dio.delete<T>(
-      path,
-      options: Options(headers: headers),
-      data: body,
-      cancelToken: cancelToken ?? _authCubit.cancelToken,
-    );
-  }
+    ResponseType? responseType,
+  }) => _dio.request<T>(
+    path,
+    data: body,
+    options: Options(
+      method: method.name,
+      headers: headers,
+      responseType: responseType,
+    ),
+    queryParameters: queryParameters,
+    cancelToken: cancelToken ?? _authCubit.cancelToken,
+  );
 }
+
+// ignore: public_member_api_docs
+enum HttpMethod { get, post, put, patch, delete }
