@@ -17,17 +17,22 @@ void main() {
     });
 
     test(
-      'getCoffeeImageUrl calls restClient.get with correct endpoint '
+      'getCoffeeImageUrl calls restClient.request with correct endpoint '
       'in $CoffeeApi',
       () async {
-        when(() => restClient.get<dynamic>(any())).thenAnswer(
+        when(
+          () => restClient.request<dynamic>(any(), HttpMethod.get),
+        ).thenAnswer(
           (_) async => Response(requestOptions: RequestOptions()),
         );
 
         await coffeeApi.getCoffeeImageUrl();
 
         verify(
-          () => restClient.get<dynamic>(Endpoints.coffee.random),
+          () => restClient.request<dynamic>(
+            Endpoints.coffee.random,
+            HttpMethod.get,
+          ),
         ).called(1);
       },
     );

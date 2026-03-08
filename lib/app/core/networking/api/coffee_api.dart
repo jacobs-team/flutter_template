@@ -17,6 +17,6 @@ class CoffeeApi {
 
   /// Fetches a random coffee image URL.
   Future<Response<dynamic>> getCoffeeImageUrl() async {
-    return _client.request(Endpoints.coffee.random, HttpMethod.post);
+    return _client.request(Endpoints.coffee.random, HttpMethod.get);
   }
 }

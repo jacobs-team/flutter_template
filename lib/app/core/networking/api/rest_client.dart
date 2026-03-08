@@ -45,6 +45,7 @@ class RestClient {
   /// Closes the underlying Dio client.
   void close() => _dio.close();
 
+  /// Sends a [Dio] request with the given [path] and [HttpMethod]
   Future<Response<T>> request<T>(
     String path,
     HttpMethod method, {
@@ -67,5 +68,5 @@ class RestClient {
   );
 }
 
-// ignore: public_member_api_docs
+// ignore: public_member_api_docs, no redundant docs
 enum HttpMethod { get, post, put, patch, delete }

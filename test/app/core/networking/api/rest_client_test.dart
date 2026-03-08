@@ -26,121 +26,59 @@ void main() {
       when(() => authCubit.cancelToken).thenReturn(cancelToken);
       when(() => dio.interceptors).thenReturn(Interceptors());
 
-      restClient = RestClient(authCubit, devToolsCubit, dio);
-    });
-
-    test('get calls dio.get with correct $path', () async {
       when(
-        () => dio.get<dynamic>(
+        () => dio.request<dynamic>(
           any(),
+          data: any(named: 'data'),
           options: any(named: 'options'),
+          queryParameters: any(named: 'queryParameters'),
           cancelToken: any(named: 'cancelToken'),
         ),
       ).thenAnswer((_) async => Response(requestOptions: RequestOptions()));
 
-      await restClient.get<dynamic>(path);
+      restClient = RestClient(authCubit, devToolsCubit, dio);
+    });
+
+    for (final method in HttpMethod.values) {
+      test('request calls dio.request with $method', () async {
+        await restClient.request<dynamic>(path, method);
+
+        final captured = verify(
+          () => dio.request<dynamic>(
+            path,
+            data: any(named: 'data'),
+            options: captureAny(named: 'options'),
+            queryParameters: any(named: 'queryParameters'),
+            cancelToken: cancelToken,
+          ),
+        ).captured;
+
+        final options = captured.first as Options;
+        expect(options.method, equals(method.name));
+      });
+    }
+
+    test('passes body to dio.request', () async {
+      const body = {'key': 'value'};
+      await restClient.request<dynamic>(path, HttpMethod.post, body: body);
 
       verify(
-        () => dio.get<dynamic>(
+        () => dio.request<dynamic>(
           path,
+          data: body,
           options: any(named: 'options'),
+          queryParameters: any(named: 'queryParameters'),
           cancelToken: cancelToken,
         ),
       ).called(1);
     });
 
-    test('creates its own $Dio when not passed in', () async {
+    test('creates its own $Dio when not passed in', () {
       final client = RestClient(authCubit, devToolsCubit);
       expect(client, isA<RestClient>());
     });
 
-    test('patch calls dio.patch with correct $path', () async {
-      const body = {'key': 'value'};
-      when(
-        () => dio.patch<dynamic>(
-          any(),
-          data: any(named: 'data'),
-          options: any(named: 'options'),
-          cancelToken: any(named: 'cancelToken'),
-        ),
-      ).thenAnswer((_) async => Response(requestOptions: RequestOptions()));
-
-      await restClient.patch<dynamic>(path, body: body);
-
-      verify(
-        () => dio.patch<dynamic>(
-          path,
-          data: body,
-          options: any(named: 'options'),
-          cancelToken: cancelToken,
-        ),
-      ).called(1);
-    });
-
-    test('post calls dio.post with correct $path', () async {
-      when(
-        () => dio.post<dynamic>(
-          any(),
-          data: any(named: 'data'),
-          options: any(named: 'options'),
-          cancelToken: any(named: 'cancelToken'),
-        ),
-      ).thenAnswer((_) async => Response(requestOptions: RequestOptions()));
-
-      await restClient.post<dynamic>(path);
-
-      verify(
-        () => dio.post<dynamic>(
-          path,
-          options: any(named: 'options'),
-          cancelToken: cancelToken,
-        ),
-      ).called(1);
-    });
-
-    test('put calls dio.put with correct $path', () async {
-      when(
-        () => dio.put<dynamic>(
-          any(),
-          data: any(named: 'data'),
-          options: any(named: 'options'),
-          cancelToken: any(named: 'cancelToken'),
-        ),
-      ).thenAnswer((_) async => Response(requestOptions: RequestOptions()));
-
-      await restClient.put<dynamic>(path);
-
-      verify(
-        () => dio.put<dynamic>(
-          path,
-          options: any(named: 'options'),
-          cancelToken: cancelToken,
-        ),
-      ).called(1);
-    });
-
-    test('delete calls dio.delete with correct $path', () async {
-      when(
-        () => dio.delete<dynamic>(
-          any(),
-          data: any(named: 'data'),
-          options: any(named: 'options'),
-          cancelToken: any(named: 'cancelToken'),
-        ),
-      ).thenAnswer((_) async => Response(requestOptions: RequestOptions()));
-
-      await restClient.delete<dynamic>(path);
-
-      verify(
-        () => dio.delete<dynamic>(
-          path,
-          options: any(named: 'options'),
-          cancelToken: cancelToken,
-        ),
-      ).called(1);
-    });
-
-    test('close calls dio.close in $RestClient', () {
+    test('close calls dio.close', () {
       when(() => dio.close()).thenAnswer((_) => {});
       restClient.close();
       verify(() => dio.close()).called(1);

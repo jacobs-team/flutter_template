@@ -350,6 +350,7 @@ Map<String, dynamic> toJson(MyState state) {
 - Test repositories with mocked API clients
 - Test API clients with mocked HTTP responses
 - Use Freezed's `copyWith()` for state comparisons in tests
+- Always use matchers like equals(), isEmpty, isNull, etc
 
 ## File Naming Conventions
 
