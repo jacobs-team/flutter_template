@@ -1,19 +1,31 @@
-// coverage:ignore-file
-
 /// {@template app_exception}
-/// Base class for all custom exceptions thrown by the application.
-///
-/// By extending [Exception], this class provides a consistent interface
-/// for error handling and ensures that all app-specific errors
-/// contain a human-readable [message].
+/// Base class for custom exceptions.
 /// {@endtemplate}
-abstract class AppException implements Exception {
+abstract base class AppException implements Exception {
   /// {@macro app_exception}
-  const AppException(this.message);
+  const AppException({
+    required this.message,
+    this.statusCode,
+    this.error,
+    this.stackTrace,
+  });
 
-  /// A descriptive message explaining the cause of the exception.
+  /// Human-readable description of the failure.
   final String message;
 
+  /// HTTP status code returned by the server.
+  final int? statusCode;
+
+  /// The underlying error that caused this exception, if any.
+  final Object? error;
+
+  /// The stack trace associated with this exception, if any.
+  final StackTrace? stackTrace;
+
   @override
-  String toString() => message;
+  String toString() {
+    final code = statusCode != null ? '($statusCode)' : '';
+    final cause = error != null ? '\nCaused by: $error' : '';
+    return '$runtimeType$code: $message$cause';
+  }
 }

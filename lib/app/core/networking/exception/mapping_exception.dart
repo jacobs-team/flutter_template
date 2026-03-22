@@ -1,26 +1,18 @@
-// coverage:ignore-file
-
-import 'package:flutter_template/app/core/core.dart';
+import 'package:flutter_template/app/app.dart';
 
 /// {@template mapping_exception}
-/// Exception thrown when an error occurs during data transformation or
-/// JSON mapping.
+/// An exception that indicates a problem mapping a dynamic value to
+/// a data model.
 ///
-/// This typically occurs when a model's `fromJson` factory encounters
-/// unexpected data types or missing required fields.
+/// This usually occurs when the JSON structure from the server does
+/// not match the expected format.
 /// {@endtemplate}
-class MappingException extends AppException {
+final class MappingException extends AppException {
   /// {@macro mapping_exception}
-  const MappingException(this.error, [this.stackTrace])
-    : super('Data mapping error: $error');
-
-  /// The underlying error that caused the mapping to fail.
-  final Object error;
-
-  /// The stack trace associated with the mapping failure.
-  final StackTrace? stackTrace;
-
-  @override
-  String toString() =>
-      '${super.toString()}${stackTrace != null ? '\n$stackTrace' : ''}';
+  const MappingException(Object error, [StackTrace? stackTrace])
+    : super(
+        message: 'Data mapping error:',
+        error: error,
+        stackTrace: stackTrace,
+      );
 }
