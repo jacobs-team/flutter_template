@@ -68,12 +68,12 @@ class AppRouter {
     NavigationDestination(
       icon: const Icon(Icons.coffee_outlined),
       selectedIcon: const Icon(Icons.coffee),
-      label: l10n.coffee,
+      label: l10n.coffeeTitle,
     ),
     NavigationDestination(
       icon: const Icon(Icons.favorite_outline),
       selectedIcon: const Icon(Icons.favorite),
-      label: l10n.favorites,
+      label: l10n.favoritesTitle,
     ),
   ];
 

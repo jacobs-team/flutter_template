@@ -20,11 +20,13 @@
     "@signIn": {
         "description": "Etiqueta del botón o acción que permite al usuario iniciar sesión."
     },
-    "coffee": "Café",
+    "coffee": "Café",     "coffeeTitle": "Explore Coffee",
+
     "@coffee": {
         "description": "Etiqueta de la sección o pestaña «Café» en la aplicación."
     },
-    "favorites": "Favoritos",
+    "favorites": "Favoritos",        "favoritesTitle": "My Favorites",
+
     "@favorites": {
         "description": "Etiqueta de la sección o pestaña de imágenes favoritas."
     },

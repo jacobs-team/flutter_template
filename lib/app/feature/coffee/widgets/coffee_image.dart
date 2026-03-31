@@ -47,23 +47,36 @@ class _CoffeeImageState extends State<CoffeeImage> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.network(
-            widget.url,
-            fit: BoxFit.contain,
-            errorBuilder: (context, error, stackTrace) {
-              return const Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.error_outline,
-                      color: Colors.red,
-                      size: 48,
+          Center(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              clipBehavior: Clip.antiAlias,
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.sizeOf(context).width,
+                minWidth: double.infinity,
+              ),
+              child: Image.network(
+                widget.url,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                          size: 48,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
-            },
+                  );
+                },
+              ),
+            ),
           ),
           IgnorePointer(
             child: AnimatedOpacity(

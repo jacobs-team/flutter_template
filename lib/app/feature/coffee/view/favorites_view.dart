@@ -13,31 +13,32 @@ class FavoritesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CoffeeBloc, CoffeeState, List<String>>(
-      bloc: getIt<CoffeeBloc>(),
-      selector: (state) {
-        return state.favorites;
-      },
-      builder: (context, savedImages) {
-        if (savedImages.isEmpty) {
-          return Center(child: Text(context.l10n.noSavedImages));
-        }
-        return GridView.builder(
-          padding: const EdgeInsets.all(8),
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 300,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-          ),
-          itemCount: savedImages.length,
-          itemBuilder: (context, index) {
-            return FavoriteImage(
-              key: ValueKey(savedImages[index]),
-              savedImages[index],
-            );
-          },
-        );
-      },
+    return SafeArea(
+      child: BlocSelector<CoffeeBloc, CoffeeState, List<String>>(
+        bloc: getIt<CoffeeBloc>(),
+        selector: (state) {
+          return state.favorites;
+        },
+        builder: (context, savedImages) {
+          if (savedImages.isEmpty) {
+            return Center(child: Text(context.l10n.noSavedImages));
+          }
+          return ListView.separated(
+            padding: const EdgeInsets.all(12),
+            clipBehavior: Clip.none,
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 12,
+            ),
+            itemCount: savedImages.length,
+            itemBuilder: (context, index) {
+              return FavoriteImage(
+                key: ValueKey(savedImages[index]),
+                savedImages[index],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

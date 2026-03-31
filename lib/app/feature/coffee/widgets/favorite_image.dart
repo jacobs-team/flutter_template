@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
+import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 /// {@template favorite_image}
@@ -23,53 +25,58 @@ class FavoriteImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        FutureBuilder<File?>(
-          future: getIt<FileCacheService>().getFile(coffeeImage),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState != ConnectionState.done ||
-                snapshot.data == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return GestureDetector(
-              onTap: () {
-                unawaited(
-                  showDialog<void>(
-                    context: context,
-                    builder: (context) => Dismissible(
-                      key: UniqueKey(),
-                      onDismissed: (direction) {
-                        if (context.canPop()) {
-                          context.pop();
-                        }
-                      },
-                      direction: DismissDirection.vertical,
-                      child: ExpandedImage(coffeeImage),
-                    ),
-                  ),
-                );
-              },
-              child: Image.memory(
-                snapshot.data!.readAsBytesSync(),
-                fit: BoxFit.cover,
+    return FutureBuilder<File?>(
+      future: getIt<FileCacheService>().getFile(coffeeImage),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done ||
+            snapshot.data == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        return GestureDetector(
+          onTap: () {
+            unawaited(
+              showDialog<void>(
+                context: context,
+                builder: (context) => Dismissible(
+                  key: UniqueKey(),
+                  onDismissed: (direction) {
+                    if (context.canPop()) {
+                      context.pop();
+                    }
+                  },
+                  direction: DismissDirection.vertical,
+                  child: ExpandedImage(coffeeImage),
+                ),
               ),
             );
           },
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: IconButton(
-            icon: const Icon(
-              Icons.remove_circle_outline,
-              color: Colors.red,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Image.memory(
+                  snapshot.data!.readAsBytesSync(),
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: GlassContainer(
+                    padding: EdgeInsets.zero,
+                    child: IconButton(
+                      onPressed: () => getIt<CoffeeBloc>().add(
+                        ToggleFavoriteImage(coffeeImage),
+                      ),
+                      icon: const Icon(Icons.heart_broken),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            onPressed: () =>
-                getIt<CoffeeBloc>().add(ToggleFavoriteImage(coffeeImage)),
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

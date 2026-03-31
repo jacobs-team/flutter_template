@@ -24,7 +24,9 @@
     "@coffee": {
         "description": "Label or category name for coffee"
     },
+     "coffeeTitle": "Explore Coffee",
     "favorites": "Favorites",
+        "favoritesTitle": "My Favorites",
     "@favorites": {
         "description": "Title for the favorites section or navigation item"
     },
