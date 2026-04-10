@@ -39,7 +39,7 @@ dev_dependencies:
   freezed: ^3.2.3
   go_router_builder: ^4.2.0
   injectable_generator: ^2.9.1
-  mocktail: ^1.0.4
+  mocktail: ^1.0.5
   very_good_analysis: ^10.2.0
 
 flutter:
