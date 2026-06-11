@@ -61,7 +61,6 @@ void main() {
         expect(find.byType(ListView), findsOneWidget);
         expect(find.byKey(const ValueKey(url)), findsOneWidget);
 
-        // The list builds lazily; scroll until the second favorite is built.
         await tester.scrollUntilVisible(
           find.byKey(const ValueKey('url2')),
           200,
