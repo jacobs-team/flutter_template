@@ -9,7 +9,12 @@ import 'package:flutter_template/design_system/design_system.dart';
 /// {@endtemplate}
 class CoffeeImage extends StatefulWidget {
   /// {@macro coffee_image}
-  const CoffeeImage({required this.onTap, required this.url, super.key});
+  const CoffeeImage({
+    required this.onTap,
+    required this.url,
+    this.favorited = false,
+    super.key,
+  });
 
   /// Callback triggered when the image is double-tapped.
   final void Function() onTap;
@@ -17,14 +22,19 @@ class CoffeeImage extends StatefulWidget {
   /// The image url to display.
   final String url;
 
+  /// Whether the image is currently favorited.
+  final bool favorited;
+
   @override
   State<CoffeeImage> createState() => _CoffeeImageState();
 }
 
 class _CoffeeImageState extends State<CoffeeImage> {
   bool _showHeart = false;
+  IconData _heartIcon = Icons.favorite;
 
   void _handleDoubleTap() {
+    _heartIcon = widget.favorited ? Icons.heart_broken : Icons.favorite;
     widget.onTap();
 
     setState(() {
@@ -79,7 +89,7 @@ class _CoffeeImageState extends State<CoffeeImage> {
               opacity: _showHeart ? 1.0 : 0.0,
               duration: AppDesign.durations.fast,
               child: Icon(
-                Icons.favorite,
+                _heartIcon,
                 size: AppDesign.iconSizes.xl,
                 color: Theme.of(context).colorScheme.primary,
               ),

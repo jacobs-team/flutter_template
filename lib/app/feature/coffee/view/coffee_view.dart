@@ -99,26 +99,30 @@ class _CoffeeViewState extends State<CoffeeView> {
             },
           ),
         ],
-        child: BlocSelector<CoffeeBloc, CoffeeState, List<String>>(
-          bloc: coffeeBloc,
-          selector: (state) => state.images,
-          builder: (context, images) {
-            return PageView.builder(
-              scrollDirection: Axis.vertical,
-              controller: _pageController,
-              onPageChanged: (page) => coffeeBloc.add(LoadImages(page)),
-              itemBuilder: (context, index) {
-                return images.length <= index
-                    ? const Center(child: CircularProgressIndicator())
-                    : CoffeeImage(
-                        onTap: () =>
-                            coffeeBloc.add(ToggleFavoriteImage(images[index])),
-                        url: images[index],
-                      );
+        child:
+            BlocSelector<CoffeeBloc, CoffeeState, (List<String>, List<String>)>(
+              bloc: coffeeBloc,
+              selector: (state) => (state.images, state.favorites),
+              builder: (context, record) {
+                final (images, favorites) = record;
+                return PageView.builder(
+                  scrollDirection: Axis.vertical,
+                  controller: _pageController,
+                  onPageChanged: (page) => coffeeBloc.add(LoadImages(page)),
+                  itemBuilder: (context, index) {
+                    return images.length <= index
+                        ? const Center(child: CircularProgressIndicator())
+                        : CoffeeImage(
+                            onTap: () => coffeeBloc.add(
+                              ToggleFavoriteImage(images[index]),
+                            ),
+                            url: images[index],
+                            favorited: favorites.contains(images[index]),
+                          );
+                  },
+                );
               },
-            );
-          },
-        ),
+            ),
       ),
     );
   }

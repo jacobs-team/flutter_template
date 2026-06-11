@@ -83,6 +83,27 @@ void main() {
       verify(() => coffeeBloc.add(const ToggleFavoriteImage(url))).called(1);
     });
 
+    testWidgets('shows broken heart when unfavoriting a $CoffeeImage', (
+      tester,
+    ) async {
+      when(() => coffeeBloc.state).thenReturn(
+        const CoffeeState(images: [url], favorites: [url]),
+      );
+
+      await tester.pumpPumpPumpItUP(
+        deps: [coffeeBloc, connectivityCubit],
+        const CoffeeView(),
+      );
+
+      await tester.tap(find.byType(CoffeeImage));
+      await tester.pump(kDoubleTapMinTime);
+      await tester.tap(find.byType(CoffeeImage));
+      await tester.pumpAndSettle();
+
+      expect(find.byIcon(Icons.heart_broken), findsOneWidget);
+      verify(() => coffeeBloc.add(const ToggleFavoriteImage(url))).called(1);
+    });
+
     testWidgets('precaches images when imageWindow changes in $CoffeeView', (
       tester,
     ) async {
