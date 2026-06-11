@@ -116,6 +116,7 @@ void main() {
             child: Builder(
               builder: (context) {
                 expect(context.isMobile, isFalse);
+                expect(context.isTablet, isFalse);
                 expect(context.isDesktop, isTrue);
                 return const SizedBox();
               },

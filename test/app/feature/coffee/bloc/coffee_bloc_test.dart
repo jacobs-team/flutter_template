@@ -96,6 +96,30 @@ void main() {
     );
 
     blocTest<CoffeeBloc, CoffeeState>(
+      'keeps loadingState when images are already loaded on $LoadImages',
+      build: () => CoffeeBloc(repo, cacheService),
+      seed: () => const CoffeeState(
+        images: [url, url, url, url, url],
+        loadingState: CoffeeLoadingState.success,
+      ),
+      act: (bloc) => bloc.add(const LoadImages(0)),
+      expect: () => [
+        isA<CoffeeState>()
+            .having(
+              (s) => s.loadingState,
+              'loadingState',
+              equals(CoffeeLoadingState.success),
+            )
+            .having(
+              (s) => s.imageWindow,
+              'imageWindow',
+              equals({0, 1, 2, 3, 4}),
+            ),
+      ],
+      verify: (_) => verifyNever(() => repo.getCoffeeImage()),
+    );
+
+    blocTest<CoffeeBloc, CoffeeState>(
       'clears feed except favorites on $ClearFeed',
       build: () => CoffeeBloc(repo, cacheService),
       seed: () => const CoffeeState(images: [url], favorites: [url]),

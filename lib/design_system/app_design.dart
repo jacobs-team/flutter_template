@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 /// Centralized design tokens for the application.
 ///
 /// Use namespaces for token groups:

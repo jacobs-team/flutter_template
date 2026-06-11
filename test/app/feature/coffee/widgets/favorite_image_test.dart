@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../helpers/helpers.dart';
@@ -84,6 +85,44 @@ void main() {
 
       expect(find.byType(ExpandedImage), findsOneWidget);
       expect(find.byType(Dismissible), findsOneWidget);
+    });
+
+    testWidgets('closes dialog when $ExpandedImage is dismissed', (
+      tester,
+    ) async {
+      await tester.pumpPumpPumpItUP(
+        deps: [coffeeBloc, fileCacheService],
+        const SizedBox(),
+      );
+
+      final router = GoRouter(
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) =>
+                const Scaffold(body: FavoriteImage(coffeeImage)),
+          ),
+        ],
+      );
+
+      await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+      await tester.pumpAndSettle();
+
+      final imageGesture = find
+          .descendant(
+            of: find.byType(FavoriteImage),
+            matching: find.byType(GestureDetector),
+          )
+          .first;
+      await tester.tap(imageGesture);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ExpandedImage), findsOneWidget);
+
+      await tester.fling(find.byType(Dismissible), const Offset(0, 500), 1000);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(ExpandedImage), findsNothing);
     });
 
     testWidgets('shows $CircularProgressIndicator while loading file', (

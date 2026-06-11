@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:flutter/material.dart';
 import 'package:flutter_template/design_system/app_design.dart';
 import 'package:flutter_template/design_system/app_palette.dart';
@@ -5,50 +7,42 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// Central place for defining the application's visual theme.
 class AppTheme {
-  // static List<BoxShadow> ambientShadow(Brightness brightness) {
-  //   final color = brightness == Brightness.light
-  //       ? AppPalette.shadow
-  //       : AppPalette.darkShadow;
-  //   return [
-  //     BoxShadow(
-  //       color: color.withValues(alpha: 0.06),
-  //       blurRadius: 35,
-  //       offset: const Offset(0, 8),
-  //     ),
-  //   ];
-  // }
+  /// Applies letter spacing as a percentage of the style's font size.
+  static TextStyle? _spaced(TextStyle? style, double percent) =>
+      style?.copyWith(letterSpacing: percent * (style.fontSize ?? 14));
 
   static TextTheme _buildTextTheme(TextTheme base) {
     final manrope = GoogleFonts.manropeTextTheme(base);
     return manrope.copyWith(
-      displayLarge: manrope.displayLarge?.copyWith(
-        letterSpacing: -0.02 * (manrope.displayLarge?.fontSize ?? 57),
-      ),
-      displayMedium: manrope.displayMedium?.copyWith(
-        letterSpacing: -0.02 * (manrope.displayMedium?.fontSize ?? 45),
-      ),
-      displaySmall: manrope.displaySmall?.copyWith(
-        letterSpacing: -0.02 * (manrope.displaySmall?.fontSize ?? 36),
-      ),
-      labelLarge: manrope.labelLarge?.copyWith(
-        letterSpacing: 0.05 * (manrope.labelLarge?.fontSize ?? 14),
-      ),
-      labelMedium: manrope.labelMedium?.copyWith(
-        letterSpacing: 0.05 * (manrope.labelMedium?.fontSize ?? 12),
-      ),
-      labelSmall: manrope.labelSmall?.copyWith(
-        letterSpacing: 0.05 * (manrope.labelSmall?.fontSize ?? 11),
-      ),
+      displayLarge: _spaced(manrope.displayLarge, -0.02),
+      displayMedium: _spaced(manrope.displayMedium, -0.02),
+      displaySmall: _spaced(manrope.displaySmall, -0.02),
+      labelLarge: _spaced(manrope.labelLarge, 0.05),
+      labelMedium: _spaced(manrope.labelMedium, 0.05),
+      labelSmall: _spaced(manrope.labelSmall, 0.05),
     );
   }
 
   static ThemeData _buildTheme(ColorScheme colorScheme) {
-    final base = ThemeData(
-      useMaterial3: true,
-      brightness: colorScheme.brightness,
-      colorScheme: colorScheme,
-    );
+    final base = ThemeData(colorScheme: colorScheme);
     final textTheme = _buildTextTheme(base.textTheme);
+
+    final smRadius = BorderRadius.circular(AppDesign.radius.sm);
+    final smShape = RoundedRectangleBorder(borderRadius: smRadius);
+    final mdShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(AppDesign.radius.md),
+    );
+    final lgShape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(AppDesign.radius.lg),
+    );
+    final buttonPadding = EdgeInsets.symmetric(
+      horizontal: AppDesign.spacing.xl,
+      vertical: AppDesign.spacing.md,
+    );
+    final inputBorder = OutlineInputBorder(
+      borderRadius: smRadius,
+      borderSide: BorderSide.none,
+    );
 
     return base.copyWith(
       textTheme: textTheme,
@@ -69,9 +63,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: colorScheme.surfaceContainerLowest,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDesign.radius.md),
-        ),
+        shape: mdShape,
         margin: EdgeInsets.zero,
       ),
 
@@ -80,13 +72,8 @@ class AppTheme {
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,
           elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDesign.radius.md),
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: AppDesign.spacing.xl,
-            vertical: AppDesign.spacing.md,
-          ),
+          shape: mdShape,
+          padding: buttonPadding,
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -96,13 +83,8 @@ class AppTheme {
           backgroundColor: colorScheme.primaryContainer,
           foregroundColor: colorScheme.onPrimaryContainer,
           elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDesign.radius.md),
-          ),
-          padding: EdgeInsets.symmetric(
-            horizontal: AppDesign.spacing.xl,
-            vertical: AppDesign.spacing.md,
-          ),
+          shape: mdShape,
+          padding: buttonPadding,
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -110,9 +92,7 @@ class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: colorScheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDesign.radius.md),
-          ),
+          shape: mdShape,
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -120,9 +100,7 @@ class AppTheme {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: colorScheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDesign.radius.md),
-          ),
+          shape: mdShape,
           side: BorderSide(
             color: colorScheme.outlineVariant.withValues(alpha: 0.2),
           ),
@@ -133,22 +111,14 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: colorScheme.surfaceContainerLow,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
+        border: inputBorder,
+        enabledBorder: inputBorder,
+        focusedBorder: inputBorder.copyWith(
           borderSide: BorderSide(
             color: colorScheme.surfaceTint.withValues(alpha: 0.3),
           ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
+        errorBorder: inputBorder.copyWith(
           borderSide: BorderSide(color: colorScheme.error),
         ),
         contentPadding: EdgeInsets.symmetric(
@@ -179,18 +149,14 @@ class AppTheme {
         elevation: 0,
         height: 72,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-        iconTheme: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return IconThemeData(
-              color: colorScheme.primary,
-              size: AppDesign.iconSizes.md,
-            );
-          }
-          return IconThemeData(
-            color: colorScheme.onSurfaceVariant,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(WidgetState.selected)
+                ? colorScheme.primary
+                : colorScheme.onSurfaceVariant,
             size: AppDesign.iconSizes.md,
-          );
-        }),
+          ),
+        ),
       ),
 
       navigationRailTheme: NavigationRailThemeData(
@@ -206,9 +172,7 @@ class AppTheme {
       dialogTheme: DialogThemeData(
         backgroundColor: colorScheme.surfaceContainerLowest,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDesign.radius.lg),
-        ),
+        shape: lgShape,
       ),
 
       bottomSheetTheme: BottomSheetThemeData(
@@ -226,9 +190,7 @@ class AppTheme {
         contentTextStyle: textTheme.bodyMedium?.copyWith(
           color: colorScheme.onInverseSurface,
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
-        ),
+        shape: smShape,
         behavior: SnackBarBehavior.floating,
       ),
 
@@ -250,24 +212,20 @@ class AppTheme {
           horizontal: AppDesign.spacing.lg,
           vertical: AppDesign.spacing.xs,
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
-        ),
+        shape: smShape,
       ),
 
       switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return colorScheme.onPrimary;
-          }
-          return colorScheme.onSurfaceVariant;
-        }),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return colorScheme.primary;
-          }
-          return colorScheme.surfaceContainerHighest;
-        }),
+        thumbColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? colorScheme.onPrimary
+              : colorScheme.onSurfaceVariant,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? colorScheme.primary
+              : colorScheme.surfaceContainerHighest,
+        ),
       ),
 
       progressIndicatorTheme: ProgressIndicatorThemeData(

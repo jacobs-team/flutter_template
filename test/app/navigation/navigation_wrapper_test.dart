@@ -123,6 +123,75 @@ void main() {
         );
       },
     );
+    testWidgets(
+      'calls goBranch when floating nav item is selected on small screens',
+      (tester) async {
+        tester.view.physicalSize = const Size(400, 800);
+        tester.view.devicePixelRatio = 1.0;
+        addTearDown(tester.view.resetPhysicalSize);
+
+        when(
+          () => navigationShell.goBranch(
+            any(),
+            initialLocation: any(named: 'initialLocation'),
+          ),
+        ).thenReturn(null);
+
+        await tester.pumpPumpPumpItUP(
+          deps: [authCubit, connectivityCubit],
+          NavigationWrapper(navigationShell: navigationShell),
+        );
+
+        await tester.tap(find.byIcon(Icons.favorite_outline));
+
+        verify(
+          () => navigationShell.goBranch(
+            1,
+            initialLocation: any(named: 'initialLocation'),
+          ),
+        ).called(1);
+      },
+    );
+
+    testWidgets('navigates to dev tools when code button is pressed', (
+      tester,
+    ) async {
+      await tester.pumpPumpPumpItUP(
+        deps: [authCubit, connectivityCubit],
+        const SizedBox(),
+      );
+
+      final router = GoRouter(
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) =>
+                NavigationWrapper(navigationShell: navigationShell),
+          ),
+          GoRoute(
+            path: Routes.devTools,
+            builder: (context, state) =>
+                const Scaffold(key: Key('devToolsStub')),
+          ),
+        ],
+      );
+
+      await tester.pumpWidget(
+        MaterialApp.router(
+          routerConfig: router,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          builder: (context, child) => Layout(child: child!),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byIcon(Icons.code));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const Key('devToolsStub')), findsOneWidget);
+    });
+
     testWidgets('calls goBranch when navigation item is selected', (
       tester,
     ) async {

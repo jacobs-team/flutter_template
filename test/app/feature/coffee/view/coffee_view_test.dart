@@ -83,6 +83,48 @@ void main() {
       verify(() => coffeeBloc.add(const ToggleFavoriteImage(url))).called(1);
     });
 
+    testWidgets('precaches images when imageWindow changes in $CoffeeView', (
+      tester,
+    ) async {
+      whenListen(
+        coffeeBloc,
+        Stream.fromIterable([
+          const CoffeeState(images: [url], imageWindow: {0, 1}),
+        ]),
+        initialState: const CoffeeState(),
+      );
+
+      await tester.pumpPumpPumpItUP(
+        deps: [coffeeBloc, connectivityCubit],
+        const CoffeeView(),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.byType(CoffeeView), findsOneWidget);
+      // The test HTTP client rejects the precache request for index 0;
+      // absorb the resulting network image exception.
+      tester.takeException();
+    });
+
+    testWidgets('triggers $LoadImages when page changes in $CoffeeView', (
+      tester,
+    ) async {
+      when(() => coffeeBloc.state).thenReturn(
+        const CoffeeState(images: [url, 'url2']),
+      );
+
+      await tester.pumpPumpPumpItUP(
+        deps: [coffeeBloc, connectivityCubit],
+        const CoffeeView(),
+      );
+
+      await tester.fling(find.byType(PageView), const Offset(0, -600), 1000);
+      await tester.pumpAndSettle();
+
+      verify(() => coffeeBloc.add(const LoadImages(1))).called(1);
+    });
+
     testWidgets('triggers $LoadImages when $ConnectivityCubit reconnects', (
       tester,
     ) async {

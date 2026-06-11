@@ -100,6 +100,22 @@ void main() {
     );
 
     testWidgets(
+      'renders filled favorite icon when current image is favorited',
+      (tester) async {
+        when(() => coffeeBloc.state).thenReturn(
+          const CoffeeState(images: [url], favorites: [url]),
+        );
+
+        await tester.pumpPumpPumpItUP(
+          deps: [coffeeBloc],
+          FloatingControls(pageController: pageController),
+        );
+
+        expect(find.byIcon(Icons.favorite), findsOneWidget);
+      },
+    );
+
+    testWidgets(
       'renders $CircularProgressIndicator when saving in $FloatingControls',
       (tester) async {
         when(() => coffeeBloc.state).thenReturn(

@@ -49,16 +49,24 @@ void main() {
       'in $FavoritesView',
       (tester) async {
         when(() => coffeeBloc.state).thenReturn(
-          const CoffeeState(favorites: [url]),
+          const CoffeeState(favorites: [url, 'url2']),
         );
 
         await tester.pumpPumpPumpItUP(
           deps: [coffeeBloc, fileCacheService],
           const FavoritesView(),
         );
+        await tester.pumpAndSettle();
 
         expect(find.byType(ListView), findsOneWidget);
-        expect(find.byType(FavoriteImage), findsOneWidget);
+        expect(find.byKey(const ValueKey(url)), findsOneWidget);
+
+        // The list builds lazily; scroll until the second favorite is built.
+        await tester.scrollUntilVisible(
+          find.byKey(const ValueKey('url2')),
+          200,
+        );
+        expect(find.byKey(const ValueKey('url2')), findsOneWidget);
       },
     );
   });
