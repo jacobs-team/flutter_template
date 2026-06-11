@@ -20,10 +20,10 @@ class DevToolsView extends StatelessWidget {
       body: Column(
         children: [
           const Divider(),
-          const Center(
+          Center(
             child: Text(
               'Restart Not Required',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: theme.textTheme.titleSmall,
             ),
           ),
           const Divider(),

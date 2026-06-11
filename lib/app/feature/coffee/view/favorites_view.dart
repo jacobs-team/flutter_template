@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
+import 'package:flutter_template/design_system/design_system.dart';
 import 'package:flutter_template/l10n/l10n.dart';
 
 /// {@template favorites_view}
@@ -24,10 +25,10 @@ class FavoritesView extends StatelessWidget {
             return Center(child: Text(context.l10n.noSavedImages));
           }
           return ListView.separated(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.all(AppDesign.spacing.md),
             clipBehavior: Clip.none,
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 12,
+            separatorBuilder: (context, index) => SizedBox(
+              height: AppDesign.spacing.md,
             ),
             itemCount: savedImages.length,
             itemBuilder: (context, index) {

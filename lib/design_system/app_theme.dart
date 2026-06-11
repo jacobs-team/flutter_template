@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_template/theme/app_palette.dart';
+import 'package:flutter_template/design_system/app_design.dart';
+import 'package:flutter_template/design_system/app_palette.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Central place for defining the application's visual theme.
@@ -61,6 +62,7 @@ class AppTheme {
         centerTitle: false,
         titleTextStyle: textTheme.titleLarge?.copyWith(
           color: colorScheme.onSurface,
+          fontWeight: FontWeight.bold,
         ),
       ),
 
@@ -68,7 +70,7 @@ class AppTheme {
         color: colorScheme.surfaceContainerLowest,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(AppDesign.radius.md),
         ),
         margin: EdgeInsets.zero,
       ),
@@ -79,9 +81,12 @@ class AppTheme {
           foregroundColor: colorScheme.onPrimary,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppDesign.radius.md),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppDesign.spacing.xl,
+            vertical: AppDesign.spacing.md,
+          ),
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -92,9 +97,12 @@ class AppTheme {
           foregroundColor: colorScheme.onPrimaryContainer,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppDesign.radius.md),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: EdgeInsets.symmetric(
+            horizontal: AppDesign.spacing.xl,
+            vertical: AppDesign.spacing.md,
+          ),
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -103,7 +111,7 @@ class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: colorScheme.primary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppDesign.radius.md),
           ),
           textStyle: textTheme.labelLarge,
         ),
@@ -113,7 +121,7 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: colorScheme.primary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(AppDesign.radius.md),
           ),
           side: BorderSide(
             color: colorScheme.outlineVariant.withValues(alpha: 0.2),
@@ -126,26 +134,26 @@ class AppTheme {
         filled: true,
         fillColor: colorScheme.surfaceContainerLow,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
           borderSide: BorderSide(
             color: colorScheme.surfaceTint.withValues(alpha: 0.3),
           ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
           borderSide: BorderSide(color: colorScheme.error),
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 14,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: AppDesign.spacing.lg,
+          vertical: AppDesign.spacing.md,
         ),
         hintStyle: textTheme.bodyLarge?.copyWith(
           color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
@@ -159,7 +167,10 @@ class AppTheme {
         ),
         shape: const StadiumBorder(),
         side: BorderSide.none,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: EdgeInsets.symmetric(
+          horizontal: AppDesign.spacing.md,
+          vertical: AppDesign.spacing.xs,
+        ),
       ),
 
       navigationBarTheme: NavigationBarThemeData(
@@ -170,9 +181,15 @@ class AppTheme {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return IconThemeData(color: colorScheme.primary, size: 24);
+            return IconThemeData(
+              color: colorScheme.primary,
+              size: AppDesign.iconSizes.md,
+            );
           }
-          return IconThemeData(color: colorScheme.onSurfaceVariant, size: 24);
+          return IconThemeData(
+            color: colorScheme.onSurfaceVariant,
+            size: AppDesign.iconSizes.md,
+          );
         }),
       ),
 
@@ -190,15 +207,17 @@ class AppTheme {
         backgroundColor: colorScheme.surfaceContainerLowest,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(AppDesign.radius.lg),
         ),
       ),
 
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: colorScheme.surfaceContainerLow,
         elevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(AppDesign.radius.lg),
+          ),
         ),
       ),
 
@@ -208,7 +227,7 @@ class AppTheme {
           color: colorScheme.onInverseSurface,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
         ),
         behavior: SnackBarBehavior.floating,
       ),
@@ -227,12 +246,12 @@ class AppTheme {
       ),
 
       listTileTheme: ListTileThemeData(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 4,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: AppDesign.spacing.lg,
+          vertical: AppDesign.spacing.xs,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(AppDesign.radius.sm),
         ),
       ),
 

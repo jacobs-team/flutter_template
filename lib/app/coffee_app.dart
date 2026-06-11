@@ -5,8 +5,8 @@ import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/dev_tools/dev_tools.dart';
 import 'package:flutter_template/app/navigation/app_router.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
+import 'package:flutter_template/design_system/design_system.dart';
 import 'package:flutter_template/l10n/l10n.dart';
-import 'package:flutter_template/theme/app_theme.dart';
 
 /// {@template coffee_app}
 /// The root widget of the application.

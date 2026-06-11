@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
+import 'package:flutter_template/design_system/design_system.dart';
 
 /// {@template floating_controls}
 /// A glassmorphic pill of floating controls for the coffee discovery feed.
@@ -22,13 +23,13 @@ class FloatingControls extends StatelessWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
-      spacing: 8,
+      spacing: AppDesign.spacing.sm,
       children: [
         GlassContainer(
           padding: EdgeInsets.zero,
           child: IconButton(
             onPressed: () => _pageController.previousPage(
-              duration: const Duration(milliseconds: 250),
+              duration: AppDesign.durations.fast,
               curve: Curves.easeInOut,
             ),
             icon: const Icon(Icons.arrow_upward),
@@ -39,7 +40,7 @@ class FloatingControls extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: IconButton(
             onPressed: () => _pageController.nextPage(
-              duration: const Duration(milliseconds: 250),
+              duration: AppDesign.durations.fast,
               curve: Curves.easeInOut,
             ),
             icon: const Icon(Icons.arrow_downward),
@@ -82,7 +83,7 @@ class _FavoriteButton extends StatelessWidget {
         final favorited = favorites.contains(imageUrl);
 
         return GlassContainer(
-          padding: const EdgeInsets.all(8),
+          padding: EdgeInsets.all(AppDesign.spacing.sm),
           child: IconButton(
             onPressed: () =>
                 getIt<CoffeeBloc>().add(ToggleFavoriteImage(imageUrl)),

@@ -1,18 +1,25 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_template/design_system/design_system.dart';
 
 /// A glassmorphic container with backdrop blur, translucent fill,
 /// and a subtle ghost border.
 class GlassContainer extends StatelessWidget {
   /// Creates a glassmorphic container.
-  const GlassContainer({
+  GlassContainer({
     required this.child,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    this.borderRadius = 32,
+    EdgeInsets? padding,
+    double? borderRadius,
     this.blurSigma = 16,
     super.key,
-  });
+  }) : padding =
+           padding ??
+           EdgeInsets.symmetric(
+             horizontal: AppDesign.spacing.lg,
+             vertical: AppDesign.spacing.sm,
+           ),
+       borderRadius = borderRadius ?? AppDesign.radius.xl;
 
   /// The content inside the glass container.
   final Widget child;

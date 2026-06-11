@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_template/design_system/design_system.dart';
 
 /// {@template coffee_image}
 /// A stateful widget for coffee images that supports double-tap interactions.
@@ -30,7 +31,7 @@ class _CoffeeImageState extends State<CoffeeImage> {
       _showHeart = true;
     });
 
-    Future.delayed(const Duration(milliseconds: 250), () {
+    Future.delayed(AppDesign.durations.fast, () {
       if (mounted) {
         setState(() {
           _showHeart = false;
@@ -49,9 +50,9 @@ class _CoffeeImageState extends State<CoffeeImage> {
         children: [
           Center(
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12),
+              margin: EdgeInsets.symmetric(horizontal: AppDesign.spacing.md),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(AppDesign.radius.lg),
               ),
               clipBehavior: Clip.antiAlias,
               constraints: BoxConstraints(
@@ -62,16 +63,11 @@ class _CoffeeImageState extends State<CoffeeImage> {
                 widget.url,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
-                  return const Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.error_outline,
-                          color: Colors.red,
-                          size: 48,
-                        ),
-                      ],
+                  return Center(
+                    child: Icon(
+                      Icons.error_outline,
+                      color: Theme.of(context).colorScheme.error,
+                      size: AppDesign.iconSizes.lg,
                     ),
                   );
                 },
@@ -81,10 +77,10 @@ class _CoffeeImageState extends State<CoffeeImage> {
           IgnorePointer(
             child: AnimatedOpacity(
               opacity: _showHeart ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 250),
+              duration: AppDesign.durations.fast,
               child: Icon(
                 Icons.favorite,
-                size: 100,
+                size: AppDesign.iconSizes.xl,
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),

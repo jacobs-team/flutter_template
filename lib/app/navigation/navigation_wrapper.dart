@@ -5,6 +5,7 @@ import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/navigation/navigation.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
+import 'package:flutter_template/design_system/design_system.dart';
 import 'package:flutter_template/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
@@ -33,10 +34,9 @@ class NavigationWrapper extends StatelessWidget {
         title: Row(
           children: [
             const Icon(Icons.coffee_outlined),
-            const SizedBox(width: 8),
+            SizedBox(width: AppDesign.spacing.sm),
             Text(
               destinations(context.l10n)[navigationShell.currentIndex].label,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ],
         ),
@@ -94,14 +94,14 @@ class NavigationWrapper extends StatelessWidget {
                   return connected
                       ? const SizedBox.shrink()
                       : Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: EdgeInsets.all(AppDesign.spacing.md),
                           child: Row(
                             children: [
-                              const Icon(
+                              Icon(
                                 Icons.signal_cellular_nodata,
-                                color: Colors.red,
+                                color: Theme.of(context).colorScheme.error,
                               ),
-                              const SizedBox(width: 10),
+                              SizedBox(width: AppDesign.spacing.md),
                               Text(context.l10n.noConnection),
                             ],
                           ),
@@ -112,7 +112,7 @@ class NavigationWrapper extends StatelessWidget {
           ),
           if (!showRail)
             Positioned(
-              bottom: 32,
+              bottom: AppDesign.spacing.xxl,
               left: 0,
               right: 0,
               child: Center(
@@ -149,7 +149,7 @@ class _FloatingNavBar extends StatelessWidget {
 
     return GlassContainer(
       child: Row(
-        spacing: 16,
+        spacing: AppDesign.spacing.lg,
         mainAxisSize: MainAxisSize.min,
         children: destinations.indexed.map((entry) {
           final (i, d) = entry;

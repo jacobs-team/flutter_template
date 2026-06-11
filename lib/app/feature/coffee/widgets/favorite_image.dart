@@ -6,6 +6,7 @@ import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
+import 'package:flutter_template/design_system/design_system.dart';
 import 'package:go_router/go_router.dart';
 
 /// {@template favorite_image}
@@ -51,7 +52,7 @@ class FavoriteImage extends StatelessWidget {
             );
           },
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(AppDesign.radius.lg),
             child: Stack(
               alignment: Alignment.topRight,
               children: [
@@ -61,7 +62,7 @@ class FavoriteImage extends StatelessWidget {
                   width: double.infinity,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.all(AppDesign.spacing.sm),
                   child: GlassContainer(
                     padding: EdgeInsets.zero,
                     child: IconButton(
