@@ -35,6 +35,7 @@ class AppBlocObserver extends BlocObserver {
 /// App startup entrypoint and configuration, any config for all environments
 /// can go here. Any environment specific config can go inside the the
 /// environment entrypoint builder methods.
+// TODO(jb): optimize error handler.
 Future<void> bootstrap(
   FutureOr<Widget> Function() builder, {
   ErrorReporter? onError,
