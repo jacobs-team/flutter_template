@@ -57,7 +57,7 @@ void main() {
       );
 
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Icons.remove_circle_outline));
+      await tester.tap(find.byIcon(Icons.heart_broken));
 
       verify(
         () => coffeeBloc.add(const ToggleFavoriteImage(coffeeImage)),

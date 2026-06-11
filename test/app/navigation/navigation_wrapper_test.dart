@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/navigation/navigation.dart';
+import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:flutter_template/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -54,7 +55,8 @@ void main() {
     });
 
     testWidgets(
-      'renders $NavigationWrapper with $NavigationBar on small screens',
+      'renders $NavigationWrapper with floating $GlassContainer nav bar '
+      'on small screens',
       (tester) async {
         tester.view.physicalSize = const Size(400, 800);
         tester.view.devicePixelRatio = 1.0;
@@ -64,7 +66,7 @@ void main() {
           NavigationWrapper(navigationShell: navigationShell),
         );
 
-        expect(find.byType(NavigationBar), findsOneWidget);
+        expect(find.byType(GlassContainer), findsOneWidget);
         expect(find.byType(NavigationRail), findsNothing);
 
         addTearDown(tester.view.resetPhysicalSize);
@@ -83,7 +85,7 @@ void main() {
         );
 
         expect(find.byType(NavigationRail), findsOneWidget);
-        expect(find.byType(NavigationBar), findsNothing);
+        expect(find.byType(GlassContainer), findsNothing);
 
         addTearDown(tester.view.resetPhysicalSize);
       },
@@ -116,7 +118,7 @@ void main() {
 
         expect(find.text('No connection'), findsOneWidget);
         expect(
-          find.byIcon(Icons.signal_wifi_statusbar_connected_no_internet_4),
+          find.byIcon(Icons.signal_cellular_nodata),
           findsOneWidget,
         );
       },

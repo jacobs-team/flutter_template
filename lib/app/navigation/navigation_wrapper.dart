@@ -35,8 +35,11 @@ class NavigationWrapper extends StatelessWidget {
           children: [
             const Icon(Icons.coffee_outlined),
             SizedBox(width: AppDesign.spacing.sm),
-            Text(
-              destinations(context.l10n)[navigationShell.currentIndex].label,
+            Flexible(
+              child: Text(
+                destinations(context.l10n)[navigationShell.currentIndex].label,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

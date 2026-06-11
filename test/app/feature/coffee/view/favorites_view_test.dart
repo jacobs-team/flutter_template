@@ -45,7 +45,7 @@ void main() {
     );
 
     testWidgets(
-      'renders grid of $FavoriteImage when favorites exist '
+      'renders list of $FavoriteImage when favorites exist '
       'in $FavoritesView',
       (tester) async {
         when(() => coffeeBloc.state).thenReturn(
@@ -57,7 +57,7 @@ void main() {
           const FavoritesView(),
         );
 
-        expect(find.byType(GridView), findsOneWidget);
+        expect(find.byType(ListView), findsOneWidget);
         expect(find.byType(FavoriteImage), findsOneWidget);
       },
     );
