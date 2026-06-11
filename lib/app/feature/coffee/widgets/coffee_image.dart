@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_template/design_system/design_system.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 
 /// {@template coffee_image}
 /// A stateful widget for coffee images that supports double-tap interactions.
@@ -72,6 +73,7 @@ class _CoffeeImageState extends State<CoffeeImage> {
               child: Image.network(
                 widget.url,
                 fit: BoxFit.cover,
+                semanticLabel: context.l10n.coffeePhotoLabel,
                 errorBuilder: (context, error, stackTrace) {
                   return Center(
                     child: Icon(

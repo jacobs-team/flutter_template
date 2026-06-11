@@ -4,8 +4,6 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_template/app/core/dependencies/dependencies.dart';
-import 'package:flutter_template/app/feature/coffee/coffee.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -37,13 +35,9 @@ class AuthCubit extends HydratedCubit<AuthState> implements Listenable {
   }
 
   /// Clears the authentication state and cancels any active requests.
-  /// Clears the feed coffee image feed, keeps favorites.
   Future<void> logout() async {
     cancelToken.cancel('Logged out');
     cancelToken = CancelToken();
-    if (getIt.isRegistered<CoffeeBloc>()) {
-      getIt<CoffeeBloc>().add(const ClearFeed());
-    }
     emit(const AuthState());
   }
 

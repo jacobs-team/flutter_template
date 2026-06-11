@@ -1,6 +1,7 @@
 // coverage:ignore-file
 
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:injectable/injectable.dart';
 
@@ -12,6 +13,15 @@ class FileCacheService {
   /// Retrieves a file from the cache or downloads it if it does not exist.
   Future<File> getFile(String url) async {
     return DefaultCacheManager().getSingleFile(url);
+  }
+
+  /// Reads the cached file bytes for [url], downloading it first if needed.
+  ///
+  /// Use this for displaying cached images — works on web, where
+  /// `Image.file` is unsupported.
+  Future<Uint8List> getBytes(String url) async {
+    final file = await getFile(url);
+    return file.readAsBytes();
   }
 
   /// Removes a specific file from the local cache.

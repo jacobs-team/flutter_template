@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
@@ -7,6 +7,7 @@ import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:flutter_template/design_system/design_system.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
 /// {@template favorite_image}
@@ -26,8 +27,8 @@ class FavoriteImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<File?>(
-      future: getIt<FileCacheService>().getFile(coffeeImage),
+    return FutureBuilder<Uint8List?>(
+      future: getIt<FileCacheService>().getBytes(coffeeImage),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done ||
             snapshot.data == null) {
@@ -57,9 +58,10 @@ class FavoriteImage extends StatelessWidget {
               alignment: Alignment.topRight,
               children: [
                 Image.memory(
-                  snapshot.data!.readAsBytesSync(),
+                  snapshot.data!,
                   fit: BoxFit.cover,
                   width: double.infinity,
+                  semanticLabel: context.l10n.coffeePhotoLabel,
                 ),
                 Padding(
                   padding: EdgeInsets.all(AppDesign.spacing.sm),
@@ -69,6 +71,7 @@ class FavoriteImage extends StatelessWidget {
                       onPressed: () => getIt<CoffeeBloc>().add(
                         ToggleFavoriteImage(coffeeImage),
                       ),
+                      tooltip: context.l10n.removeFavoriteTooltip,
                       icon: const Icon(Icons.heart_broken),
                     ),
                   ),

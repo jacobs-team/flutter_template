@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/app.dart';
@@ -8,8 +8,6 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../../helpers/helpers.dart';
 
-class MockFile extends Mock implements File {}
-
 void main() {
   const url = 'url';
   const url2 = 'url2';
@@ -17,22 +15,17 @@ void main() {
   group(ExpandedImage, () {
     late CoffeeBloc coffeeBloc;
     late FileCacheService fileCacheService;
-    late File mockFile;
 
     setUp(() {
       initHydratedStorage();
       coffeeBloc = MockCoffeeBloc();
       fileCacheService = MockFileCacheService();
-      mockFile = MockFile();
 
       when(() => coffeeBloc.state).thenReturn(const CoffeeState());
       when(() => coffeeBloc.stream).thenAnswer((_) => const Stream.empty());
 
-      when(() => mockFile.path).thenReturn('/temp');
-      when(() => mockFile.readAsBytesSync()).thenReturn(transparentPixel);
-
-      when(() => fileCacheService.getFile(any())).thenAnswer(
-        (_) async => mockFile,
+      when(() => fileCacheService.getBytes(any())).thenAnswer(
+        (_) async => transparentPixel,
       );
     });
 
@@ -74,15 +67,15 @@ void main() {
       await tester.drag(find.byType(PageView), const Offset(-500, 0));
       await tester.pumpAndSettle();
 
-      verify(() => fileCacheService.getFile(url2)).called(1);
+      verify(() => fileCacheService.getBytes(url2)).called(1);
     });
 
     testWidgets(
       'shows $CircularProgressIndicator when loading in $ExpandedImage',
       (tester) async {
-        final completer = Completer<File>();
+        final completer = Completer<Uint8List>();
         when(
-          () => fileCacheService.getFile(any()),
+          () => fileCacheService.getBytes(any()),
         ).thenAnswer((_) => completer.future);
 
         when(() => coffeeBloc.state).thenReturn(
@@ -98,7 +91,7 @@ void main() {
 
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-        completer.complete(mockFile);
+        completer.complete(transparentPixel);
         await tester.pumpAndSettle();
 
         expect(find.byType(CircularProgressIndicator), findsNothing);

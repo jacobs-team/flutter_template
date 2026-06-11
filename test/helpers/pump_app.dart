@@ -3,6 +3,7 @@ import 'package:flutter_template/app/app.dart';
 import 'package:flutter_template/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mocktail/mocktail.dart';
 
 import 'helpers.dart';
 
@@ -16,8 +17,11 @@ extension PumpApp on WidgetTester {
     final getIt = GetIt.instance;
     await getIt.reset();
 
+    final authCubit = MockAuthCubit();
+    when(() => authCubit.state).thenReturn(const AuthState());
+
     getIt
-      ..registerSingleton<AuthCubit>(MockAuthCubit())
+      ..registerSingleton<AuthCubit>(authCubit)
       ..registerSingleton<ConnectivityCubit>(MockConnectivityCubit())
       ..registerSingleton<DevToolsCubit>(MockDevToolsCubit())
       ..registerSingleton<CoffeeBloc>(MockCoffeeBloc())
@@ -29,6 +33,11 @@ extension PumpApp on WidgetTester {
     for (final instance in [...deps]) {
       await _registerOverride(instance);
     }
+
+    // Lazy so the router binds to whichever AuthCubit the test registered.
+    getIt.registerLazySingleton<AppRouter>(
+      () => AppRouter(getIt<AuthCubit>()),
+    );
 
     await pumpWidget(
       MaterialApp(

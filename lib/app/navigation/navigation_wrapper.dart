@@ -46,11 +46,13 @@ class NavigationWrapper extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: getIt<AuthCubit>().logout,
+            tooltip: context.l10n.logoutTooltip,
             icon: const Icon(Icons.logout),
           ),
           if (kDebugMode)
             IconButton(
               onPressed: () => context.push(Routes.devTools),
+              tooltip: context.l10n.devToolsTooltip,
               icon: const Icon(Icons.code),
             ),
         ],
@@ -159,6 +161,7 @@ class _FloatingNavBar extends StatelessWidget {
           final isSelected = i == selectedIndex;
           return IconButton(
             onPressed: () => onDestinationSelected(i),
+            tooltip: d.label,
             icon: isSelected ? d.selectedIcon ?? d.icon : d.icon,
             color: isSelected
                 ? colorScheme.onPrimary

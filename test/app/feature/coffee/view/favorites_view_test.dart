@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/app.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,22 +11,17 @@ void main() {
   group(FavoritesView, () {
     late CoffeeBloc coffeeBloc;
     late FileCacheService fileCacheService;
-    late File mockFile;
 
     setUp(() {
       initHydratedStorage();
       coffeeBloc = MockCoffeeBloc();
       fileCacheService = MockFileCacheService();
-      mockFile = MockFile();
 
       when(() => coffeeBloc.state).thenReturn(const CoffeeState());
       when(() => coffeeBloc.stream).thenAnswer((_) => const Stream.empty());
 
-      when(() => mockFile.path).thenReturn('/temp');
-      when(() => mockFile.readAsBytesSync()).thenReturn(transparentPixel);
-
-      when(() => fileCacheService.getFile(any())).thenAnswer(
-        (_) async => mockFile,
+      when(() => fileCacheService.getBytes(any())).thenAnswer(
+        (_) async => transparentPixel,
       );
     });
 

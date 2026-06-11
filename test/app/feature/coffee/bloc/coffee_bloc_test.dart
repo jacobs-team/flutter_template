@@ -96,6 +96,37 @@ void main() {
     );
 
     blocTest<CoffeeBloc, CoffeeState>(
+      'keeps successfully fetched images when some requests fail',
+      setUp: () {
+        var calls = 0;
+        when(() => repo.getCoffeeImage()).thenAnswer((_) async {
+          calls++;
+          if (calls == 1) throw Exception('error');
+          return const Coffee(imageUrl: url);
+        });
+      },
+      build: () => CoffeeBloc(repo, cacheService),
+      act: (bloc) => bloc.add(const LoadImages(0)),
+      expect: () => [
+        isA<CoffeeState>().having(
+          (s) => s.loadingState,
+          'loadingState',
+          equals(CoffeeLoadingState.loading),
+        ),
+        isA<CoffeeState>().having(
+          (s) => s.images,
+          'images',
+          equals([url, url, url, url]),
+        ),
+        isA<CoffeeState>().having(
+          (s) => s.loadingState,
+          'loadingState',
+          equals(CoffeeLoadingState.success),
+        ),
+      ],
+    );
+
+    blocTest<CoffeeBloc, CoffeeState>(
       'keeps loadingState when images are already loaded on $LoadImages',
       build: () => CoffeeBloc(repo, cacheService),
       seed: () => const CoffeeState(

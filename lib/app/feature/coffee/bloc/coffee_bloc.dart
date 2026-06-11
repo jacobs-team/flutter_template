@@ -3,6 +3,7 @@
 import 'dart:developer';
 import 'dart:math' as math;
 
+import 'package:flutter_template/app/core/networking/model/model.dart';
 import 'package:flutter_template/app/core/networking/repository/coffee_repository.dart';
 import 'package:flutter_template/app/core/service/file_cache_service.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -96,9 +97,21 @@ class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
       );
 
       if (numImagesToLoad > 0) {
-        final newImages = await Future.wait(
-          List.generate(numImagesToLoad, (_) => _repo.getCoffeeImage()),
+        final results = await Future.wait(
+          List.generate(numImagesToLoad, (_) async {
+            try {
+              return await _repo.getCoffeeImage();
+            } catch (e) {
+              log('failed to load image: $e');
+              return null;
+            }
+          }),
         );
+        final newImages = results.whereType<Coffee>().toList();
+
+        if (newImages.isEmpty) {
+          throw Exception('Failed to load any images');
+        }
 
         emit(
           state.copyWith(

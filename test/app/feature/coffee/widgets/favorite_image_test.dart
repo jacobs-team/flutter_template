@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/feature/feature.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
@@ -16,22 +17,17 @@ void main() {
   group(FavoriteImage, () {
     late CoffeeBloc coffeeBloc;
     late FileCacheService fileCacheService;
-    late File mockFile;
 
     setUp(() {
       initHydratedStorage();
       coffeeBloc = MockCoffeeBloc();
       fileCacheService = MockFileCacheService();
-      mockFile = MockFile();
 
       when(() => coffeeBloc.state).thenReturn(const CoffeeState());
       when(() => coffeeBloc.stream).thenAnswer((_) => const Stream.empty());
 
-      when(() => mockFile.path).thenReturn('/temp');
-      when(() => mockFile.readAsBytesSync()).thenReturn(transparentPixel);
-
-      when(() => fileCacheService.getFile(any())).thenAnswer(
-        (_) async => mockFile,
+      when(() => fileCacheService.getBytes(any())).thenAnswer(
+        (_) async => transparentPixel,
       );
     });
 
@@ -46,7 +42,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(Image), findsOneWidget);
-      verify(() => fileCacheService.getFile(coffeeImage)).called(1);
+      verify(() => fileCacheService.getBytes(coffeeImage)).called(1);
     });
 
     testWidgets('triggers $ToggleFavoriteImage when remove icon is pressed', (
@@ -105,7 +101,13 @@ void main() {
         ],
       );
 
-      await tester.pumpWidget(MaterialApp.router(routerConfig: router));
+      await tester.pumpWidget(
+        MaterialApp.router(
+          routerConfig: router,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+        ),
+      );
       await tester.pumpAndSettle();
 
       final imageGesture = find
@@ -128,9 +130,9 @@ void main() {
     testWidgets('shows $CircularProgressIndicator while loading file', (
       tester,
     ) async {
-      final completer = Completer<File>();
+      final completer = Completer<Uint8List>();
       when(
-        () => fileCacheService.getFile(any()),
+        () => fileCacheService.getBytes(any()),
       ).thenAnswer((_) => completer.future);
 
       await tester.pumpPumpPumpItUP(
@@ -140,7 +142,7 @@ void main() {
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-      completer.complete(mockFile);
+      completer.complete(transparentPixel);
       await tester.pumpAndSettle();
 
       expect(find.byType(CircularProgressIndicator), findsNothing);

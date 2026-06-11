@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
-import 'package:flutter_template/app/feature/dev_tools/dev_tools.dart';
-import 'package:flutter_template/app/navigation/app_router.dart';
+import 'package:flutter_template/app/feature/feature.dart';
+import 'package:flutter_template/app/navigation/navigation.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:flutter_template/design_system/design_system.dart';
 import 'package:flutter_template/l10n/l10n.dart';
@@ -23,25 +24,30 @@ class CoffeeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<DevToolsCubit, DevToolsState, bool>(
-      bloc: getIt<DevToolsCubit>(),
-      selector: (state) => state.isDarkMode,
-      builder: (context, isDarkMode) {
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: AppRouter.router,
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          themeMode: !kDebugMode
-              ? ThemeMode.system
-              : isDarkMode
-              ? ThemeMode.dark
-              : ThemeMode.light,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          builder: (context, child) => Layout(child: child!),
-        );
-      },
+    return BlocListener<AuthCubit, AuthState>(
+      bloc: getIt<AuthCubit>(),
+      listenWhen: (previous, current) => previous.signedIn && !current.signedIn,
+      listener: (context, state) => getIt<CoffeeBloc>().add(const ClearFeed()),
+      child: BlocSelector<DevToolsCubit, DevToolsState, bool>(
+        bloc: getIt<DevToolsCubit>(),
+        selector: (state) => state.isDarkMode,
+        builder: (context, isDarkMode) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            routerConfig: getIt<AppRouter>().router,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: !kDebugMode
+                ? ThemeMode.system
+                : isDarkMode
+                ? ThemeMode.dark
+                : ThemeMode.light,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            builder: (context, child) => Layout(child: child!),
+          );
+        },
+      ),
     );
   }
 }

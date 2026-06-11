@@ -4,6 +4,7 @@ import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:flutter_template/design_system/design_system.dart';
+import 'package:flutter_template/l10n/l10n.dart';
 
 /// {@template floating_controls}
 /// A glassmorphic pill of floating controls for the coffee discovery feed.
@@ -32,6 +33,7 @@ class FloatingControls extends StatelessWidget {
               duration: AppDesign.durations.fast,
               curve: Curves.easeInOut,
             ),
+            tooltip: context.l10n.previousImageTooltip,
             icon: const Icon(Icons.arrow_upward),
             color: colorScheme.onSurfaceVariant,
           ),
@@ -43,6 +45,7 @@ class FloatingControls extends StatelessWidget {
               duration: AppDesign.durations.fast,
               curve: Curves.easeInOut,
             ),
+            tooltip: context.l10n.nextImageTooltip,
             icon: const Icon(Icons.arrow_downward),
             color: colorScheme.onSurfaceVariant,
           ),
@@ -87,6 +90,7 @@ class _FavoriteButton extends StatelessWidget {
           child: IconButton(
             onPressed: () =>
                 getIt<CoffeeBloc>().add(ToggleFavoriteImage(imageUrl)),
+            tooltip: context.l10n.toggleFavoriteTooltip,
             icon: savingImage
                 ? const SizedBox(
                     height: 20,

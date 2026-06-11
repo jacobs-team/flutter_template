@@ -1,9 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_template/app/core/core.dart';
-import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
-import 'package:mocktail/mocktail.dart';
 
 import '../../../helpers/helpers.dart';
 
@@ -11,12 +8,8 @@ void main() {
   group(AuthCubit, () {
     const user = 'user';
     const token = 'token';
-    late CoffeeBloc coffeeBloc;
 
-    setUp(() {
-      initHydratedStorage();
-      coffeeBloc = MockCoffeeBloc();
-    });
+    setUp(initHydratedStorage);
 
     blocTest<AuthCubit, AuthState>(
       'emits correct state when setSession is called',
@@ -26,20 +19,11 @@ void main() {
     );
 
     blocTest<AuthCubit, AuthState>(
-      'emits empty state and adds $ClearFeed when logout is called',
-      setUp: () async {
-        if (GetIt.I.isRegistered<CoffeeBloc>()) {
-          await GetIt.I.unregister<CoffeeBloc>();
-        }
-        GetIt.I.registerSingleton<CoffeeBloc>(coffeeBloc);
-      },
+      'emits empty state when logout is called',
       build: AuthCubit.new,
       seed: () => const AuthState(user: user, token: token),
       act: (cubit) => cubit.logout(),
       expect: () => [const AuthState()],
-      verify: (_) {
-        verify(() => coffeeBloc.add(const ClearFeed())).called(1);
-      },
     );
 
     test('signedIn returns true when user and token are present', () {
