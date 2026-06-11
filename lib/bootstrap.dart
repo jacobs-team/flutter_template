@@ -35,10 +35,6 @@ class AppBlocObserver extends BlocObserver {
 /// App startup entrypoint and configuration, any config for all environments
 /// can go here. Any environment specific config can go inside the the
 /// environment entrypoint builder methods.
-///
-/// Console error output keeps Flutter's default behavior. Pass [onError] from
-/// an environment entrypoint to additionally forward uncaught errors
-/// (framework, async, platform, and bloc) to a crash-reporting service.
 Future<void> bootstrap(
   FutureOr<Widget> Function() builder, {
   ErrorReporter? onError,
