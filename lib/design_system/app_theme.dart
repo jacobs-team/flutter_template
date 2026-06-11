@@ -7,25 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// Central place for defining the application's visual theme.
 class AppTheme {
-  /// Applies letter spacing as a percentage of the style's font size.
-  static TextStyle? _spaced(TextStyle? style, double percent) =>
-      style?.copyWith(letterSpacing: percent * (style.fontSize ?? 14));
-
-  static TextTheme _buildTextTheme(TextTheme base) {
-    final manrope = GoogleFonts.manropeTextTheme(base);
-    return manrope.copyWith(
-      displayLarge: _spaced(manrope.displayLarge, -0.02),
-      displayMedium: _spaced(manrope.displayMedium, -0.02),
-      displaySmall: _spaced(manrope.displaySmall, -0.02),
-      labelLarge: _spaced(manrope.labelLarge, 0.05),
-      labelMedium: _spaced(manrope.labelMedium, 0.05),
-      labelSmall: _spaced(manrope.labelSmall, 0.05),
-    );
-  }
-
   static ThemeData _buildTheme(ColorScheme colorScheme) {
     final base = ThemeData(colorScheme: colorScheme);
-    final textTheme = _buildTextTheme(base.textTheme);
+    final textTheme = GoogleFonts.manropeTextTheme(base.textTheme);
 
     final smRadius = BorderRadius.circular(AppDesign.radius.sm);
     final smShape = RoundedRectangleBorder(borderRadius: smRadius);
@@ -101,9 +85,7 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: colorScheme.primary,
           shape: mdShape,
-          side: BorderSide(
-            color: colorScheme.outlineVariant.withValues(alpha: 0.2),
-          ),
+          side: BorderSide(color: colorScheme.outlineVariant),
           textStyle: textTheme.labelLarge,
         ),
       ),
@@ -114,9 +96,7 @@ class AppTheme {
         border: inputBorder,
         enabledBorder: inputBorder,
         focusedBorder: inputBorder.copyWith(
-          borderSide: BorderSide(
-            color: colorScheme.surfaceTint.withValues(alpha: 0.3),
-          ),
+          borderSide: BorderSide(color: colorScheme.primary),
         ),
         errorBorder: inputBorder.copyWith(
           borderSide: BorderSide(color: colorScheme.error),
@@ -124,9 +104,6 @@ class AppTheme {
         contentPadding: EdgeInsets.symmetric(
           horizontal: AppDesign.spacing.lg,
           vertical: AppDesign.spacing.md,
-        ),
-        hintStyle: textTheme.bodyLarge?.copyWith(
-          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
         ),
       ),
 
@@ -145,7 +122,6 @@ class AppTheme {
 
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: colorScheme.surfaceContainer,
-        indicatorColor: colorScheme.primaryContainer.withValues(alpha: 0.15),
         elevation: 0,
         height: 72,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
@@ -161,7 +137,6 @@ class AppTheme {
 
       navigationRailTheme: NavigationRailThemeData(
         backgroundColor: colorScheme.surfaceContainer,
-        indicatorColor: colorScheme.primaryContainer.withValues(alpha: 0.15),
         elevation: 0,
         selectedIconTheme: IconThemeData(color: colorScheme.primary),
         unselectedIconTheme: IconThemeData(
@@ -202,7 +177,7 @@ class AppTheme {
       ),
 
       dividerTheme: DividerThemeData(
-        color: colorScheme.outlineVariant.withValues(alpha: 0.2),
+        color: colorScheme.outlineVariant,
         thickness: 0.5,
         space: 0,
       ),
