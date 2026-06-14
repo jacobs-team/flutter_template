@@ -1,0 +1,70 @@
+workflows:
+  ios-testflight:
+    name: iOS TestFlight (production)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      # Name of the App Store Connect API key you add under
+      # Codemagic > Teams > Integrations > Apple Developer Portal.
+      app_store_connect: AppStoreConnect
+    environment:
+      xcode: latest
+      cocoapods: default
+      groups:
+        # Codemagic env group holding CERTIFICATE_PRIVATE_KEY (a PEM RSA key,
+        # marked secure). Used to mint a persistent signing certificate.
+        - ios_signing
+      vars:
+        # Your app's numeric Apple ID: App Store Connect > your app >
+        # App Information > General Information > Apple ID.
+        APP_STORE_APP_ID: "REPLACE_WITH_APP_STORE_APP_ID"
+    # Enable this block (and set APP_STORE_APP_ID, the bundle id, and the Slack
+    # channel below) once the project has been renamed from the template.
+    # triggering:
+    #   cancel_previous_builds: true
+    #   events:
+    #     - push
+    #   branch_patterns:
+    #     - pattern: main
+    #       include: true
+    #       source: true
+    scripts:
+      - name: Install Flutter from .fvmrc
+        script: |
+          dart pub global activate fvm
+          echo "PATH=$HOME/.pub-cache/bin:$PATH" >> $CM_ENV
+          fvm install --setup
+      - name: Get Flutter packages
+        script: fvm flutter pub get
+      - name: Run code generation
+        script: fvm dart run build_runner build --delete-conflicting-outputs
+      - name: Set up code signing
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "REPLACE_WITH_BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --certificate-key="@env:CERTIFICATE_PRIVATE_KEY" \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+      - name: Set build number from TestFlight
+        script: |
+          LATEST=$(app-store-connect get-latest-build-number "$APP_STORE_APP_ID")
+          echo "BUILD_NUMBER=$((LATEST + 1))" >> $CM_ENV
+      - name: Build IPA
+        script: |
+          fvm flutter build ipa --release \
+            --flavor production \
+            --target lib/main_production.dart \
+            --build-number=$BUILD_NUMBER \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+      slack:
+        channel: '#REPLACE_WITH_SLACK_CHANNEL'
+        notify:
+          success: true
+          failure: true
