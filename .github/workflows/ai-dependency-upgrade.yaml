@@ -51,7 +51,7 @@ jobs:
             --output-format text
 
       - name: Open pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           # A PAT is required so the resulting PR triggers the verify workflow
           # (PRs opened with the default GITHUB_TOKEN do not start other workflows).
