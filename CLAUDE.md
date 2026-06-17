@@ -20,6 +20,49 @@
 - Always use `@freezed` for data classes, BLoC states, and BLoC events.
 - Use `@JsonSerializable(fieldRename: FieldRename.snake)` on the constructor when the API returns snake_case.
 
+## Persisted state & migrations
+
+- Changing the shape of a `HydratedBloc` state, or any persisted or serialized model, can silently wipe user data. If `fromJson` throws on old stored JSON the bloc resets to its initial state, and even a clean read whose meaning shifted can corrupt behavior. A classic trap is inserting or reordering an enum value that is persisted by position (for example a step index): old stored indexes then point at the wrong value.
+- Whenever you add, remove, rename, retype, or reorder anything that affects a persisted shape (state fields, or enum values used as map keys or positions), confirm old stored data still reads correctly and add a migration when it does not. Version the persisted state and route by `version` in `fromJson`. Prefer storing stable identifiers like enum names over positional indexes.
+- Compact migration pattern (freezed + json_serializable). Keep `fromJson` arrow-bodied or freezed won't generate `toJson`; do the version routing in a delegated factory:
+
+  ```dart
+  @freezed
+  abstract class MyFeatureState with _$MyFeatureState {
+    @JsonSerializable(explicitToJson: true)
+    const factory MyFeatureState({
+      @Default(1) int version,
+      required String newField,
+    }) = _MyFeatureState;
+
+    const MyFeatureState._();
+
+    static const _currentVersion = 1;
+
+    factory MyFeatureState.fromJson(Map<String, dynamic> json) =>
+        MyFeatureState._fromVersionedJson(json);
+
+    factory MyFeatureState._fromVersionedJson(Map<String, dynamic> json) {
+      final version = json['version'] as int? ?? 0;
+      switch (version) {
+        case 0:
+          // Migrate unversioned/v0 data to the current shape.
+          return MyFeatureState(
+            newField: json['oldField'] as String? ?? 'fallback',
+          );
+        case _currentVersion:
+          return _$MyFeatureStateFromJson(json);
+        default:
+          // Unknown, newer version (e.g. the user downgraded): read with the
+          // current schema as a best effort instead of discarding the user's
+          // data. Unknown keys are ignored and missing ones fall back to
+          // defaults.
+          return _$MyFeatureStateFromJson(json);
+      }
+    }
+  }
+  ```
+
 ## Naming
 
 - Name fields and variables after the model type they hold, in full. A value of type `CoffeeOrigin` is named `coffeeOrigin`, never `origin` — the short form is ambiguous. Example: `const factory Coffee({required CoffeeOrigin coffeeOrigin, ...})`, and loops read `for (final coffeeOrigin in CoffeeOrigin.values)`.
@@ -58,3 +101,4 @@
 - Prefer using `isA<BlocState>().having` in tests over matching the entire state to reduce test fragility.
 - Use `mocktail` for mocking dependencies.
 - Call `initHydratedStorage()` in test setup when testing with `HydratedBloc`.
+- Always use random seed ordering for testing using the flag.

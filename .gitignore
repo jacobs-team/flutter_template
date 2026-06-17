@@ -114,4 +114,9 @@ app.*.map.json
 # Generated l10n files
 lib/l10n/gen/
 
-config/
+config/*
+!config/dev.example.json
+!config/prod.example.json
+
+# Summary written by the AI dependency upgrade workflow; used as the PR body, not committed
+UPGRADE_NOTES.md

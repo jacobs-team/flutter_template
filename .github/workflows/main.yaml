@@ -48,11 +48,11 @@ jobs:
           --exclude-coverage "**/*.freezed.dart" \
           --exclude-coverage "lib/l10n/gen/*"
 
-      - name: Check Test Coverage (95%)
+      - name: Check Test Coverage (100%)
         uses: VeryGoodOpenSource/very_good_coverage@v3
         with:
           path: ./coverage/lcov.info
-          min_coverage: 95
+          min_coverage: 100
       - name: Extract Coverage
         id: coverage_data
         run: |

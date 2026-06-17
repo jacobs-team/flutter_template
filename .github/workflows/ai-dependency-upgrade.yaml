@@ -1,0 +1,65 @@
+name: AI Dependency Upgrade
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # every Monday 06:00 UTC
+  workflow_dispatch: {} # manual "Run workflow" button
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node (for Claude Code)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Install FVM
+        run: |
+          curl -fsSL https://fvm.app/install.sh | bash
+          echo "$HOME/.fvm_flutter/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
+      - name: Install pinned Flutter via FVM
+        run: |
+          fvm install
+          fvm flutter --version
+
+      - name: Install Very Good CLI
+        run: fvm dart pub global activate very_good_cli
+
+      - name: Run upgrade agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude -p "Use the upgrade-dependencies skill to upgrade the Flutter SDK and every dependency in this project. Follow the skill exactly: apply migrations from each package's changelog, fix all analyzer errors, keep the test suite green at 100% coverage, and write UPGRADE_NOTES.md as the skill's final step. Do not push or open a pull request yourself." \
+            --dangerously-skip-permissions \
+            --output-format text
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          # A PAT is required so the resulting PR triggers the verify workflow
+          # (PRs opened with the default GITHUB_TOKEN do not start other workflows).
+          # Falls back to GITHUB_TOKEN, in which case CI must be re-run manually.
+          token: ${{ secrets.WORKFLOW_PAT || secrets.GITHUB_TOKEN }}
+          branch: chore/ai-dependency-upgrade
+          delete-branch: true
+          title: "chore: AI dependency + Flutter SDK upgrade"
+          commit-message: "chore: upgrade Flutter SDK and dependencies"
+          body-path: UPGRADE_NOTES.md
+          labels: dependencies

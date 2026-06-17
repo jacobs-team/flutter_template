@@ -4,7 +4,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "pub"
-    directory: "/"
-    schedule:
-      interval: "daily"
+  # pub upgrades are handled by the AI Dependency Upgrade workflow, which can also
+  # apply breaking-change migrations. Re-enable this block to hand pub bumps back
+  # to Dependabot.
+  # - package-ecosystem: "pub"
+  #   directory: "/"
+  #   schedule:
+  #     interval: "daily"
