@@ -44,7 +44,8 @@ jobs:
 
       - name: Run upgrade agent
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Claude subscription OAuth token generated with `claude setup-token`.
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # Used by the agent for gh api release lookups and gh pr create.
           # A PAT is preferred so the resulting PR triggers the verify workflow
           # (PRs opened with the default GITHUB_TOKEN do not start other workflows).
