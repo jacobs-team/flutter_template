@@ -31,7 +31,7 @@ jobs:
       - name: Install FVM
         run: |
           curl -fsSL https://fvm.app/install.sh | bash
-          echo "$HOME/.fvm_flutter/bin" >> "$GITHUB_PATH"
+          echo "$HOME/fvm/bin" >> "$GITHUB_PATH"
           echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
 
       - name: Install pinned Flutter via FVM
@@ -45,6 +45,8 @@ jobs:
       - name: Run upgrade agent
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Lets the agent query GitHub for latest action releases (skill step 7).
+          GH_TOKEN: ${{ github.token }}
         run: |
           claude -p "Use the upgrade-dependencies skill to upgrade the Flutter SDK and every dependency in this project. Follow the skill exactly: apply migrations from each package's changelog, fix all analyzer errors, keep the test suite green at 100% coverage, and write UPGRADE_NOTES.md as the skill's final step. Do not push or open a pull request yourself." \
             --dangerously-skip-permissions \

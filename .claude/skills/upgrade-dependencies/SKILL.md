@@ -1,6 +1,6 @@
 ---
 name: upgrade-dependencies
-description: Upgrade the Flutter SDK and all dependencies to their latest compatible versions, apply migration guides for upgraded packages, bring the native Android/iOS projects up to the new SDK's template (Gradle, AGP, Kotlin, JVM targets, deployment targets), then fix analyzer issues and broken tests. Use when the user says "upgrade dependencies", "update packages", "bump deps", or "update all flutter dependencies".
+description: Upgrade the Flutter SDK and all dependencies to their latest compatible versions, apply migration guides for upgraded packages, bring the native Android/iOS projects up to the new SDK's template (Gradle, AGP, Kotlin, JVM targets, deployment targets), bump GitHub Actions in CI workflows, then fix analyzer issues and broken tests. Use when the user says "upgrade dependencies", "update packages", "bump deps", or "update all flutter dependencies".
 ---
 
 # Upgrade the Flutter SDK and Dependencies
@@ -118,7 +118,29 @@ The Android and iOS projects go stale independently of `pubspec.yaml` — Gradle
 
 6. Delete the reference app once done.
 
-## Step 7: Fix analyzer issues
+## Step 7: Upgrade GitHub Actions
+
+The workflows under `.github/workflows/` drift the same way native projects do, and stale actions eventually break on runner or Node deprecations. Bring every action reference up to its latest release so Dependabot's `github_actions` PRs have nothing left to file.
+
+1. Collect every action reference (`uses: owner/repo@ref`) across `.github/workflows/*.yaml`, including local composite actions' workflows if present. Skip `uses:` entries that point to local paths (`./...`).
+
+2. For each unique action, find the latest release tag:
+
+   ```
+   gh api repos/<owner>/<repo>/releases/latest --jq .tag_name
+   ```
+
+   If the repo publishes no releases, list tags instead: `gh api repos/<owner>/<repo>/tags --jq '.[].name'`.
+
+3. Update each reference to the latest version, keeping the file's existing pin style — a project pinning `@v6` moves to `@v7`, a project pinning full SHAs gets the new tag's SHA with the version in a trailing comment.
+
+4. For every major bump, read the release notes between the old and new major (`gh api repos/<owner>/<repo>/releases --jq '.[].body'` or the releases page) and apply any required workflow changes: renamed or removed inputs, changed defaults, new permissions, or a raised minimum runner/Node version. Do NOT guess — base every edit on the release notes, same as package migrations.
+
+5. Also resolve runner deprecation warnings surfaced in recent runs (for example an action forced from Node 20 to 24) when a newer action major fixes them.
+
+Action bumps cannot be executed locally. The pull request this upgrade produces runs the main CI workflow, which is the verification — call that out in the report. If open Dependabot PRs cover the same bumps, note that they become redundant once this lands.
+
+## Step 8: Fix analyzer issues
 
 ```
 fvm flutter analyze
@@ -126,7 +148,7 @@ fvm flutter analyze
 
 Fix all **errors**, then re-run until the analyzer reports zero errors. Per project rules, leave warnings and info-level diagnostics alone unless they were introduced by this upgrade.
 
-## Step 8: Run the test suite
+## Step 9: Run the test suite
 
 ```
 very_good test --coverage --test-randomize-ordering-seed=random --exclude-coverage "**/*.g.dart" --exclude-coverage "**/*.freezed.dart" --exclude-coverage "lib/l10n/gen/*"
@@ -141,7 +163,7 @@ Fix any broken tests. Distinguish the two failure causes:
 
 Re-run until all tests pass and coverage stays at or above the CI minimum (100%).
 
-## Step 9: Report
+## Step 10: Report
 
 Write the summary to `UPGRADE_NOTES.md` at the repo root (when run in CI this becomes the pull request description) and also report it in chat. Include:
 
@@ -150,6 +172,7 @@ Write the summary to `UPGRADE_NOTES.md` at the repo root (when run in CI this be
 - Packages held back and why.
 - A bullet per code migration applied, naming the package and the reason.
 - Native project changes: every Android/iOS tooling version bumped (old → new) and which builds verified them, or an explicit note that iOS could not be built on this platform.
+- GitHub Actions bumped (old → new) per workflow file, any release-note-driven config edits, and which open Dependabot PRs this supersedes.
 - The final analyze / test / coverage results.
 
 If anything could not be safely migrated, leave it pinned at the working version and explain why in `UPGRADE_NOTES.md` rather than forcing it.
