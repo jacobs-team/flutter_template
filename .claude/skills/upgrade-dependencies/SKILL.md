@@ -1,11 +1,11 @@
 ---
 name: upgrade-dependencies
-description: Upgrade the Flutter SDK and all dependencies to their latest compatible versions, apply migration guides for upgraded packages, then fix analyzer issues and broken tests. Use when the user says "upgrade dependencies", "update packages", "bump deps", or "update all flutter dependencies".
+description: Upgrade the Flutter SDK and all dependencies to their latest compatible versions, apply migration guides for upgraded packages, bring the native Android/iOS projects up to the new SDK's template (Gradle, AGP, Kotlin, JVM targets, deployment targets), then fix analyzer issues and broken tests. Use when the user says "upgrade dependencies", "update packages", "bump deps", or "update all flutter dependencies".
 ---
 
 # Upgrade the Flutter SDK and Dependencies
 
-Bump the pinned Flutter SDK to the latest stable, upgrade every package in `pubspec.yaml` to its latest possible version, migrate the codebase for breaking changes, and leave the analyzer and test suite green. Use `fvm flutter` / `fvm dart` for all CLI commands.
+Bump the pinned Flutter SDK to the latest stable, upgrade every package in `pubspec.yaml` to its latest possible version, migrate the codebase for breaking changes, bring the native Android/iOS projects up to what the new SDK and plugins expect, and leave the analyzer and test suite green. Use `fvm flutter` / `fvm dart` for all CLI commands.
 
 ## Step 1: Snapshot current state
 
@@ -71,7 +71,8 @@ For each **direct** dependency that changed:
 
 1. Fetch its changelog at `https://pub.dev/packages/<package>/changelog` (WebFetch). For major bumps also check the package README/repo for a dedicated migration guide.
 2. Read every entry between the old and new version and note breaking changes, deprecations, and renamed/removed APIs.
-3. Search the codebase for affected APIs and apply the required changes. Follow the project conventions in CLAUDE.md while editing.
+3. Also note any **native requirement changes** in those entries — raised Android `minSdk`/`compileSdk`, new Kotlin/AGP minimums, raised iOS deployment target, Swift Package Manager or CocoaPods setup changes. Carry these into Step 6.
+4. Search the codebase for affected APIs and apply the required changes. Follow the project conventions in CLAUDE.md while editing.
 
 Do NOT guess at API changes. Base every code change on the changelog or migration guide. If neither is available, read the package's README and API docs before changing anything — never invent a new API shape from memory.
 
@@ -83,7 +84,41 @@ If codegen-related packages changed (`freezed`, `json_serializable`, `injectable
 fvm dart run build_runner build --delete-conflicting-outputs
 ```
 
-## Step 6: Fix analyzer issues
+## Step 6: Verify and upgrade the native projects
+
+The Android and iOS projects go stale independently of `pubspec.yaml` — Gradle, AGP, Kotlin, JVM targets, and iOS deployment targets all drift behind what the new Flutter SDK and upgraded plugins expect. Bring them up to date every run so projects created from this template never inherit outdated native config.
+
+1. Generate a pristine reference app with the exact new SDK in a temp directory (the scratchpad), so the diff target is what Flutter's own templates currently ship:
+
+   ```
+   fvm flutter create --project-name ref_app --platforms android,ios,web ref_app
+   ```
+
+2. Diff each of these project files against the reference and adopt the reference's tooling versions. Never downgrade a value the project already pins higher than the reference, and preserve project-specific config (flavors, `applicationId`/bundle ids, signing, ProGuard, manifest entries, icons):
+
+   - `android/gradle/wrapper/gradle-wrapper.properties` — Gradle `distributionUrl`
+   - `android/settings.gradle.kts` — AGP (`com.android.application`) and Kotlin (`org.jetbrains.kotlin.android`) plugin versions
+   - `android/app/build.gradle.kts` and `android/build.gradle.kts` — `compileSdk`, `minSdk`, `targetSdk`, `ndkVersion`, Java `compileOptions`/`kotlinOptions.jvmTarget` (or `compilerOptions`)
+   - `android/gradle.properties` — JVM args and AndroidX flags
+   - `ios/Flutter/AppFrameworkInfo.plist` — `MinimumOSVersion`
+   - `ios/Runner.xcodeproj/project.pbxproj` — every `IPHONEOS_DEPLOYMENT_TARGET` occurrence
+   - `ios/Podfile` — `platform :ios` version (only if the project has a Podfile)
+
+3. Apply the native requirements collected from plugin changelogs in Step 5. When a plugin demands more than the fresh template (for example a higher `minSdk` or iOS deployment target), raise the project to the plugin's requirement.
+
+4. For the SDK jump itself, check `https://docs.flutter.dev/release/breaking-changes` for Android/iOS template migrations between the old and new versions (Gradle imperative-to-declarative moves, manifest changes, etc.) and apply any that affect these files.
+
+5. Prove the Android project actually builds with the new toolchain — file diffs alone don't catch Gradle incompatibilities:
+
+   ```
+   fvm flutter build apk --debug --flavor development --target lib/main_development.dart
+   ```
+
+   On macOS also verify iOS: `fvm flutter build ios --debug --no-codesign --flavor development --target lib/main_development.dart`. On other platforms the pbxproj/plist diff plus CI is the iOS verification — say so in the report rather than skipping silently.
+
+6. Delete the reference app once done.
+
+## Step 7: Fix analyzer issues
 
 ```
 fvm flutter analyze
@@ -91,7 +126,7 @@ fvm flutter analyze
 
 Fix all **errors**, then re-run until the analyzer reports zero errors. Per project rules, leave warnings and info-level diagnostics alone unless they were introduced by this upgrade.
 
-## Step 7: Run the test suite
+## Step 8: Run the test suite
 
 ```
 very_good test --coverage --test-randomize-ordering-seed=random --exclude-coverage "**/*.g.dart" --exclude-coverage "**/*.freezed.dart" --exclude-coverage "lib/l10n/gen/*"
@@ -106,7 +141,7 @@ Fix any broken tests. Distinguish the two failure causes:
 
 Re-run until all tests pass and coverage stays at or above the CI minimum (100%).
 
-## Step 8: Report
+## Step 9: Report
 
 Write the summary to `UPGRADE_NOTES.md` at the repo root (when run in CI this becomes the pull request description) and also report it in chat. Include:
 
@@ -114,6 +149,7 @@ Write the summary to `UPGRADE_NOTES.md` at the repo root (when run in CI this be
 - The upgraded-packages table from Step 4.
 - Packages held back and why.
 - A bullet per code migration applied, naming the package and the reason.
+- Native project changes: every Android/iOS tooling version bumped (old → new) and which builds verified them, or an explicit note that iOS could not be built on this platform.
 - The final analyze / test / coverage results.
 
 If anything could not be safely migrated, leave it pinned at the working version and explain why in `UPGRADE_NOTES.md` rather than forcing it.
