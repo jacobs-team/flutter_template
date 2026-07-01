@@ -176,3 +176,28 @@ Write the summary to `UPGRADE_NOTES.md` at the repo root (when run in CI this be
 - The final analyze / test / coverage results.
 
 If anything could not be safely migrated, leave it pinned at the working version and explain why in `UPGRADE_NOTES.md` rather than forcing it.
+
+## Step 11: Hand off the changes
+
+How the changes leave your hands depends on where you are running:
+
+**Local interactive run**: do NOT commit or push. List the changed files and a suggested commit message, and let the developer commit themselves.
+
+**CI run** (the `GITHUB_ACTIONS` env var is set): you are the one opening the pull request.
+
+1. Set a git identity if none is configured:
+
+   ```
+   git config user.name "github-actions[bot]"
+   git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+   ```
+
+2. If nothing changed (working tree is clean), stop here and report that everything was already current — do not open an empty PR.
+3. Create the branch `chore/ai-dependency-upgrade`, commit every change with message `chore: upgrade Flutter SDK and dependencies`, and push with `--force` so a leftover branch from a previous run is replaced.
+4. If no open PR exists for that branch, create one:
+
+   ```
+   gh pr create --title "chore: AI dependency + Flutter SDK upgrade" --body-file UPGRADE_NOTES.md --label dependencies
+   ```
+
+   If a PR is already open for the branch, the push updated it — just refresh its body with `gh pr edit --body-file UPGRADE_NOTES.md`.
