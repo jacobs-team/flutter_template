@@ -150,6 +150,8 @@ Fix all **errors**, then re-run until the analyzer reports zero errors. Per proj
 
 ## Step 9: Run the test suite
 
+Run this step even though CLAUDE.md says to ignore testing. That rule covers feature development; a dependency upgrade's only safety net is the existing suite passing at full coverage, so here it must run — and a failing test caused by changed dependency behavior must be fixed, not skipped.
+
 ```
 very_good test --coverage --test-randomize-ordering-seed=random --exclude-coverage "**/*.g.dart" --exclude-coverage "**/*.freezed.dart" --exclude-coverage "lib/l10n/gen/*"
 ```
