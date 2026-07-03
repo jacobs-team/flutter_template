@@ -2,6 +2,7 @@
 
 ## General
 
+- Before writing code against any package or tool (drift, firebase, go_router, ...), check its current documentation and validate the approach follows that package's best practices. For raw Flutter/Dart, check the docs when needed. Training-data knowledge may be stale; the docs win.
 - Do not re-add previously removed code. If code was removed by the developer, assume it was intentional. Ask before re-introducing it.
 - Do not add unnecessary inline comments. Only comment on non-obvious logic. Never restate what the code already says.
 - A doc comment describes what something IS, not the history of how it got there. When you change behavior, do NOT append context about the change ("X is now null when...", "calories are no longer estimated..."). Only edit a comment if the existing text no longer accurately describes the definition. If the original sentence still holds, leave it or just delete the now-wrong clause — comments are not a change log. Example: changing a field's behavior, keep `/// A single thing the user logged eating.` as-is rather than tacking on why calories may be null.
