@@ -24,17 +24,17 @@ void main() {
       when(() => coffeeBloc.state).thenReturn(const CoffeeState());
       when(() => coffeeBloc.stream).thenAnswer((_) => const Stream.empty());
 
-      when(() => fileCacheService.getBytes(any())).thenAnswer(
-        (_) async => transparentPixel,
-      );
+      when(
+        () => fileCacheService.getBytes(any()),
+      ).thenAnswer((_) async => transparentPixel);
     });
 
     testWidgets(
       'renders $ExpandedImage and shows image memory in $ExpandedImage',
       (tester) async {
-        when(() => coffeeBloc.state).thenReturn(
-          const CoffeeState(favorites: [url]),
-        );
+        when(
+          () => coffeeBloc.state,
+        ).thenReturn(const CoffeeState(favorites: [url]));
 
         await tester.pumpPumpPumpItUP(
           deps: [coffeeBloc, fileCacheService],
@@ -52,9 +52,9 @@ void main() {
     testWidgets('paginates through favorites in $ExpandedImage', (
       tester,
     ) async {
-      when(() => coffeeBloc.state).thenReturn(
-        const CoffeeState(favorites: [url, url2]),
-      );
+      when(
+        () => coffeeBloc.state,
+      ).thenReturn(const CoffeeState(favorites: [url, url2]));
 
       await tester.pumpPumpPumpItUP(
         deps: [coffeeBloc, fileCacheService],
@@ -78,9 +78,9 @@ void main() {
           () => fileCacheService.getBytes(any()),
         ).thenAnswer((_) => completer.future);
 
-        when(() => coffeeBloc.state).thenReturn(
-          const CoffeeState(favorites: [url]),
-        );
+        when(
+          () => coffeeBloc.state,
+        ).thenReturn(const CoffeeState(favorites: [url]));
 
         await tester.pumpPumpPumpItUP(
           deps: [coffeeBloc, fileCacheService],

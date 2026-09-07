@@ -11,10 +11,8 @@ import 'package:flutter_template/l10n/l10n.dart';
 /// {@endtemplate}
 class FloatingControls extends StatelessWidget {
   /// {@macro floating_controls}
-  const FloatingControls({
-    required PageController pageController,
-    super.key,
-  }) : _pageController = pageController;
+  const FloatingControls({required PageController pageController, super.key})
+    : _pageController = pageController;
 
   final PageController _pageController;
 
@@ -95,20 +93,14 @@ class _FavoriteButton extends StatelessWidget {
                 ? const SizedBox(
                     height: 20,
                     width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
+                    child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : Icon(
-                    favorited ? Icons.favorite : Icons.favorite_outline,
-                  ),
+                : Icon(favorited ? Icons.favorite : Icons.favorite_outline),
             color: favorited
                 ? colorScheme.onPrimary
                 : colorScheme.onSurfaceVariant,
             style: favorited
-                ? IconButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                  )
+                ? IconButton.styleFrom(backgroundColor: colorScheme.primary)
                 : null,
           ),
         );

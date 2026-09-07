@@ -84,9 +84,9 @@ void main() {
     testWidgets(
       'triggers $ToggleFavoriteImage when favorite button is pressed',
       (tester) async {
-        when(() => coffeeBloc.state).thenReturn(
-          const CoffeeState(images: [url]),
-        );
+        when(
+          () => coffeeBloc.state,
+        ).thenReturn(const CoffeeState(images: [url]));
 
         await tester.pumpPumpPumpItUP(
           deps: [coffeeBloc],
@@ -102,9 +102,9 @@ void main() {
     testWidgets(
       'renders filled favorite icon when current image is favorited',
       (tester) async {
-        when(() => coffeeBloc.state).thenReturn(
-          const CoffeeState(images: [url], favorites: [url]),
-        );
+        when(
+          () => coffeeBloc.state,
+        ).thenReturn(const CoffeeState(images: [url], favorites: [url]));
 
         await tester.pumpPumpPumpItUP(
           deps: [coffeeBloc],

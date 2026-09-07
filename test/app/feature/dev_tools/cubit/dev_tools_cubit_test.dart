@@ -12,18 +12,14 @@ void main() {
       'toggleDebugApi emits toggled isApiDebug in $DevToolsCubit',
       build: DevToolsCubit.new,
       act: (cubit) => cubit.toggleDebugApi(),
-      expect: () => [
-        const DevToolsState(isApiDebug: false),
-      ],
+      expect: () => [const DevToolsState(isApiDebug: false)],
     );
 
     blocTest<DevToolsCubit, DevToolsState>(
       'toggleDarkMode emits toggled isDarkMode in $DevToolsCubit',
       build: DevToolsCubit.new,
       act: (cubit) => cubit.toggleDarkMode(),
-      expect: () => [
-        const DevToolsState(isDarkMode: true),
-      ],
+      expect: () => [const DevToolsState(isDarkMode: true)],
     );
 
     test('fromJson returns correct $DevToolsState', () {

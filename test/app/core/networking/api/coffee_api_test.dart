@@ -16,25 +16,20 @@ void main() {
       coffeeApi = CoffeeApi(restClient);
     });
 
-    test(
-      'getCoffeeImageUrl calls restClient.request with correct endpoint '
-      'in $CoffeeApi',
-      () async {
-        when(
-          () => restClient.request<dynamic>(any(), HttpMethod.get),
-        ).thenAnswer(
-          (_) async => Response(requestOptions: RequestOptions()),
-        );
+    test('getCoffeeImageUrl calls restClient.request with correct endpoint '
+        'in $CoffeeApi', () async {
+      when(
+        () => restClient.request<dynamic>(any(), HttpMethod.get),
+      ).thenAnswer((_) async => Response(requestOptions: RequestOptions()));
 
-        await coffeeApi.getCoffeeImageUrl();
+      await coffeeApi.getCoffeeImageUrl();
 
-        verify(
-          () => restClient.request<dynamic>(
-            Endpoints.coffee.random,
-            HttpMethod.get,
-          ),
-        ).called(1);
-      },
-    );
+      verify(
+        () => restClient.request<dynamic>(
+          Endpoints.coffee.random,
+          HttpMethod.get,
+        ),
+      ).called(1);
+    });
   });
 }

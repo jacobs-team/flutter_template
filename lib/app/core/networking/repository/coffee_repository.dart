@@ -15,6 +15,6 @@ class CoffeeRepository {
   /// Fetches a random coffee image.
   Future<Coffee> getCoffeeImage() async {
     final response = await _coffeeApi.getCoffeeImageUrl();
-    return mapJson(response.data, Coffee.fromJson);
+    return await mapJson(response.data, Coffee.fromJson);
   }
 }

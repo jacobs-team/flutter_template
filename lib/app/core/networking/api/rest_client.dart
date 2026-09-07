@@ -19,19 +19,12 @@ part 'interceptors/logging_interceptor.dart';
 class RestClient {
   /// {@macro api_client}
   RestClient(this._authCubit, this._devToolsCubit, [@ignoreParam Dio? dio])
-    : _dio =
-          dio ??
-          Dio(
-            BaseOptions(baseUrl: EnvironmentConfig.apiDomain),
-          ) {
+    : _dio = dio ?? Dio(BaseOptions(baseUrl: EnvironmentConfig.apiDomain)) {
     _dio.interceptors.addAll([
       if (kDebugMode)
         LoggingInterceptor(
           _devToolsCubit,
-          PrettyDioLogger(
-            requestBody: true,
-            maxWidth: 100,
-          ),
+          PrettyDioLogger(requestBody: true, maxWidth: 100),
         ),
     ]);
   }

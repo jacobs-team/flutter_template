@@ -70,10 +70,7 @@ class AuthCubit extends HydratedCubit<AuthState> implements Listenable {
 @freezed
 abstract class AuthState with _$AuthState {
   /// {@macro auth_state}
-  const factory AuthState({
-    String? user,
-    String? token,
-  }) = _AuthState;
+  const factory AuthState({String? user, String? token}) = _AuthState;
 
   const AuthState._();
 

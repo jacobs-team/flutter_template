@@ -15,7 +15,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.example.verygoodcore.flutter_template"
-    compileSdk = flutter.compileSdkVersion
+    // flutter_secure_storage requires compileSdk 37, higher than this Flutter version's default.
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

@@ -23,10 +23,7 @@ void main() {
       () async {
         final data = {'file': url};
         when(() => coffeeApi.getCoffeeImageUrl()).thenAnswer(
-          (_) async => Response(
-            data: data,
-            requestOptions: RequestOptions(),
-          ),
+          (_) async => Response(data: data, requestOptions: RequestOptions()),
         );
 
         final result = await coffeeRepository.getCoffeeImage();

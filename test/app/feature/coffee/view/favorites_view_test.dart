@@ -20,9 +20,9 @@ void main() {
       when(() => coffeeBloc.state).thenReturn(const CoffeeState());
       when(() => coffeeBloc.stream).thenAnswer((_) => const Stream.empty());
 
-      when(() => fileCacheService.getBytes(any())).thenAnswer(
-        (_) async => transparentPixel,
-      );
+      when(
+        () => fileCacheService.getBytes(any()),
+      ).thenAnswer((_) async => transparentPixel);
     });
 
     testWidgets(
@@ -37,29 +37,23 @@ void main() {
       },
     );
 
-    testWidgets(
-      'renders list of $FavoriteImage when favorites exist '
-      'in $FavoritesView',
-      (tester) async {
-        when(() => coffeeBloc.state).thenReturn(
-          const CoffeeState(favorites: [url, 'url2']),
-        );
+    testWidgets('renders list of $FavoriteImage when favorites exist '
+        'in $FavoritesView', (tester) async {
+      when(
+        () => coffeeBloc.state,
+      ).thenReturn(const CoffeeState(favorites: [url, 'url2']));
 
-        await tester.pumpPumpPumpItUP(
-          deps: [coffeeBloc, fileCacheService],
-          const FavoritesView(),
-        );
-        await tester.pumpAndSettle();
+      await tester.pumpPumpPumpItUP(
+        deps: [coffeeBloc, fileCacheService],
+        const FavoritesView(),
+      );
+      await tester.pumpAndSettle();
 
-        expect(find.byType(ListView), findsOneWidget);
-        expect(find.byKey(const ValueKey(url)), findsOneWidget);
+      expect(find.byType(ListView), findsOneWidget);
+      expect(find.byKey(const ValueKey(url)), findsOneWidget);
 
-        await tester.scrollUntilVisible(
-          find.byKey(const ValueKey('url2')),
-          200,
-        );
-        expect(find.byKey(const ValueKey('url2')), findsOneWidget);
-      },
-    );
+      await tester.scrollUntilVisible(find.byKey(const ValueKey('url2')), 200);
+      expect(find.byKey(const ValueKey('url2')), findsOneWidget);
+    });
   });
 }

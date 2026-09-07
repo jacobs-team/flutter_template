@@ -17,10 +17,7 @@ T mapJson<T>(dynamic raw, T Function(Map<String, dynamic>) fromMap) {
 /// Expects [raw] to be a [List<dynamic>]. Each element in the list is
 /// transformed using the [fromJson] function. If the list cast or
 /// any individual element mapping fails, a [MappingException] is thrown.
-List<T> mapJsonList<T>(
-  dynamic raw,
-  T Function(Map<String, dynamic>) fromJson,
-) {
+List<T> mapJsonList<T>(dynamic raw, T Function(Map<String, dynamic>) fromJson) {
   try {
     final list = raw as List<dynamic>;
     return list.map((e) => fromJson(e as Map<String, dynamic>)).toList();

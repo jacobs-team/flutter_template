@@ -24,9 +24,9 @@ void main() {
     blocTest<CoffeeBloc, CoffeeState>(
       'emits correct state on $LoadImages and fetches from $CoffeeRepository',
       setUp: () {
-        when(() => repo.getCoffeeImage()).thenAnswer(
-          (_) async => const Coffee(imageUrl: url),
-        );
+        when(
+          () => repo.getCoffeeImage(),
+        ).thenAnswer((_) async => const Coffee(imageUrl: url));
       },
       build: () => CoffeeBloc(repo, cacheService),
       act: (bloc) => bloc.add(const LoadImages(0)),
@@ -87,11 +87,7 @@ void main() {
           'loadingState',
           equals(CoffeeLoadingState.saving),
         ),
-        isA<CoffeeState>().having(
-          (s) => s.favorites,
-          'favorites',
-          isEmpty,
-        ),
+        isA<CoffeeState>().having((s) => s.favorites, 'favorites', isEmpty),
       ],
     );
 
@@ -214,8 +210,11 @@ void main() {
       final bloc = CoffeeBloc(repo, cacheService);
       final json = <String, dynamic>{
         'favorites': [url],
+        'imageWindow': [0, 1],
       };
-      expect(bloc.fromJson(json).favorites, equals([url]));
+      final state = bloc.fromJson(json);
+      expect(state.favorites, equals([url]));
+      expect(state.imageWindow, equals({0, 1}));
     });
   });
 }

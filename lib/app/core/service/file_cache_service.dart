@@ -12,14 +12,14 @@ import 'package:injectable/injectable.dart';
 @singleton
 class FileCacheService {
   /// Retrieves a file from the cache or downloads it if it does not exist.
-  Future<File> getFile(String url) async {
+  Future<File> getFile(String url) {
     return DefaultCacheManager().getSingleFile(url);
   }
 
   /// Reads the cached file bytes for [url], downloading it first if needed.
   Future<Uint8List> getBytes(String url) async {
     final file = await getFile(url);
-    return file.readAsBytes();
+    return await file.readAsBytes();
   }
 
   /// Removes a specific file from the local cache.

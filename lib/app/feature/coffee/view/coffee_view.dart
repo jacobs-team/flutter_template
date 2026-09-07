@@ -85,12 +85,8 @@ class _CoffeeViewState extends State<CoffeeView> {
                 previous.loadingState != CoffeeLoadingState.failure &&
                 current.loadingState == CoffeeLoadingState.failure,
             listener: (context, state) {
-              ScaffoldMessenger.of(
-                context,
-              ).clearSnackBars();
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.errorMessage!),
                   duration: const Duration(seconds: 10),

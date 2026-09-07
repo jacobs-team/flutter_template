@@ -59,9 +59,7 @@ class AppRouter {
             GoRoute(
               path: Routes.coffee,
               pageBuilder: (context, state) {
-                return const NoTransitionPage(
-                  child: CoffeeView(),
-                );
+                return const NoTransitionPage(child: CoffeeView());
               },
             ),
           ],
