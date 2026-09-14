@@ -117,10 +117,7 @@ void main() {
         );
 
         expect(find.text('No connection'), findsOneWidget);
-        expect(
-          find.byIcon(Icons.signal_cellular_nodata),
-          findsOneWidget,
-        );
+        expect(find.byIcon(Icons.signal_cellular_nodata), findsOneWidget);
       },
     );
     testWidgets(

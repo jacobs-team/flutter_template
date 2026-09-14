@@ -84,9 +84,7 @@ class NavigationWrapper extends StatelessWidget {
                                   index == navigationShell.currentIndex,
                             ),
                       ),
-                    Expanded(
-                      child: navigationShell,
-                    ),
+                    Expanded(child: navigationShell),
                   ],
                 ),
               ),
@@ -167,9 +165,7 @@ class _FloatingNavBar extends StatelessWidget {
                 ? colorScheme.onPrimary
                 : colorScheme.onSurfaceVariant,
             style: isSelected
-                ? IconButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                  )
+                ? IconButton.styleFrom(backgroundColor: colorScheme.primary)
                 : null,
           );
         }).toList(),

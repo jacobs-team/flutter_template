@@ -139,9 +139,7 @@ class AppTheme {
         backgroundColor: colorScheme.surfaceContainer,
         elevation: 0,
         selectedIconTheme: IconThemeData(color: colorScheme.primary),
-        unselectedIconTheme: IconThemeData(
-          color: colorScheme.onSurfaceVariant,
-        ),
+        unselectedIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
       ),
 
       dialogTheme: DialogThemeData(

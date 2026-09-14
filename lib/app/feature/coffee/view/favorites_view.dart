@@ -27,9 +27,8 @@ class FavoritesView extends StatelessWidget {
           return ListView.separated(
             padding: EdgeInsets.all(AppDesign.spacing.md),
             clipBehavior: Clip.none,
-            separatorBuilder: (context, index) => SizedBox(
-              height: AppDesign.spacing.md,
-            ),
+            separatorBuilder: (context, index) =>
+                SizedBox(height: AppDesign.spacing.md),
             itemCount: savedImages.length,
             itemBuilder: (context, index) {
               return FavoriteImage(

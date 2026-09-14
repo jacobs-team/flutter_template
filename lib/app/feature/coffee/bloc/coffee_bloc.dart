@@ -76,10 +76,7 @@ class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
     }
   }
 
-  Future<void> _loadImages(
-    LoadImages event,
-    Emitter<CoffeeState> emit,
-  ) async {
+  Future<void> _loadImages(LoadImages event, Emitter<CoffeeState> emit) async {
     try {
       final numImagesToLoad = math.max(
         0,
@@ -122,10 +119,7 @@ class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
       }
 
       final totalImages = state.images.length;
-      final windowStart = (event.currentImage - 5).clamp(
-        0,
-        totalImages - 1,
-      );
+      final windowStart = (event.currentImage - 5).clamp(0, totalImages - 1);
       final windowEnd = (event.currentImage + 5).clamp(0, totalImages - 1);
       final imageWindow = <int>{
         for (int i = windowStart; i <= windowEnd; i++) i,

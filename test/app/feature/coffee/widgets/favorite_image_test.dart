@@ -26,9 +26,9 @@ void main() {
       when(() => coffeeBloc.state).thenReturn(const CoffeeState());
       when(() => coffeeBloc.stream).thenAnswer((_) => const Stream.empty());
 
-      when(() => fileCacheService.getBytes(any())).thenAnswer(
-        (_) async => transparentPixel,
-      );
+      when(
+        () => fileCacheService.getBytes(any()),
+      ).thenAnswer((_) async => transparentPixel);
     });
 
     testWidgets('renders $FavoriteImage and shows image from cache', (
