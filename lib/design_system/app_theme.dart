@@ -1,9 +1,9 @@
 // coverage:ignore-file
 
-import 'package:flutter/material.dart';
 import 'package:flutter_template/design_system/app_design.dart';
 import 'package:flutter_template/design_system/app_palette.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Central place for defining the application's visual theme.
 class AppTheme {

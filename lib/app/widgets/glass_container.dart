@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_template/design_system/design_system.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A glassmorphic container with backdrop blur, translucent fill,
 /// and a subtle ghost border.

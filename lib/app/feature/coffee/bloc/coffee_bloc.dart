@@ -27,11 +27,11 @@ class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
   /// {@macro coffee_bloc}
   CoffeeBloc(this._repo, this._cacheService) : super(const CoffeeState()) {
     on<CoffeeEvent>(
-      (coffeEvent, emit) => coffeEvent.map(
-        loadImages: (value) => _loadImages(value, emit),
-        toggleFavoriteImage: (value) => _toggleFavorite(value, emit),
-        clearFeed: (value) => emit(CoffeeState(favorites: state.favorites)),
-      ),
+      (coffeEvent, emit) => switch (coffeEvent) {
+        final LoadImages event => _loadImages(event, emit),
+        final ToggleFavoriteImage event => _toggleFavorite(event, emit),
+        ClearFeed() => emit(CoffeeState(favorites: state.favorites)),
+      },
     );
   }
 
@@ -163,7 +163,7 @@ class CoffeeBloc extends HydratedBloc<CoffeeEvent, CoffeeState> {
 }
 
 @Freezed()
-abstract class CoffeeEvent with _$CoffeeEvent {
+sealed class CoffeeEvent with _$CoffeeEvent {
   const factory CoffeeEvent.loadImages(int currentImage) = LoadImages;
   const factory CoffeeEvent.toggleFavoriteImage(String url) =
       ToggleFavoriteImage;

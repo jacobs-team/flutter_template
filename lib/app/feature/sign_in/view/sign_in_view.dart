@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, placeholder
 // coverage:ignore-file
 
-import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/l10n/l10n.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({super.key});

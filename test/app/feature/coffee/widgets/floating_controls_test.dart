@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_template/app/feature/coffee/widgets/floating_controls.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../helpers/helpers.dart';

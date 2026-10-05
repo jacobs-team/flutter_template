@@ -1,7 +1,6 @@
 // coverage:ignore-file
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/cubit/auth_cubit.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_template/app/navigation/navigation_wrapper.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_template/app/navigation/routes.dart';
 import 'package:flutter_template/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template app_router}
 /// Central navigation configuration using [GoRouter].

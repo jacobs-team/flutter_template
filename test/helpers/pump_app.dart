@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_template/app/app.dart';
 import 'package:flutter_template/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'helpers.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_template/app/navigation/navigation.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:flutter_template/design_system/design_system.dart';
 import 'package:flutter_template/l10n/l10n.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template coffee_app}
 /// The root widget of the application.
