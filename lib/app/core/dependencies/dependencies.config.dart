@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+
 import 'package:flutter_template/app/core/core.dart' as _i483;
 import 'package:flutter_template/app/core/cubit/auth_cubit.dart' as _i669;
 import 'package:flutter_template/app/core/cubit/connectivity_cubit.dart'

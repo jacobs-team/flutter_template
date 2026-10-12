@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/cubit/connectivity_cubit.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
 import 'package:flutter_template/app/feature/coffee/widgets/floating_controls.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template coffee_view}
 /// A stateful widget that displays a vertical feed of coffee images.
