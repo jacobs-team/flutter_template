@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
@@ -9,6 +7,7 @@ import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:flutter_template/design_system/design_system.dart';
 import 'package:flutter_template/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template favorite_image}
 /// A stateless widget that displays a single favorited coffee image from
@@ -36,19 +35,17 @@ class FavoriteImage extends StatelessWidget {
         }
         return GestureDetector(
           onTap: () {
-            unawaited(
-              showDialog<void>(
-                context: context,
-                builder: (context) => Dismissible(
-                  key: UniqueKey(),
-                  onDismissed: (direction) {
-                    if (context.canPop()) {
-                      context.pop();
-                    }
-                  },
-                  direction: DismissDirection.vertical,
-                  child: ExpandedImage(coffeeImage),
-                ),
+            showDialog<void>(
+              context: context,
+              builder: (context) => Dismissible(
+                key: UniqueKey(),
+                onDismissed: (direction) {
+                  if (context.canPop()) {
+                    context.pop();
+                  }
+                },
+                direction: DismissDirection.vertical,
+                child: ExpandedImage(coffeeImage),
               ),
             );
           },

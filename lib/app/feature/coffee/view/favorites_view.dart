@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/coffee/coffee.dart';
 import 'package:flutter_template/design_system/design_system.dart';
 import 'package:flutter_template/l10n/l10n.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template favorites_view}
 /// A stateless widget that displays a grid of favorited coffee images.
@@ -27,9 +27,8 @@ class FavoritesView extends StatelessWidget {
           return ListView.separated(
             padding: EdgeInsets.all(AppDesign.spacing.md),
             clipBehavior: Clip.none,
-            separatorBuilder: (context, index) => SizedBox(
-              height: AppDesign.spacing.md,
-            ),
+            separatorBuilder: (context, index) =>
+                SizedBox(height: AppDesign.spacing.md),
             itemCount: savedImages.length,
             itemBuilder: (context, index) {
               return FavoriteImage(

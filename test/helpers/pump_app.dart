@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_template/app/app.dart';
 import 'package:flutter_template/l10n/l10n.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'helpers.dart';
@@ -35,14 +35,15 @@ extension PumpApp on WidgetTester {
     }
 
     // Lazy so the router binds to whichever AuthCubit the test registered.
-    getIt.registerLazySingleton<AppRouter>(
-      () => AppRouter(getIt<AuthCubit>()),
-    );
+    getIt.registerLazySingleton<AppRouter>(() => AppRouter(getIt<AuthCubit>()));
 
     await pumpWidget(
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          ...GlobalMaterialLocalizations.delegates,
+        ],
         supportedLocales: AppLocalizations.supportedLocales,
         locale: locale,
         home: Layout(child: Scaffold(body: widget)),

@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_template/app/core/core.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../../helpers/helpers.dart';
@@ -66,9 +66,7 @@ void main() {
     testWidgets('triggers $ToggleFavoriteImage when $CoffeeImage is tapped', (
       tester,
     ) async {
-      when(() => coffeeBloc.state).thenReturn(
-        const CoffeeState(images: [url]),
-      );
+      when(() => coffeeBloc.state).thenReturn(const CoffeeState(images: [url]));
 
       await tester.pumpPumpPumpItUP(
         deps: [coffeeBloc, connectivityCubit],
@@ -86,9 +84,9 @@ void main() {
     testWidgets('shows broken heart when unfavoriting a $CoffeeImage', (
       tester,
     ) async {
-      when(() => coffeeBloc.state).thenReturn(
-        const CoffeeState(images: [url], favorites: [url]),
-      );
+      when(
+        () => coffeeBloc.state,
+      ).thenReturn(const CoffeeState(images: [url], favorites: [url]));
 
       await tester.pumpPumpPumpItUP(
         deps: [coffeeBloc, connectivityCubit],
@@ -131,9 +129,9 @@ void main() {
     testWidgets('triggers $LoadImages when page changes in $CoffeeView', (
       tester,
     ) async {
-      when(() => coffeeBloc.state).thenReturn(
-        const CoffeeState(images: [url, 'url2']),
-      );
+      when(
+        () => coffeeBloc.state,
+      ).thenReturn(const CoffeeState(images: [url, 'url2']));
 
       await tester.pumpPumpPumpItUP(
         deps: [coffeeBloc, connectivityCubit],
@@ -161,9 +159,7 @@ void main() {
       );
       await tester.pump();
 
-      verify(
-        () => coffeeBloc.add(const LoadImages(0)),
-      ).called(greaterThan(0));
+      verify(() => coffeeBloc.add(const LoadImages(0))).called(greaterThan(0));
     });
   });
 }

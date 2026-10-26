@@ -16,10 +16,7 @@ void main() {
     });
 
     testWidgets('renders $CoffeeApp', (tester) async {
-      await tester.pumpPumpPumpItUP(
-        deps: [devToolsCubit],
-        const CoffeeApp(),
-      );
+      await tester.pumpPumpPumpItUP(deps: [devToolsCubit], const CoffeeApp());
       expect(find.byType(CoffeeApp), findsOneWidget);
     });
 

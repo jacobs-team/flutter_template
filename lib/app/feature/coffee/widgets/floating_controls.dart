@@ -1,20 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_template/app/core/dependencies/dependencies.dart';
 import 'package:flutter_template/app/feature/feature.dart';
 import 'package:flutter_template/app/widgets/widgets.dart';
 import 'package:flutter_template/design_system/design_system.dart';
 import 'package:flutter_template/l10n/l10n.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// {@template floating_controls}
 /// A glassmorphic pill of floating controls for the coffee discovery feed.
 /// {@endtemplate}
 class FloatingControls extends StatelessWidget {
   /// {@macro floating_controls}
-  const FloatingControls({
-    required PageController pageController,
-    super.key,
-  }) : _pageController = pageController;
+  const FloatingControls({required PageController pageController, super.key})
+    : _pageController = pageController;
 
   final PageController _pageController;
 
@@ -95,20 +93,14 @@ class _FavoriteButton extends StatelessWidget {
                 ? const SizedBox(
                     height: 20,
                     width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
+                    child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : Icon(
-                    favorited ? Icons.favorite : Icons.favorite_outline,
-                  ),
+                : Icon(favorited ? Icons.favorite : Icons.favorite_outline),
             color: favorited
                 ? colorScheme.onPrimary
                 : colorScheme.onSurfaceVariant,
             style: favorited
-                ? IconButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
-                  )
+                ? IconButton.styleFrom(backgroundColor: colorScheme.primary)
                 : null,
           ),
         );
