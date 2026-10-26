@@ -55,11 +55,7 @@ enum LayoutData {
 /// {@endtemplate}
 class Layout extends StatelessWidget {
   /// {@macro layout}
-  const Layout({
-    required this.child,
-    this.data,
-    super.key,
-  });
+  const Layout({required this.child, this.data, super.key});
 
   /// The threshold width at which the layout will change from
   /// small to medium
@@ -103,10 +99,7 @@ class Layout extends StatelessWidget {
 /// {@endtemplate}
 class _LayoutScope extends InheritedWidget {
   /// {@macro layout_scope}
-  const _LayoutScope({
-    required super.child,
-    required this.layout,
-  });
+  const _LayoutScope({required super.child, required this.layout});
 
   /// {@macro layout_data}
   final LayoutData layout;

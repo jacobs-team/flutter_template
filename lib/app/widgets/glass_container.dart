@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_template/design_system/design_system.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// A glassmorphic container with backdrop blur, translucent fill,
 /// and a subtle ghost border.
@@ -41,10 +41,7 @@ class GlassContainer extends StatelessWidget {
     return ClipRRect(
       borderRadius: radius,
       child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: blurSigma,
-          sigmaY: blurSigma,
-        ),
+        filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
         child: Container(
           padding: padding,
           decoration: BoxDecoration(

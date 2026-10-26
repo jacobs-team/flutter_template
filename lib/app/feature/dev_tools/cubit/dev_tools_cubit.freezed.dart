@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'dev_tools_cubit.dart';
@@ -9,6 +9,7 @@ part of 'dev_tools_cubit.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $DevToolsStateCopyWith<DevToolsState> get copyWith => _$DevToolsStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DevToolsState&&(identical(other.isApiDebug, isApiDebug) || other.isApiDebug == isApiDebug)&&(identical(other.isDarkMode, isDarkMode) || other.isDarkMode == isDarkMode));
+  final _this = this as DevToolsState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DevToolsState&&(identical(other.isApiDebug, _this.isApiDebug) || other.isApiDebug == _this.isApiDebug)&&(identical(other.isDarkMode, _this.isDarkMode) || other.isDarkMode == _this.isDarkMode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,isApiDebug,isDarkMode);
+int get hashCode {
+  final _this = this as DevToolsState;
+  return Object.hash(runtimeType,_this.isApiDebug,_this.isDarkMode);
+}
 
 @override
 String toString() {
-  return 'DevToolsState(isApiDebug: $isApiDebug, isDarkMode: $isDarkMode)';
+  final _this = this as DevToolsState;
+  return 'DevToolsState(isApiDebug: ${_this.isApiDebug}, isDarkMode: ${_this.isDarkMode})';
 }
 
 
@@ -66,7 +72,7 @@ class _$DevToolsStateCopyWithImpl<$Res>
 /// Create a copy of DevToolsState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? isApiDebug = null,Object? isDarkMode = null,}) {
-  return _then(_self.copyWith(
+  return _then(DevToolsState(
 isApiDebug: null == isApiDebug ? _self.isApiDebug : isApiDebug // ignore: cast_nullable_to_non_nullable
 as bool,isDarkMode: null == isDarkMode ? _self.isDarkMode : isDarkMode // ignore: cast_nullable_to_non_nullable
 as bool,
@@ -229,16 +235,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DevToolsState&&(identical(other.isApiDebug, isApiDebug) || other.isApiDebug == isApiDebug)&&(identical(other.isDarkMode, isDarkMode) || other.isDarkMode == isDarkMode));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DevToolsState&&(identical(other.isApiDebug, isApiDebug) || other.isApiDebug == isApiDebug)&&(identical(other.isDarkMode, isDarkMode) || other.isDarkMode == isDarkMode));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,isApiDebug,isDarkMode);
+int get hashCode {
+    return Object.hash(runtimeType,isApiDebug,isDarkMode);
+}
 
 @override
 String toString() {
-  return 'DevToolsState(isApiDebug: $isApiDebug, isDarkMode: $isDarkMode)';
+    return 'DevToolsState(isApiDebug: $isApiDebug, isDarkMode: $isDarkMode)';
 }
 
 

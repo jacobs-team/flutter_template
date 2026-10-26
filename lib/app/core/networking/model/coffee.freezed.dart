@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'coffee.dart';
@@ -9,6 +9,7 @@ part of 'coffee.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -29,16 +30,21 @@ $CoffeeCopyWith<Coffee> get copyWith => _$CoffeeCopyWithImpl<Coffee>(this as Cof
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Coffee&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
+  final _this = this as Coffee;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Coffee&&(identical(other.imageUrl, _this.imageUrl) || other.imageUrl == _this.imageUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,imageUrl);
+int get hashCode {
+  final _this = this as Coffee;
+  return Object.hash(runtimeType,_this.imageUrl);
+}
 
 @override
 String toString() {
-  return 'Coffee(imageUrl: $imageUrl)';
+  final _this = this as Coffee;
+  return 'Coffee(imageUrl: ${_this.imageUrl})';
 }
 
 
@@ -67,7 +73,7 @@ class _$CoffeeCopyWithImpl<$Res>
 /// Create a copy of Coffee
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? imageUrl = null,}) {
-  return _then(_self.copyWith(
+  return _then(Coffee(
 imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -229,16 +235,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Coffee&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Coffee&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,imageUrl);
+int get hashCode {
+    return Object.hash(runtimeType,imageUrl);
+}
 
 @override
 String toString() {
-  return 'Coffee(imageUrl: $imageUrl)';
+    return 'Coffee(imageUrl: $imageUrl)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'coffee_bloc.dart';
@@ -9,6 +9,7 @@ part of 'coffee_bloc.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$CoffeeEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoffeeEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CoffeeEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CoffeeEvent()';
+    return 'CoffeeEvent()';
 }
 
 
@@ -202,16 +203,18 @@ $LoadImagesCopyWith<LoadImages> get copyWith => _$LoadImagesCopyWithImpl<LoadIma
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadImages&&(identical(other.currentImage, currentImage) || other.currentImage == currentImage));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is LoadImages&&(identical(other.currentImage, currentImage) || other.currentImage == currentImage));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentImage);
+int get hashCode {
+    return Object.hash(runtimeType,currentImage);
+}
 
 @override
 String toString() {
-  return 'CoffeeEvent.loadImages(currentImage: $currentImage)';
+    return 'CoffeeEvent.loadImages(currentImage: $currentImage)';
 }
 
 
@@ -268,16 +271,18 @@ $ToggleFavoriteImageCopyWith<ToggleFavoriteImage> get copyWith => _$ToggleFavori
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ToggleFavoriteImage&&(identical(other.url, url) || other.url == url));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ToggleFavoriteImage&&(identical(other.url, url) || other.url == url));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,url);
+int get hashCode {
+    return Object.hash(runtimeType,url);
+}
 
 @override
 String toString() {
-  return 'CoffeeEvent.toggleFavoriteImage(url: $url)';
+    return 'CoffeeEvent.toggleFavoriteImage(url: $url)';
 }
 
 
@@ -329,7 +334,7 @@ class ClearFeed implements CoffeeEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ClearFeed);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ClearFeed);
 }
 
 
@@ -338,7 +343,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CoffeeEvent.clearFeed()';
+    return 'CoffeeEvent.clearFeed()';
 }
 
 
@@ -366,16 +371,21 @@ $CoffeeStateCopyWith<CoffeeState> get copyWith => _$CoffeeStateCopyWithImpl<Coff
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoffeeState&&(identical(other.loadingState, loadingState) || other.loadingState == loadingState)&&(identical(other.currentImage, currentImage) || other.currentImage == currentImage)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other.images, images)&&const DeepCollectionEquality().equals(other.favorites, favorites)&&const DeepCollectionEquality().equals(other.imageWindow, imageWindow));
+  final _this = this as CoffeeState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CoffeeState&&(identical(other.loadingState, _this.loadingState) || other.loadingState == _this.loadingState)&&(identical(other.currentImage, _this.currentImage) || other.currentImage == _this.currentImage)&&(identical(other.errorMessage, _this.errorMessage) || other.errorMessage == _this.errorMessage)&&const DeepCollectionEquality().equals(other.images, _this.images)&&const DeepCollectionEquality().equals(other.favorites, _this.favorites)&&const DeepCollectionEquality().equals(other.imageWindow, _this.imageWindow));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,loadingState,currentImage,errorMessage,const DeepCollectionEquality().hash(images),const DeepCollectionEquality().hash(favorites),const DeepCollectionEquality().hash(imageWindow));
+int get hashCode {
+  final _this = this as CoffeeState;
+  return Object.hash(runtimeType,_this.loadingState,_this.currentImage,_this.errorMessage,const DeepCollectionEquality().hash(_this.images),const DeepCollectionEquality().hash(_this.favorites),const DeepCollectionEquality().hash(_this.imageWindow));
+}
 
 @override
 String toString() {
-  return 'CoffeeState(loadingState: $loadingState, currentImage: $currentImage, errorMessage: $errorMessage, images: $images, favorites: $favorites, imageWindow: $imageWindow)';
+  final _this = this as CoffeeState;
+  return 'CoffeeState(loadingState: ${_this.loadingState}, currentImage: ${_this.currentImage}, errorMessage: ${_this.errorMessage}, images: ${_this.images}, favorites: ${_this.favorites}, imageWindow: ${_this.imageWindow})';
 }
 
 
@@ -404,7 +414,7 @@ class _$CoffeeStateCopyWithImpl<$Res>
 /// Create a copy of CoffeeState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loadingState = null,Object? currentImage = null,Object? errorMessage = freezed,Object? images = null,Object? favorites = null,Object? imageWindow = null,}) {
-  return _then(_self.copyWith(
+  return _then(CoffeeState(
 loadingState: null == loadingState ? _self.loadingState : loadingState // ignore: cast_nullable_to_non_nullable
 as CoffeeLoadingState,currentImage: null == currentImage ? _self.currentImage : currentImage // ignore: cast_nullable_to_non_nullable
 as int,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -552,7 +562,7 @@ return $default(_that.loadingState,_that.currentImage,_that.errorMessage,_that.i
 @JsonSerializable()
 
 class _CoffeeState implements CoffeeState {
-  const _CoffeeState({this.loadingState = CoffeeLoadingState.init, this.currentImage = 0, this.errorMessage, final  List<String> images = const [], final  List<String> favorites = const [], final  Set<int> imageWindow = const {}}): _images = images,_favorites = favorites,_imageWindow = imageWindow;
+  const _CoffeeState({this.loadingState = CoffeeLoadingState.init, this.currentImage = 0, this.errorMessage,  List<String> images = const [],  List<String> favorites = const [],  Set<int> imageWindow = const {}}): _images = images,_favorites = favorites,_imageWindow = imageWindow;
   factory _CoffeeState.fromJson(Map<String, dynamic> json) => _$CoffeeStateFromJson(json);
 
 @override@JsonKey() final  CoffeeLoadingState loadingState;
@@ -597,16 +607,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoffeeState&&(identical(other.loadingState, loadingState) || other.loadingState == loadingState)&&(identical(other.currentImage, currentImage) || other.currentImage == currentImage)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other._images, _images)&&const DeepCollectionEquality().equals(other._favorites, _favorites)&&const DeepCollectionEquality().equals(other._imageWindow, _imageWindow));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CoffeeState&&(identical(other.loadingState, loadingState) || other.loadingState == loadingState)&&(identical(other.currentImage, currentImage) || other.currentImage == currentImage)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage)&&const DeepCollectionEquality().equals(other.images, _images)&&const DeepCollectionEquality().equals(other.favorites, _favorites)&&const DeepCollectionEquality().equals(other.imageWindow, _imageWindow));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,loadingState,currentImage,errorMessage,const DeepCollectionEquality().hash(_images),const DeepCollectionEquality().hash(_favorites),const DeepCollectionEquality().hash(_imageWindow));
+int get hashCode {
+    return Object.hash(runtimeType,loadingState,currentImage,errorMessage,const DeepCollectionEquality().hash(_images),const DeepCollectionEquality().hash(_favorites),const DeepCollectionEquality().hash(_imageWindow));
+}
 
 @override
 String toString() {
-  return 'CoffeeState(loadingState: $loadingState, currentImage: $currentImage, errorMessage: $errorMessage, images: $images, favorites: $favorites, imageWindow: $imageWindow)';
+    return 'CoffeeState(loadingState: $loadingState, currentImage: $currentImage, errorMessage: $errorMessage, images: $images, favorites: $favorites, imageWindow: $imageWindow)';
 }
 
 
