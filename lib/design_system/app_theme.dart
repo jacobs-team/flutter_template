@@ -9,7 +9,32 @@ import 'package:google_fonts/google_fonts.dart';
 class AppTheme {
   static ThemeData _buildTheme(ColorScheme colorScheme) {
     final base = ThemeData(colorScheme: colorScheme);
-    final textTheme = GoogleFonts.manropeTextTheme(base.textTheme);
+    final baseTextTheme = base.textTheme;
+    final textTheme = TextTheme(
+      displayLarge: GoogleFonts.manrope(textStyle: baseTextTheme.displayLarge),
+      displayMedium: GoogleFonts.manrope(
+        textStyle: baseTextTheme.displayMedium,
+      ),
+      displaySmall: GoogleFonts.manrope(textStyle: baseTextTheme.displaySmall),
+      headlineLarge: GoogleFonts.manrope(
+        textStyle: baseTextTheme.headlineLarge,
+      ),
+      headlineMedium: GoogleFonts.manrope(
+        textStyle: baseTextTheme.headlineMedium,
+      ),
+      headlineSmall: GoogleFonts.manrope(
+        textStyle: baseTextTheme.headlineSmall,
+      ),
+      titleLarge: GoogleFonts.manrope(textStyle: baseTextTheme.titleLarge),
+      titleMedium: GoogleFonts.manrope(textStyle: baseTextTheme.titleMedium),
+      titleSmall: GoogleFonts.manrope(textStyle: baseTextTheme.titleSmall),
+      bodyLarge: GoogleFonts.manrope(textStyle: baseTextTheme.bodyLarge),
+      bodyMedium: GoogleFonts.manrope(textStyle: baseTextTheme.bodyMedium),
+      bodySmall: GoogleFonts.manrope(textStyle: baseTextTheme.bodySmall),
+      labelLarge: GoogleFonts.manrope(textStyle: baseTextTheme.labelLarge),
+      labelMedium: GoogleFonts.manrope(textStyle: baseTextTheme.labelMedium),
+      labelSmall: GoogleFonts.manrope(textStyle: baseTextTheme.labelSmall),
+    );
 
     final smRadius = BorderRadius.circular(AppDesign.radius.sm);
     final smShape = RoundedRectangleBorder(borderRadius: smRadius);
@@ -139,9 +164,7 @@ class AppTheme {
         backgroundColor: colorScheme.surfaceContainer,
         elevation: 0,
         selectedIconTheme: IconThemeData(color: colorScheme.primary),
-        unselectedIconTheme: IconThemeData(
-          color: colorScheme.onSurfaceVariant,
-        ),
+        unselectedIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
       ),
 
       dialogTheme: DialogThemeData(
